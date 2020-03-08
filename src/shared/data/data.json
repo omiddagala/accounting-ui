@@ -1,0 +1,10 @@
+{
+  "keys": {
+    "submittingInsurance": "SUBMITTING_INSURANCE",
+    "thirdPerson": "THIRD_PARTY",
+    "body": "BODY",
+    "complementary": "SUPPLEMENTARY",
+    "fire": "FIRE",
+    "life": "LIFE"
+  }
+}

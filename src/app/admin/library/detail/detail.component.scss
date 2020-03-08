@@ -1,0 +1,124 @@
+.wrapper {
+  //height: calc(100% - 70px);
+  //min-height: 500px;
+  //background: url("../../../../assets/image/facilities/insurance/footer.png") no-repeat bottom;
+  //background-size: contain;
+  padding-top: 70px;
+  .vector {
+    height: 400px;
+  }
+  button.next {
+    font-size: 26px;
+    font-weight: 500;
+    min-width: 150px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  .next {
+    color: white;
+    background: #236b81;
+  }
+}
+
+.padding-20 {
+  padding: 20px;
+}
+
+.margin-bottom-40 {
+  margin-bottom: 40px;
+}
+
+.color_236b81 {
+  color: #236b81 !important;
+}
+
+.min-w-100 {
+  min-width: 100%;
+}
+
+.mat-badge-warn .mat-badge-content {
+  background: green;
+}
+
+
+@media (max-width: 575.98px) {
+  .wrapper {
+    min-height: calc(100% - 62px);
+    padding-top: 30px !important;
+  }
+
+  button.next{
+    font-size: 20px !important;
+    font-weight: 500 !important;
+    width: 120px !important;
+    height: 55px;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+
+  form {
+    text-align: center !important;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .wrapper {
+    min-height: calc(100% - 62px);
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+  form {
+    text-align: center !important;
+  }
+
+  button.next{
+    font-size: 20px !important;
+    font-weight: 450 !important;
+    width: 120px !important;
+    height: 55px;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  button.next {
+    font-size: 20px !important;
+    font-weight: 450 !important;
+    width: 120px !important;
+    height: 55px;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+  form {
+    text-align: center !important;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) and (max-width: 1600px) {
+  .wrapper {
+    padding-top: 30px !important;
+    .next {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      min-width: 120px !important;
+    }
+  }
+}
+
+@media (max-height: 768px) {
+  .wrapper {
+    padding-top: 15px !important;
+    .vector {
+      height: 280px !important;
+    }
+  }
+}
+
+

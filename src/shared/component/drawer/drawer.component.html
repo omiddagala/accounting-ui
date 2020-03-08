@@ -1,0 +1,11 @@
+<mat-drawer style="min-width: 40%"
+            #snav
+            mode="over">
+  <mat-nav-list>
+    <a mat-list-item
+       *ngFor="let item of menu"
+       [routerLink]="item.route"
+       class="px-2"
+    >{{item.text}}</a>
+  </mat-nav-list>
+</mat-drawer>

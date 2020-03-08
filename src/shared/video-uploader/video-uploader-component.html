@@ -1,0 +1,54 @@
+<div class="flex-column"
+     [style.height]="height"
+     [style.width]="width">
+  <div *ngIf="title"
+       class="title text-center my-2"
+       [ngClass]=""
+       style="font-size: 12px !important;">
+    {{title}}
+  </div>
+  <div [ngStyle]="{'background-image': (video !== undefined ? 'url(' + bgImage+')': '')}"
+       [class.dash-border]="defaultStyle"
+       [matTooltip]="title"
+       class="image-box h-100 w-100">
+    <div class="image-container h-100">
+      <div *ngIf="video === undefined"
+           (click)="file.click()"
+           [class.add-icon-layout]="addLayout"
+           class=" w-100 h-100 d-flex justify-content-center align-items-center">
+        <i class="material-icons icon">
+          {{addIcon ?  addIcon : 'add'}}
+        </i>
+        <input #file
+               (change)="openInputFile()"
+               class="d-none file-input"
+               type="file"/>
+      </div>
+      <div *ngIf="isLoading"
+           class="w-100 h-100 loading-layer  d-flex justify-content-center ">
+        <div class="percentage">
+          {{percentage + '%'}}
+        </div>
+        <div [ngStyle]="{'height': percentage + '%'}" class="w-100 blue-layer"></div>
+
+      </div>
+      <div *ngIf="(video !== undefined) && (!isLoading)"
+           (click)="removeImage()"
+           class="remove-icon-layer w-100 h-100 d-flex justify-content-center align-items-center ">
+        <i class="material-icons icon">
+          delete_forever
+        </i>
+      </div>
+    </div>
+  </div>
+
+  <div class="remove-icon-layout"></div>
+  <div *ngIf="invalid" style="font-size: 12px;color: #d21013">
+    فایل غیر مجاز می باشد
+  </div>
+  <div *ngIf="!isValidRequired" style="font-size: 12px;color: #d21013">
+    فایل الزامی است
+  </div>
+</div>
+
+

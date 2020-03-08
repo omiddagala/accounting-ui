@@ -1,0 +1,118 @@
+.wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+
+  .logo {
+    width: 115px ;
+    height: auto;
+  }
+
+  .right-part {
+    background-size: cover;
+    background-image: url("../../../assets/image/login/Group 676 (1).png");
+
+    .welcome-part {
+      margin-top: -15%;
+      .message {
+        color: white;
+        text-align: center;
+        margin-top: 2%;
+      }
+    }
+  }
+
+  .left-part {
+    background-image: url("../../../assets/image/login/Group 676.png");
+    background-size: cover;
+    .main {
+      text-align: center;
+
+      h1{
+        margin-bottom: 12%
+      }
+
+      .login-btn {
+        background: #65a640;
+        color: white;
+        font-weight: bold;
+        padding: 3px 0;
+        font-size: 16px;
+        margin-top: 8%;
+      }
+
+      .register-btn {
+        background: white;
+        border: 1px solid #65a640;
+        color: #65a640;
+        font-weight: bold;
+        padding: 3px 0;
+        font-size: 16px;
+      }
+
+      .forget-password {
+        position: relative;
+        top: -8px;
+        text-align: right;
+        color: #236b81;
+        cursor: pointer;
+      }
+    }
+    @media(max-width: 1199.98px) {
+      .main {
+        h1 {
+          font-size: 1.5rem
+        }
+      }
+    }
+    @media (max-width: 767.98px) {
+      .main {
+        h1 {
+          font-size: 1.3rem;
+          margin-bottom: 8%
+        }
+      }
+    }
+
+    @media (max-width: 576px) {
+      .main {
+        h1 {
+          font-size: 1.2rem;
+          margin-bottom: 8%
+        }
+      }
+      .forget-password {
+        top: -3%;
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .logo {
+    width: 90px !important;
+    height: auto;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1600px) {
+  .mat-headline {
+    font-size: 26px !important;
+  }
+  .welcome-part {
+    margin-top: -20%;
+    .logo {
+      width: 100px !important;
+      height: auto;
+    }
+  }
+}
+
+.login {
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+  }
+}
+

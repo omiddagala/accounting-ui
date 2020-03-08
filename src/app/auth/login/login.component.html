@@ -1,0 +1,117 @@
+<div class=" wrapper w-100 h-100">
+  <div class="row h-100">
+    <app-loading-component *ngIf="loading"></app-loading-component>
+    <div class="col-sm-12 d-none
+                d-xl-flex col-xl-7
+                right-part
+                w-100 h-100
+                align-items-center
+                justify-content-center">
+      <div class="welcome-part ">
+        <div class="row ">
+          <div class="col-12 d-flex justify-content-center">
+            <img src="../../../assets/image/logo/logo.png"
+                 class="logo">
+          </div>
+          <div class="row message w-100"
+               style="margin-top: 4%">
+            <div class="col-12 d-flex justify-content-center mat-headline"
+                 style="font-weight: 450">
+              به سامانه حسابداری و انبارداری های تلکام خوش آمدید
+            </div>
+          </div>
+          <div class="row message w-100">
+            <div class="col-12 d-flex justify-content-center mat-headline"
+                 style="font-weight: 450">
+              خوش آمدید
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-xl-5
+              w-100 h-100
+              left-part d-flex
+              align-items-center
+              justify-content-center">
+      <div class="main">
+        <img class="d-block d-xl-none mx-auto logo mb-2"
+             src="../../../assets/image/logo/logo-black.png"/>
+        <h1 class="mat-headline" style="font-weight: 450">
+          سامانه حسابداری و انبارداری های تلکام
+        </h1>
+
+        <form [formGroup]="formGroup">
+        <div dir="rtl"
+             class="w-100 login">
+            <mat-form-field class="w-100"
+                            appearance="outline">
+              <mat-label>نام کاربری</mat-label>
+              <input formControlName="username"
+                     matInput
+                     autocomplete="off"
+                     placeholder="نام کاربری">
+              <mat-icon matSuffix>person_outline</mat-icon>
+              <mat-error *ngIf="formGroup.get('username').hasError('required')">
+                این فیلد الزامی است
+              </mat-error>
+              <mat-error *ngIf="formGroup.get('username').hasError('maxlength')">
+                حداکثر ۱۰۰ کاراکتر
+              </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div dir="rtl" class="w-100 login">
+          <mat-form-field class="w-100"
+                          appearance="outline">
+            <mat-label>کلمه عبور</mat-label>
+            <input formControlName="pass"
+                   matInput
+                   autocomplete="off"
+                   [type]="passType"
+                   placeholder="کلمه عبور">
+            <mat-icon matSuffix
+                      *ngIf="passType === 'password'"
+                      (click)="passType = 'text'"
+                      style="cursor: pointer">
+              <img src="../../../assets/image/login/eye-slash-solid.svg" width="25">
+            </mat-icon>
+            <mat-icon matSuffix
+                      *ngIf="passType === 'text'"
+                      (click)="passType = 'password'"
+                      style="cursor: pointer">
+              <img src="../../../assets/image/login/eye-solid.svg" width="25">
+            </mat-icon>
+            <mat-error *ngIf="formGroup.get('pass').hasError('required')">
+              این فیلد الزامی است
+            </mat-error>
+            <mat-error *ngIf="formGroup.get('pass').hasError('maxlength')">
+              حداکثر ۱۰۰ کاراکتر
+            </mat-error>
+          </mat-form-field>
+          <div class="forget-password mat-body"
+               routerLink="/auth/forget-password">
+            فراموشی رمز عبور
+          </div>
+        </div>
+        <div>
+          <button (click)="login()"
+                  mat-flat-button
+                  style="font-size: 18px"
+                  class="w-50 login-btn pt-2">
+            <span>ورود</span>
+          </button>
+        </div>
+          <div class="d-flex justify-content-center">
+            <button routerLink="/auth/register"
+                    mat-flat-button
+                    style="font-size: 18px"
+                    class="w-50 register-btn pb-2 my-2">
+              <span>ثبت نام</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

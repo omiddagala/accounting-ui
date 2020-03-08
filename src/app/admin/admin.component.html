@@ -1,0 +1,57 @@
+<div class="w-100 h-100">
+  <mat-drawer-container class="h-100 w-100" dir="rtl">
+    <mat-drawer style="min-width: 40%"
+                #snav mode="over">
+      <mat-nav-list>
+        <a mat-list-item
+           *ngFor="let item of menu"
+           [routerLink]="item.route"
+           class="px-2">
+          {{item.text}}
+        </a>
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+      <app-main-menu [logo]="true"
+                     [snav]="snav"
+                     [mainMenu]="true"
+                     [profile]="true">
+      </app-main-menu>
+      <div class="w-100 wrapper d-flex flex-column flex-lg-row">
+        <div style="background: url('../../assets/image/facilities/home/store.jpg') no-repeat center;background-size: cover"
+             routerLink="/admin/library"
+             class="col-xs-12 col-lg-6 service h-100">
+          <div class="service-text d-flex flex-column justify-content-center align-items-center w-100 h-100">
+            <div class="row justify-content-center icon-container  w-100 mx-0">
+              <div class="d-flex justify-content-center icon">
+                <img src="../../assets/image/facilities/home/icons/offer.svg"
+                     class="mb-xl-4 mb-3  mx-auto"/>
+              </div>
+            </div>
+            <div class="row justify-content-center mx-0 mat-h2 mt-xl-3 mt-2 mat-title service-title">
+              محصولات
+            </div>
+          </div>
+          <div class="normal-layer   w-100"></div>
+        </div>
+
+        <div style="background: url('../../assets/image/facilities/home/buy.jpg') no-repeat center;background-size: cover"
+             routerLink="/admin/reservoir"
+             class="col-xs-12 col-lg-6 service h-100">
+          <div class="service-text d-flex flex-column justify-content-center align-items-center w-100 h-100">
+            <div class="row justify-content-center icon-container  w-100 mx-0">
+              <div class="d-flex justify-content-center icon">
+                <img src="../../assets/image/facilities/home/icons/bill.svg"
+                     class="mb-xl-4 mb-3  mx-auto"/>
+              </div>
+            </div>
+            <div class="row justify-content-center mx-0 mat-h2 mt-xl-3 mt-2 mat-title service-title">
+              انبارها
+            </div>
+          </div>
+          <div class="normal-layer   w-100"></div>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

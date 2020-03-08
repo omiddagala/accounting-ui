@@ -1,0 +1,27 @@
+.toolbar-style {
+  background: #fdfdfd;
+  border-bottom: solid 1px #bebebe;
+  height: 70px;
+  @media (max-width: 576px) {
+    max-height: 62px;
+    margin-right: 5px !important;
+    margin-left: 5px !important;
+    padding: 0;
+  }
+
+  img.logo {
+    height: 45px;
+    cursor: pointer;
+    @media (max-width: 768px) {
+      height: 35px;
+    }
+  }
+
+  .big-icon {
+    font-size: 32px !important;
+    color: #236b81;
+    @media (max-width: 768px) {
+      font-size: 28px !important;
+    }
+  }
+}

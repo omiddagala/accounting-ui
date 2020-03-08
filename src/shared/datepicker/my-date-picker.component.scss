@@ -1,0 +1,61 @@
+.datevalue {
+  outline: none;
+
+  &:hover {
+    border-radius: 5px;
+    background: #037AF2;
+    color: white;
+    font-size: 12px !important;
+    font-weight: 500;
+    transition: all 0.5s;
+    cursor: pointer;
+  }
+}
+
+.selector {
+  position: absolute;
+  z-index: 5000000;
+  outline: none;
+  top: 13px;
+  background: white;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 5px;
+}
+
+.prevmonth, .nextmonth {
+  background: #F3F3FD;
+  //color: white;
+}
+
+.selected-day {
+  background: #294CF2;
+  color: white;
+}
+
+.daycell {
+  border-radius: 5px;
+}
+
+.yearvalue {
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.monthvalue {
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.markcurrmonth, .markcurryear {
+  border-radius: 5px;
+  color: white;
+  background: #294CF2;
+}
+
+.headertodaybtn, .headermonthtxt, .headeryeartxt {
+  cursor: pointer;
+  color: #037AF2;
+}
+.headeryeartxt {
+  padding-top: 3px;
+}

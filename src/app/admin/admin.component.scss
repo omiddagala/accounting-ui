@@ -1,0 +1,219 @@
+.text-center {
+  text-align: center;
+}
+
+.drawer {
+  background: #236b81;
+  color: white;
+
+  .drawer-content {
+    margin-top: 25%;
+  }
+
+  .social-media {
+    position: absolute;
+    bottom: 0;
+    overflow-x: hidden;
+    width: 96%;
+  }
+}
+
+.btn {
+  background: #65a640;
+  color: white;
+  font-weight: bold;
+  padding: 3px 0;
+  font-size: 16px;
+  margin-top: 8%;
+}
+
+.wrapper {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  height: calc(100% - 70px);
+
+  div.service {
+    padding: 0 !important;
+    min-height: 200px;
+    height: 100%;
+  }
+
+  .service {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+
+    .service-title {
+      font-size: 26px;
+      height: auto;
+    }
+
+    &:hover .normal-layer {
+      background: #064982;
+      animation: layer 0.75s ease-in-out;
+    }
+
+    .normal-layer {
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0.66;
+      background: #000;
+    }
+
+    .service-text {
+      position: absolute;
+      opacity: 1;
+      top: 0;
+      z-index: 10000;
+      color: white !important;
+
+      .icon-container {
+        height: auto;
+
+        .icon {
+          border-bottom: 2px solid #fff;
+          height: auto;
+          width: 40%;
+          img {
+            width: 30%;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+@media (max-width: 576px) {
+  .icon {
+    width: 55% !important;
+    img {
+      width: 45%;
+    }
+  }
+  .service-title {
+    font-size: 18px !important;
+  }
+  .drawer {
+    min-width: 40% !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .icon {
+    img {
+      width: 40%;
+    }
+  }
+  .service-title {
+    font-size: 22px !important;
+  }
+  .drawer {
+    min-width: 60%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .icon {
+    img {
+      width: 40%;
+    }
+  }
+  .drawer {
+    min-width: 40%;
+  }
+
+
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .icon {
+    img {
+      width: 40%;
+    }
+  }
+  .logo {
+    height: 80px !important;
+    width: auto;
+  }
+
+  .mat-title {
+    font-size: 18px !important;
+  }
+
+
+}
+
+@media (min-width: 1200px) and (max-width: 1600px) {
+  .icon {
+    img {
+      width: 40%;
+    }
+  }
+  .logo {
+    height: 80px !important;
+    width: auto;
+  }
+  .mat-title {
+    font-size: 18px !important;
+  }
+  .drawer-content {
+    margin-top: 20% !important;
+  }
+}
+
+
+
+@media (max-height: 575px) {
+  .logo {
+    height: 65px !important;
+  }
+  .mat-title {
+    font-size: 16px !important;
+  }
+
+  .drawer-content {
+    margin-top: 12%;
+  }
+}
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  //box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d8d8d8;
+  border-radius: 10px;
+  max-width: 60px !important;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  overflow-x: hidden !important;
+}
+
+//@@@@@@@@@@@@@@@ animation @@@@@@@@@@@@@@@
+
+@-webkit-keyframes layer {
+  0% {
+    height: 0
+  }
+
+
+  100% {
+    height: 100%;
+    background: #064982;
+  }
+}
+

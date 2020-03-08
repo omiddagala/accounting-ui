@@ -1,0 +1,42 @@
+<form [formGroup]="dateForm" class="w-100">
+  <div *ngIf="title" class=" pl-3 row" style="font-size: 14px">
+    {{title}}
+  </div>
+  <div class="row pt-1 ">
+    <div dir="rtl" class="col-4">
+
+      <mat-form-field appearance="outline"
+                      class="w-100">
+        <mat-label>روز</mat-label>
+        <input formControlName="day"
+               matInput
+               required
+               placeholder="مثال: 08"/>
+        <mat-error>عدد 2 رقمی, مثال 02</mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field dir="rtl" class="col-4"
+                    appearance="outline">
+      <mat-label>ماه</mat-label>
+      <mat-select formControlName="month">
+        <mat-option *ngFor="let month of jallaliMonth"
+                    [value]="month.value">
+          {{month.text}}
+        </mat-option>
+      </mat-select>
+      <mat-error>لطفا ماه را انتخاب کنید</mat-error>
+    </mat-form-field>
+    <div dir="rtl" class="col-4">
+      <mat-form-field appearance="outline"
+                      class="w-100">
+        <mat-label>سال</mat-label>
+        <input formControlName="year"
+               matInput
+               required
+               placeholder="مثال 1398"/>
+        <mat-error>عدد 4 رقمی, مثال 1398</mat-error>
+      </mat-form-field>
+
+    </div>
+  </div>
+</form>

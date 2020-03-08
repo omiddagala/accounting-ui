@@ -1,0 +1,175 @@
+.wrapper {
+  height: calc(100% - 70px);
+  min-height: 480px;
+  background: url("../../../assets/image/facilities/insurance/footer.png") no-repeat bottom;
+  background-size: contain;
+}
+
+.ornamental-image {
+  width: 250px;
+}
+
+.main-container {
+  padding-top: 30px;
+}
+
+.right-card {
+  height: 51%
+}
+
+.bottom-btn {
+  position: absolute;
+  bottom: 0;
+  height: 60px;
+  background: #dedede;
+}
+
+.info-part {
+  height: 52vh;
+  animation: fadeIn 1s;
+}
+
+.zero-padding {
+  padding: 0 !important;
+}
+
+.uploader-image {
+  width: 130px;
+  height: 130px;
+  position: relative;
+  top: -60px;
+  margin: auto;
+  border: 10px solid white;
+  border-radius: 50%;
+  background: rgba(151, 151, 151, 1);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+}
+
+.btn {
+  height: 64px;
+  color: #707070;
+  border: solid 1px #cbcbcb;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 450;
+}
+
+.active-btn {
+  background: #40a698 !important;
+  color: white !important;
+  transition: background-color 0.6s 0.2s ease-in;
+}
+
+.send-btn {
+  font-size: 20px;
+  font-weight: 450;
+  background: #236b81;
+  color: white;
+  cursor: pointer;
+  min-width: 110px;
+}
+
+.first-last-name {
+  position: relative;
+  top: -40px;
+
+  div {
+    font-weight: 450 !important;
+  }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+  .wrapper {
+    height: auto !important;
+  }
+  .send-btn {
+    font-size: 16px !important;
+    font-weight: 450 !important;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .wrapper {
+    height: auto !important;
+  }
+  .send-btn {
+    font-size: 18px !important;
+    font-weight: 450 !important;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .wrapper {
+    height: auto !important;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .ornamental-image {
+    width: 200px !important;
+  }
+
+  .main-container {
+    padding-top: 10px !important;
+  }
+
+
+  .right-card {
+    height: 48% !important;
+  }
+  .uploader-image {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  .btn {
+    font-size: 16px !important;
+    font-weight: 430 !important;
+  }
+
+  .first-last-name {
+    position: relative;
+    top: -45px !important;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+
+}
+
+@media (min-width: 1200px) and (max-width: 1600px) {
+  .ornamental-image {
+    width: 200px !important;
+  }
+
+  .main-container {
+    padding-top: 10px !important;
+  }
+
+
+  .right-card {
+    height: 44% !important;
+  }
+  .uploader-image {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  .btn {
+    font-size: 16px !important;
+    font-weight: 430 !important;
+  }
+  .first-last-name {
+    top: -48px !important;
+  }
+}
+
+@media (min-height: 850px) {
+  .right-card {
+    height: 51% !important;
+  }
+}

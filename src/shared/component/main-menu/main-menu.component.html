@@ -1,0 +1,43 @@
+<mat-toolbar class="toolbar-style row px-md-5 justify-content-between"
+             style="padding-top: 6px; padding-bottom: 6px;margin: 0 !important;">
+
+  <div *ngIf="snav"
+       class="row d-flex d-lg-none justify-content-between align-items-center mx-auto w-100">
+    <button mat-icon-button
+            (click)="toggleDrawer()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="logo"
+       (click)="routeHome()"
+       class="my-auto col-auto d-none d-lg-flex align-items-center">
+    <img class="logo"
+         src="../../../assets/image/logo/logo-black.png">
+  </div>
+
+  <div *ngIf="mainMenu"
+       class="col-auto row d-none d-lg-flex justify-content-center w-50">
+    <button class="d-none d-md-block"
+            mat-button
+            (click)="routeHome()">
+      خانه
+    </button>
+    <button class="d-none d-md-block"
+            mat-button
+            *ngIf="commonService.isCustomer() || commonService.isAdmin()"
+            (click)="routeLibrary()">
+      کتابخانه
+    </button>
+    <button class="d-none d-md-block"
+            mat-button
+            (click)="routeHome()">
+      قوانین و مقررات
+    </button>
+  </div>
+
+  <div class="d-none d-lg-block">
+    <app-profile-menu-component *ngIf="profile">
+    </app-profile-menu-component>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,265 @@
+<div class="mydp w-100"
+     [ngStyle]="{'width': opts.showInputField ? opts.width : null, 'border': opts.inline ? 'none' : null}">
+  <div class="selectiongroup w-100"
+       *ngIf="!opts.inline">
+    <form [formGroup]="dateForm" class="w-100">
+      <mat-form-field (click)="openBtnClicked()"
+                      class="w-100"
+                      appearance="outline">
+        <mat-label *ngIf="label">
+          {{placeholder}}
+        </mat-label>
+        <!--        [ngStyle]="{'height': opts.height, 'font-size': opts.selectionTxtFontSize}"-->
+        <!--(ngModelChange)="onUserDateInput($event)"-->
+        <input formControlName="datepicker"
+               matInput
+               *ngIf="opts.showInputField"
+               #inputBoxEl
+               ngtype="text"
+               class="selection"
+               [attr.aria-label]="opts.ariaLabelInputField"
+               (click)="opts.openSelectorOnInputClick&&!opts.editableDateField&&openBtnClicked()"
+               [ngClass]="{'invaliddate': invalidDate&&opts.indicateInvalidDate, 'inputnoteditable': opts.openSelectorOnInputClick&&!opts.editableDateField, 'selectiondisabled': opts.componentDisabled}"
+               placeholder="{{placeholder}}"
+               [value]="selectionDayTxt"
+               (keyup)="onCloseSelector($event)"
+               (focus)="opts.editableDateField&&onFocusInput($event)"
+               (blur)="opts.editableDateField&&onBlurInput($event)"
+               [disabled]="opts.componentDisabled"
+               [readonly]="!opts.editableDateField"
+               autocomplete="off"
+               spellcheck="false"
+               autocorrect="off"/>
+        <!--        [ngModel]="selectionDayTxt" -->
+        <mat-icon (click)="openBtnClicked()" matSuffix>calendar_today</mat-icon>
+        <mat-error *ngIf="required && dateForm.get('datepicker').hasError('required')">
+          این فیلد الزامی است
+        </mat-error>
+      </mat-form-field>
+    </form>
+
+
+    <!--    they are for default btn opening calendar-->
+
+    <!--    <div class="selbtngroup"-->
+    <!--         [style.height]="opts.height">-->
+    <!--      <button type="button"-->
+    <!--              [attr.aria-label]="opts.ariaLabelDecreaseDate" class="btndecrease"-->
+    <!--              *ngIf="opts.showDecreaseDateBtn"-->
+    <!--              (click)="onDecreaseBtnClicked()"-->
+    <!--              [ngClass]="{'btndecreaseenabled': !opts.componentDisabled, 'btndecreasedisabled': opts.componentDisabled, 'btnleftborderradius': !opts.showInputField}"-->
+    <!--              [disabled]="opts.componentDisabled">-->
+    <!--        <span class=" icon-left-dir"></span>-->
+    <!--      </button>-->
+    <!--      <button type="button"-->
+    <!--              [attr.aria-label]="opts.ariaLabelIncreaseDate"-->
+    <!--              class="btnincrease"-->
+    <!--              *ngIf="opts.showIncreaseDateBtn"-->
+    <!--              (click)="onIncreaseBtnClicked()"-->
+    <!--              [ngClass]="{'btnincreaseenabled': !opts.componentDisabled, 'btnincreasedisabled': opts.componentDisabled, 'btnleftborderradius': !opts.showDecreaseDateBtn&&!opts.showInputField}"-->
+    <!--              [disabled]="opts.componentDisabled">-->
+    <!--        <span class=" icon-right-dir"></span>-->
+    <!--      </button>-->
+    <!--      <button type="button" [attr.aria-label]="opts.ariaLabelClearDate" class="btnclear"-->
+    <!--              *ngIf="selectionDayTxt.length>0&&opts.showClearDateBtn"-->
+    <!--              (click)="removeBtnClicked()"-->
+    <!--              [ngClass]="{'btnclearenabled': !opts.componentDisabled, 'btncleardisabled': opts.componentDisabled, 'btnleftborderradius': !opts.showIncreaseDateBtn&&!opts.showDecreaseDateBtn&&!opts.showInputField}"-->
+    <!--              [disabled]="opts.componentDisabled">-->
+    <!--        <span class=" icon-cancel"></span>-->
+    <!--      </button>-->
+    <!--      <button type="button"-->
+    <!--              [attr.aria-label]="opts.ariaLabelOpenCalendar"-->
+    <!--              class="btnpicker"-->
+    <!--              (click)="openBtnClicked()"-->
+    <!--              [ngClass]="{'btnpickerenabled': !opts.componentDisabled, 'btnpickerdisabled': opts.componentDisabled, 'btnleftborderradius': !opts.showClearDateBtn&&!opts.showIncreaseDateBtn&&!opts.showDecreaseDateBtn&&!opts.showInputField||selectionDayTxt.length===0&&!opts.showInputField}"-->
+    <!--              [disabled]="opts.componentDisabled">-->
+    <!--        salam-->
+    <!--        <span class="icon-calendar"></span>-->
+    <!--      </button>-->
+    <!--    </div>-->
+  </div>
+  <!--  'height' : opts.selectorHeight,-->
+  <div class="selector"
+       dir="{{direction}}" #selectorEl
+       [ngStyle]="{'width': opts.selectorWidth,  'bottom': getSelectorTopPosition()}"
+       *ngIf="showSelector||opts.inline" [mydpfocus]="opts.inline?'0':'1'"
+       [ngClass]="{'inlinedp': opts.inline, 'alignselectorright': opts.alignSelectorRight, 'selectorarrow': opts.showSelectorArrow&&!opts.inline, 'selectorarrowleft': opts.showSelectorArrow&&!opts.alignSelectorRight&&!opts.inline, 'selectorarrowright': opts.showSelectorArrow&&opts.alignSelectorRight&&!opts.inline}"
+       (keyup)="onCloseSelector($event)" tabindex="0">
+    <table class="header mx-auto">
+      <tr>
+        <td>
+          <div class="d-flex">
+            <div class="headerbtncell d-flex justify-content-center align-items-center my-1">
+              <button mat-icon-button
+                      type="button"
+                      [attr.aria-label]="opts.ariaLabelPrevMonth"
+                      style="color: #294CF2"
+                      [ngClass]="direction == 'ltr'?'headerbtn  icon-left-dir':'headerbtn  icon-right-dir'"
+                      (click)="onPrevMonth()" [disabled]="prevMonthDisabled"
+                      [ngClass]="{'headerbtnenabled': !prevMonthDisabled, 'headerbtndisabled': prevMonthDisabled}">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
+            </div>
+            <div class="headermonthtxt headerlabelbtn d-flex align-items-center"
+                 type="button" [ngClass]="{'monthlabel': opts.monthSelector}"
+                 (click)="opts.monthSelector&&onSelectMonthClicked($event)"
+                 tabindex="{{opts.monthSelector?'0':'-1'}}">
+              {{visibleMonth.monthTxt}}
+            </div>
+            <div class="headerbtncell d-flex justify-content-center align-items-center my-1">
+              <button type="button"
+                      [attr.aria-label]="opts.ariaLabelNextMonth"
+                      mat-icon-button
+                      style="color: #294CF2"
+                      [ngClass]="direction == 'ltr'?'headerbtn  icon-right-dir':'headerbtn  icon-left-dir'"
+                      (click)="onNextMonth()" [disabled]="nextMonthDisabled"
+                      [ngClass]="{'headerbtnenabled': !nextMonthDisabled, 'headerbtndisabled': nextMonthDisabled}">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+              </button>
+            </div>
+          </div>
+        </td>
+        <td>
+          <button *ngIf="opts.showTodayBtn"
+                  mat-flat-button
+                  type="button" class="headertodaybtn"
+                  (click)="onTodayClicked()"
+                  [disabled]="disableTodayBtn"
+                  [ngClass]="{'headertodaybtnenabled': !disableTodayBtn, 'headertodaybtndisabled': disableTodayBtn}">
+            <span class=" icon-ok"></span>
+            <span>{{opts.todayBtnTxt}}</span>
+          </button>
+        </td>
+        <td>
+          <div class="d-flex">
+            <div class="headerbtncell d-flex justify-content-center align-items-center my-1">
+              <button type="button"
+                      mat-icon-button
+                      style="color: #294CF2"
+                      [attr.aria-label]="opts.ariaLabelPrevYear"
+                      [ngClass]="direction == 'ltr'?'headerbtn  icon-left-dir':'headerbtn  icon-right-dir'"
+                      (click)="onPrevYear()"
+                      [disabled]="prevYearDisabled"
+                      [ngClass]="{'headerbtnenabled': !prevYearDisabled, 'headerbtndisabled': prevYearDisabled}">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
+            </div>
+            <div class="headeryeartxt headerlabelbtn d-flex align-items-center"
+                 type="button"
+                 [ngClass]="{'yearlabel': opts.yearSelector}"
+                 (click)="opts.yearSelector&&onSelectYearClicked($event)"
+                 tabindex="{{opts.yearSelector?'0':'-1'}}">
+              {{visibleMonth.year}}
+            </div>
+            <div class="headerbtncell d-flex justify-content-center align-items-center">
+              <button type="button"
+                      mat-icon-button
+                      style="color: #294CF2"
+                      [attr.aria-label]="opts.ariaLabelNextYear"
+                      [ngClass]="direction == 'ltr'?'headerbtn  icon-right-dir':'headerbtn  icon-left-dir'"
+                      (click)="onNextYear()" [disabled]="nextYearDisabled"
+                      [ngClass]="{'headerbtnenabled': !nextYearDisabled, 'headerbtndisabled': nextYearDisabled}">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table class="caltable mx-auto" style="width: 95%" *ngIf="!selectMonth&&!selectYear">
+      <thead>
+      <tr>
+        <th class="weekdaytitle weekdaytitleweeknbr"
+            *ngIf="opts.showWeekNumbers&&opts.firstDayOfWeek==='mo'">#
+        </th>
+        <th class="weekdaytitle"
+            scope="col"
+            *ngFor="let d of weekDays">{{d}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let w of dates">
+        <td class="daycell daycellweeknbr"
+            *ngIf="opts.showWeekNumbers&&opts.firstDayOfWeek==='mo'">{{w.weekNbr}}</td>
+        <td class="daycell"
+            *ngFor="let d of w.week"
+            [class.selected-day]="selectedDate.day===d.dateObj.day && selectedDate.month===d.dateObj.month && selectedDate.year===d.dateObj.year && d.cmo===currMonthId"
+            [ngClass]="{'currmonth':d.cmo===currMonthId&&!d.disabled, 'selectedday':selectedDate.day===d.dateObj.day && selectedDate.month===d.dateObj.month && selectedDate.year===d.dateObj.year && d.cmo===currMonthId, 'disabled': d.disabled, 'tablesingleday':(!opts.allowSelectionOnlyInCurrentMonth||d.cmo===currMonthId&&opts.allowSelectionOnlyInCurrentMonth)&&!d.disabled}"
+            (click)="!d.disabled&&onCellClicked(d);$event.stopPropagation()"
+            (keydown)="onCellKeyDown($event, d)"
+            tabindex="0">
+          <div *ngIf="d.markedDate.marked"
+               class="markdate"
+               [ngStyle]="{'background-color': ' #294CF2'}"></div>
+          <div class="datevalue d-flex justify-content-center"
+               style="padding: 8px 0"
+               [ngClass]="{'prevmonth':d.cmo===prevMonthId,'currmonth':d.cmo===currMonthId,'nextmonth':d.cmo===nextMonthId,'highlight':d.highlight}">
+            <div
+              class="mx-auto mat-body"
+              style="font-size: 14px;font-weight: 450"
+              [ngClass]="{'markcurrday':d.currDay&&opts.markCurrentDay, 'dimday': d.highlight && (d.cmo===prevMonthId || d.cmo===nextMonthId || d.disabled)}">{{d.dateObj.day}}
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <table class="monthtable mx-auto"
+           style="width: 95%;font-size: 14px;font-weight: 450"
+           *ngIf="selectMonth">
+      <tbody>
+      <tr *ngFor="let mr of months">
+        <td class="monthcell tablesinglemonth text-center"
+            [ngClass]="{'selectedmonth': m.selected, 'disabled': m.disabled}"
+            *ngFor="let m of mr"
+            (click)="!m.disabled&&onMonthCellClicked(m);$event.stopPropagation()"
+            (keydown)="onMonthCellKeyDown($event, m)"
+            tabindex="0">
+          <div class="monthvalue d-flex justify-content-center align-items-center"
+               [ngClass]="{'markcurrmonth':m.currMonth&&opts.markCurrentMonth}">{{m.name}}</div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <table class="yeartable mx-auto" style="width: 95%;font-size: 14px; font-weight: 450" *ngIf="selectYear">
+      <tbody>
+      <tr>
+        <td colspan="5" class="yearchangebtncell"
+            (click)="$event.stopPropagation()">
+          <button type="button"
+                  mat-icon-button
+                  class="yearchangebtn mx-auto d-flex icon-up-dir"
+                  (click)="onPrevYears($event, years[0][0].year)"
+                  [disabled]="prevYearsDisabled"
+                  [ngClass]="{'yearchangebtnenabled': !prevYearsDisabled, 'yearchangebtndisabled': prevYearsDisabled}">
+            <mat-icon style="transform: rotate(180deg)">keyboard_arrow_down</mat-icon>
+          </button>
+        </td>
+      </tr>
+      <tr *ngFor="let yr of years">
+        <td class="yearcell tablesingleyear"
+            [ngClass]="{'selectedyear': y.selected, 'disabled': y.disabled}"
+            *ngFor="let y of yr"
+            (click)="!y.disabled&&onYearCellClicked(y);$event.stopPropagation()"
+            (keydown)="onYearCellKeyDown($event, y)" tabindex="0">
+          <div class="yearvalue d-flex align-items-center justify-content-center"
+               [ngClass]="{'markcurryear':y.currYear&&opts.markCurrentYear}">{{y.year}}</div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5" class="yearchangebtncell"
+            (click)="$event.stopPropagation()">
+          <button type="button"
+                  mat-icon-button
+                  class="yearchangebtn d-flex mx-auto icon-down-dir"
+                  (click)="onNextYears($event, years[0][0].year)"
+                  [disabled]="nextYearsDisabled"
+                  [ngClass]="{'yearchangebtnenabled': !nextYearsDisabled, 'yearchangebtndisabled': nextYearsDisabled}">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

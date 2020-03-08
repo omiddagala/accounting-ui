@@ -1,0 +1,14 @@
+[
+  {
+    "text": "خانه",
+    "route": "/facilities"
+  },
+  {
+    "text": "کتابخانه",
+    "route": "/facilities/library"
+  },
+  {
+    "text": "قوانین و مقررات",
+    "route": "/facilities"
+  }
+]

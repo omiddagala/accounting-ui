@@ -1,0 +1,83 @@
+.title {
+  width: 100%;
+  color: #236b81;
+  font-size: 1rem;
+}
+
+.dash-border {
+  border: 1px dashed  #707070;
+  &:hover {
+    border: 2px solid #236b81;
+    transition: border 0.5s;
+  }
+}
+
+.image-box {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  .icon {
+    font-size: 55px;
+    font-weight: bold;
+
+  }
+  .add-icon-layout {
+    .icon {
+      color: #afacac;
+    }
+    &:hover  {
+      background-color: rgba(35, 107, 129,0.5);
+      transition: all  0.5s;
+      cursor: pointer;
+      .icon {
+        color:  #236b81;
+        transition: all 0.5s;
+        transform: rotate(360deg);
+      }
+    }
+
+  }
+
+  .removing {
+    background: rgba(210, 16, 19, 0.5);
+  }
+
+  .loading-layer {
+    position: relative;
+    top: 0;
+    transition: height 0.5s;
+    .blue-layer {
+      background-color: rgba(35, 107, 129,0.4);
+      z-index: 50000;
+      position: absolute;
+      bottom: 0;
+    }
+    .percentage {
+      position: absolute;
+      top: 4vh;
+      color: #236b81;
+    }
+  }
+
+  .remove-icon-layer {
+    cursor: pointer;
+    opacity: 0.1;
+    color: #d21013;
+    &:hover {
+      opacity: 1;
+      background-color: rgba(255,255,255, 0.7);
+      transition: all 0.5s;
+    }
+  }
+
+  .invalid-layer {
+    cursor: pointer;
+    opacity: 0.1;
+    color: #d21013;
+    background: rgba(210, 16, 19, 0.66);
+  }
+
+  .image-container {
+
+  }
+}

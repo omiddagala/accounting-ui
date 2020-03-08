@@ -1,0 +1,18 @@
+<div class="profile-wrapper ">
+  <div class=" row px-2 py-1  profile-box">
+    <mat-icon  matSuffix
+               class="profile-icons mb-2">
+      person
+    </mat-icon>
+    <div class="mat-body-2 mx-1 mt-1">
+      {{commonService.getUser().username}}
+    </div>
+<!--    <mat-icon class="mt-1">keyboard_arrow_down</mat-icon>-->
+  </div>
+  <div routerLink="/auth/profile" class="sliding-menu ma-1 px-3 py-1 mat-body-2">
+    پروفایل
+  </div>
+  <div (click)="commonService.logOut()" class="sliding-menu ma-1 px-3 py-1 mat-body-2">
+    خروج
+  </div>
+</div>
