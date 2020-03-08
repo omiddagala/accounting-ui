@@ -46,7 +46,7 @@ export class SizeListComponent implements OnInit {
     const param = {
       value: this.formGroup.get("value").value,
     };
-    this.http.post<any>('http://37.152.180.194:9000/v1/shop/size/list', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/size/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -63,7 +63,7 @@ export class SizeListComponent implements OnInit {
 
   saveOrUpdate(size) {
     this.loading = true;
-    this.http.post<any>('http://37.152.180.194:9000/v1/shop/size/save', size, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/size/save', size, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -85,7 +85,7 @@ export class SizeListComponent implements OnInit {
       id: id
     };
     this.loading = true;
-    this.http.post('http://37.152.180.194:9000/v1/shop/size/delete', param, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/size/delete', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }

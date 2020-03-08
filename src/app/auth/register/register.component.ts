@@ -93,7 +93,7 @@ export class RegisterComponent implements OnInit {
   doRegister() {
     this.loading = true;
     const param = this.makeObj();
-    this.http.post('http://37.152.180.194:9000/v1/user/anonymous/register', param)
+    this.http.post('http://127.0.0.1:9000/v1/user/anonymous/register', param)
       .subscribe(
         (val) => {
           this.loading = false;

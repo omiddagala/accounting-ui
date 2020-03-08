@@ -71,7 +71,7 @@ export class ChangePasswordComponent implements OnInit {
       oldPass: this.passwordForm.get('old').value,
       newPass: this.passwordForm.get('new').value
     };
-    this.http.post('http://37.152.180.194:9000/v1/user/authenticated/changePass', obj, {
+    this.http.post('http://127.0.0.1:9000/v1/user/authenticated/changePass', obj, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -109,7 +109,7 @@ export class ChangePasswordComponent implements OnInit {
     user.newPass = this.recoveryForm.get('new').value;
     console.log('user');
     console.log(user);
-    this.http.post('http://37.152.180.194:9000/v1/user/anonymous/recoveryChangePass',
+    this.http.post('http://127.0.0.1:9000/v1/user/anonymous/recoveryChangePass',
       user, {
         headers: {
           'Content-Type': 'application/json'

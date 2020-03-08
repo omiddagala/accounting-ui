@@ -86,7 +86,7 @@ export class DetailComponent implements OnInit {
 
   fetchReservoirs() {
     this.reservoirs = [];
-    this.http.post<any>('http://37.152.180.194:9000/v1/shop/reservoir/list', {name: null}, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/reservoir/list', {name: null}, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -117,7 +117,7 @@ export class DetailComponent implements OnInit {
     let param = {
       id: id
     };
-    this.http.post('http://37.152.180.194:9000/v1/shop/product/fetch', param, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/product/fetch', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -157,7 +157,7 @@ export class DetailComponent implements OnInit {
   }
 
   fetchSizes() {
-    this.http.post('http://37.152.180.194:9000/v1/shop/product/sizes', {}, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/product/sizes', {}, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -180,7 +180,7 @@ export class DetailComponent implements OnInit {
     };
     this.product.expireDate = moment(this.formGroup.get("year").value + "/" + this.formGroup.get("month").value + "/" + this.formGroup.get("day").value, 'YYYY-MM-DD');
     this.product.image = this.url;
-    this.http.post('http://37.152.180.194:9000/v1/shop/product/save', this.product, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/product/save', this.product, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }

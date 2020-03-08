@@ -65,7 +65,7 @@ export class LibraryComponent implements OnInit {
       name: this.formGroup.get("name").value,
       type: this.formGroup.get("type").value
     };
-    this.http.post<any>('http://37.152.180.194:9000/v1/shop/product/list', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/product/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -147,7 +147,7 @@ export class LibraryComponent implements OnInit {
       id: id
     };
     this.loading = true;
-    this.http.post('http://37.152.180.194:9000/v1/shop/product/delete', param, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/product/delete', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }

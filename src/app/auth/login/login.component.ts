@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       return encodeURIComponent(key) + '=' + encodeURIComponent(jp[key]);
     }).join('&');
     this.loading = true;
-    this.http.post<any>('http://37.152.180.194:9000/oauth/token', sp, {headers:{
+    this.http.post<any>('http://127.0.0.1:9000/oauth/token', sp, {headers:{
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: 'Basic ZW5nX2FwcDplbmdfYXBw'
       }})

@@ -47,7 +47,7 @@ export class ReservoirComponent implements OnInit {
     const param = {
       name: this.formGroup.get("name").value,
     };
-    this.http.post<any>('http://37.152.180.194:9000/v1/shop/reservoir/list', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/reservoir/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -64,7 +64,7 @@ export class ReservoirComponent implements OnInit {
 
   saveOrUpdate() {
     this.loading = true;
-    this.http.post<any>('http://37.152.180.194:9000/v1/shop/reservoir/save', this.reservoir, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/reservoir/save', this.reservoir, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -86,7 +86,7 @@ export class ReservoirComponent implements OnInit {
       id: id
     };
     this.loading = true;
-    this.http.post('http://37.152.180.194:9000/v1/shop/reservoir/delete', param, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/reservoir/delete', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }

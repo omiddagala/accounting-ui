@@ -84,7 +84,7 @@ export class ProfileComponent implements OnInit {
     }
     this.loading = true;
     const param = this.makeObj();
-    this.http.post<any>('http://37.152.180.194:9000/v1/user/authenticated/update', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/user/authenticated/update', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }

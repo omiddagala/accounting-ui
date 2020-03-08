@@ -52,7 +52,7 @@ export class ForgetPasswordComponent implements OnInit {
     if (this.formGroup.first.valid) {
       this.loading = true;
       const phone = this.commonService.toEnglishDigits(this.formGroup.first.get('phone').value);
-      this.http.post('http://37.152.180.194:9000/v1/user/anonymous/forgetPass',
+      this.http.post('http://127.0.0.1:9000/v1/user/anonymous/forgetPass',
         phone, {
           headers: {
             'Content-Type': 'application/json'
@@ -88,7 +88,7 @@ export class ForgetPasswordComponent implements OnInit {
     if (this.formGroup.second.valid) {
       this.loading = true;
       console.log(obj);
-      this.http.post('http://37.152.180.194:9000/v1/user/anonymous/recoveryCode',
+      this.http.post('http://127.0.0.1:9000/v1/user/anonymous/recoveryCode',
         obj, {
           headers: {
             'Content-Type': 'application/json'
