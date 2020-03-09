@@ -115,7 +115,7 @@ export class OrderComponent implements OnInit {
   }
 
   saveOrder() {
-    this.checkFormValidation()
+    this.checkFormValidation();
     if (!this.formGroup.valid) {
       return;
     }
@@ -142,10 +142,8 @@ export class OrderComponent implements OnInit {
         // tslint:disable-next-line:radix
         id: parseInt(product)
       },
-      count: {
-        // tslint:disable-next-line:radix
-        id: parseInt(number)
-      }
+      // tslint:disable-next-line:radix
+      count: parseInt(number)
     };
     this.http.post('http://127.0.0.1:9000/v1/shop/order/submit', param, {
       headers: {
