@@ -139,15 +139,18 @@ export class OrderComponent implements OnInit {
         id: toId
       },
       product: {
-        id: product
+        // tslint:disable-next-line:radix
+        id: parseInt(product)
       },
       count: {
-        id: number
+        // tslint:disable-next-line:radix
+        id: parseInt(number)
       }
     };
-    this.http.post('http://127.0.0.1:9000//v1/shop/order/submit', param, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/order/submit', param, {
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
       }
     })
       .subscribe(
