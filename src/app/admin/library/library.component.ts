@@ -162,4 +162,8 @@ export class LibraryComponent implements OnInit {
         });
   }
 
+  routeToOrder(id) {
+    this.router.navigate(['/admin/library/order/' + id]);
+  }
+
 }

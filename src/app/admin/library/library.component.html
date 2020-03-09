@@ -167,7 +167,7 @@
                           matTooltip="QR">
                     <mat-icon style="color: red">money</mat-icon>
                   </button>
-<!--                  <button mat-button > حواله</button>-->
+                  <button mat-button (click)="routeToOrder(item.id)"> حواله</button>
                 </div>
               </div>
               <mat-spinner *ngIf="loading"
@@ -255,16 +255,19 @@
                       *ngFor="let item of result; let i = index">
               <div class="row justify-content-between">
                 <div class="col-auto mat-body-2">نام</div>
-                <div class="col-auto mat-body" style="text-align: end">{{item.name}}</div>
+                <div class="col-auto mat-body"
+                     style="text-align: end">{{item.name}}</div>
               </div>
               <div class="row justify-content-between pt-3 pb-2">
                 <div class="col-auto mat-body-2">نوع</div>
-                <div class="col-auto mat-body" style="text-align: end">{{findTypeById(item.type)}}</div>
+                <div class="col-auto mat-body"
+                     style="text-align: end">{{findTypeById(item.type)}}</div>
               </div>
               <hr class="w-75 mx-auto  mt-4">
               <div class="row justify-content-between pt-1">
                 <div class="col-auto">
-                  <button mat-flat-button (click)="edit(item.id)"
+                  <button mat-flat-button
+                          (click)="edit(item.id)"
                           class="mat-body-1"
                           style="background: green;color: white">
                     ویرایش
@@ -272,13 +275,15 @@
                 </div>
                 <div class="col-auto">
                   <button mat-stroked-button class="col-auto mat-body-1"
-                          style="background: red; color: white" (click)="delete(item.id, i)">
+                          style="background: red; color: white"
+                          (click)="delete(item.id, i)">
                     حذف
                   </button>
                 </div>
                 <div class="col-auto">
                   <button mat-stroked-button class="col-auto mat-body-1"
-                          style="background: blue; color: white" (click)="generateQRCode(item)">
+                          style="background: blue; color: white"
+                          (click)="generateQRCode(item)">
                     بارکد
                   </button>
                 </div>
@@ -286,6 +291,13 @@
                   <button mat-stroked-button class="col-auto mat-body-1"
                           style="background: red; color: white" (click)="readQR()">
                     خواندن
+                  </button>
+                </div>
+
+                <div class="col-auto">
+                  <button mat-stroked-button
+                          class="col-auto mat-body-1">
+                    <a [routerLink]="['/admin/library/order', item.id]"></a>
                   </button>
                 </div>
               </div>

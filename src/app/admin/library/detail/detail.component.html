@@ -118,14 +118,16 @@
               </div>
 
 
-              <div class="row col-md-12 col-sm-12 padding-20 color_236b81">سایزهای کالا را انتخاب و تعداد را برای هرکدام وارد کنید</div>
+              <div class="row col-md-12 col-sm-12 padding-20 color_236b81">سایزهای کالا را انتخاب و تعداد را برای هرکدام
+                وارد کنید
+              </div>
               <div *ngFor="let size of product.productSizes" class="col-sm-12 col-md-2">
                 <button mat-raised-button color="primary" (click)="openDialog(size)"
-                        [matBadge]="size.count ? size.count : '0'" matBadgePosition="before" [matBadgeColor]="size.count ? 'warn' : 'accent'">
+                        [matBadge]="size.count ? size.count : '0'" matBadgePosition="before"
+                        [matBadgeColor]="size.count ? 'warn' : 'accent'">
                   {{size.size.value}}
                 </button>
               </div>
-
 
 
               <div class="col-12 pt-3 d-flex flex-row justify-content-center">

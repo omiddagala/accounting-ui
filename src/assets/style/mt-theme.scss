@@ -8,17 +8,18 @@
 //);
 
 $candy-app-primary: mat-palette($mat-indigo, A100);
-$candy-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$candy-app-accent:  mat-palette($mat-green, 600) ;  // mat-palette($mat-pink, A200, A100, A400)
 $candy-app-warn:    mat-palette($mat-red);
+//$candy-app-org-green: '#40a698';
 
 $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
 @include angular-material-theme($candy-app-theme);
 
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@ font-family @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $custom-typography: mat-typography-config(
-  $font-family: 'IRANSans'
-/*  $headline: mat-typography-level(26px, 40px, 600),
-  $body-1: mat-typography-level(14px, 18px, 400)*/
+  $font-family: 'IRANSans',
+  $headline: mat-typography-level(25px, 38px, 600),
+  $body-1: mat-typography-level(13px, 17px, 400)
 );
 @include mat-base-typography($custom-typography);
 @include mat-checkbox-typography($custom-typography);

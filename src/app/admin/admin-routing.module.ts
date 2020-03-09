@@ -7,6 +7,7 @@ import {SizeListComponent} from "./library/size/list.component";
 import {ReservoirComponent} from "./reservoir/reservoir.component";
 import {MyScanComponent} from "./library/barcode/scan";
 import {CreateBarcodeComponent} from "./library/barcode/create";
+import {OrderComponent} from './library/order/order.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'reservoir',
     component: ReservoirComponent
+  },
+  {
+    path: 'library/order/:product',
+    component: OrderComponent
   }
 ];
 
