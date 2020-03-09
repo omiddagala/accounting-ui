@@ -4,8 +4,8 @@ import Menu from '../../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
-import {CommonService} from "../../../../shared/common/common.service";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {CommonService} from '../../../../shared/common/common.service';
 import * as moment from 'jalali-moment';
 
 
@@ -61,6 +61,7 @@ export class DetailComponent implements OnInit {
 
   }
 
+
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
       name: new FormControl(this.product ? this.product.name : '', Validators.required),
@@ -74,7 +75,7 @@ export class DetailComponent implements OnInit {
     });
     let id;
     this.route.queryParams.subscribe(params => {
-      id = params['id'];
+      id = params.id;
     });
     if (id) {
       this.fetchProduct(id);
@@ -114,8 +115,8 @@ export class DetailComponent implements OnInit {
 
   fetchProduct(id) {
     this.loading = true;
-    let param = {
-      id: id
+    const param = {
+      id
     };
     this.http.post('http://127.0.0.1:9000/v1/shop/product/fetch', param, {
       headers: {
@@ -130,10 +131,10 @@ export class DetailComponent implements OnInit {
             this.uploader.video = this.product.image;
           }
           if (this.product.expireDate) {
-            this.expireDate = moment(this.product.expireDate, "YYYY-MM-DDTHH:mmZ").format("jYYYY/jMM/jDD");
+            this.expireDate = moment(this.product.expireDate, 'YYYY-MM-DDTHH:mmZ').format('jYYYY/jMM/jDD');
             this.expireDate = new Date(this.expireDate).toLocaleDateString('fa-IR');
             this.expireDate = this.convertNumbers(this.expireDate);
-            this.expireDate = this.expireDate.split("/", 3);
+            this.expireDate = this.expireDate.split('/', 3);
           }
           this.initFormGroup();
           this.loading = false;
@@ -144,16 +145,14 @@ export class DetailComponent implements OnInit {
   }
 
   convertNumbers(str) {
-    var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+    const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
       arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
-        if (typeof str === 'string')
-        {
-          for(var i=0; i<10; i++)
-          {
+    if (typeof str === 'string') {
+          for (let i = 0; i < 10; i++) {
             str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
           }
         }
-        return str;
+    return str;
   }
 
   fetchSizes() {
@@ -165,20 +164,20 @@ export class DetailComponent implements OnInit {
       .subscribe(
         (val) => {
           this.initFormGroup();
-          this.product.productSizes = val
+          this.product.productSizes = val;
         },
         response => {
         });
   }
 
   save() {
-    this.product.name = this.formGroup.get("name").value;
-    this.product.description = this.formGroup.get("description").value;
-    this.product.type = this.formGroup.get("type").value;
+    this.product.name = this.formGroup.get('name').value;
+    this.product.description = this.formGroup.get('description').value;
+    this.product.type = this.formGroup.get('type').value;
     this.product.reservoir = {
-      id: this.formGroup.get("reservoir").value
+      id: this.formGroup.get('reservoir').value
     };
-    this.product.expireDate = moment(this.formGroup.get("year").value + "/" + this.formGroup.get("month").value + "/" + this.formGroup.get("day").value, 'YYYY-MM-DD');
+    this.product.expireDate = moment(this.formGroup.get('year').value + '/' + this.formGroup.get('month').value + '/' + this.formGroup.get('day').value, 'YYYY-MM-DD');
     this.product.image = this.url;
     this.http.post('http://127.0.0.1:9000/v1/shop/product/save', this.product, {
       headers: {
@@ -201,7 +200,7 @@ export class DetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.size.count = result === "0" ? null : result;
+      this.size.count = result === '0' ? null : result;
     });
   }
 

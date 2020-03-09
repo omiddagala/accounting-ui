@@ -3,6 +3,7 @@ import {AdminComponent} from './admin.component';
 import {AdminRoutingModule} from './admin-routing.module';
 import {LibraryComponent} from './library/library.component';
 import {
+  MatAutocompleteModule,
   MatBadgeModule,
   MatButtonModule,
   MatCardModule, MatDialogModule,
@@ -55,7 +56,8 @@ import {OrderComponent} from './library/order/order.component';
     FormsModule,
     MyDatePickerModule,
     ZXingScannerModule,
-    QRCodeModule
+    QRCodeModule,
+    MatAutocompleteModule
   ],
   declarations: [
     AdminComponent,
