@@ -4,7 +4,7 @@ import Menu from '../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from "@angular/router";
-import {QRCode} from "qrcode-generator-ts";
+import {QRCode} from 'qrcode-generator-ts';
 
 @Component({
   selector: 'app-admin-library',

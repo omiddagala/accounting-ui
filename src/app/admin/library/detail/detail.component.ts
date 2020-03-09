@@ -188,6 +188,7 @@ export class DetailComponent implements OnInit {
       .subscribe(
         (val) => {
           this.commonService.showMessage('عملیات با موفقیت انجام شد.', 'success-msg');
+          this.router.navigate(['/admin/library']);
         },
         response => {
         });

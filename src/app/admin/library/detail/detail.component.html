@@ -18,11 +18,11 @@
                      [mainMenu]="true"
                      [profile]="true">
       </app-main-menu>
-      <div class="wrapper ">
-        <div class="d-flex flex-row pt-2 pt-xl-5">
+      <div class="wrapper">
+        <div class="d-flex flex-row ">
           <div class="col-12 col-xl-7">
             <form [formGroup]="formGroup"
-                  class="d-flex w-100 flex-wrap pl-0 pl-xl-5 pt-xl-2 justify-content-center">
+                  class="d-flex w-100 flex-wrap pl-0 pl-xl-5  justify-content-center">
               <div class="col-12 mat-title py-3">اطلاعات کالا را وارد کنید</div>
 
               <div class="col-10 col-xl-6" dir="rtl">
@@ -147,10 +147,10 @@
                  src="../../../../assets/image/facilities/insurance/Group-796%20.png">
           </div>
         </div>
-        <div *ngIf="!product.id" class="d-flex justify-content-center justify-content-xl-end">
+        <div *ngIf="!product.id" class="d-flex justify-content-center justify-content-xl-end mt-5 mt-xl-0">
           <div class="col-4 d-flex justify-content-center">
             <button (click)="save()"
-                    class="next mt-5"
+                    class="next "
                     mat-flat-button>
               افزودن
             </button>
