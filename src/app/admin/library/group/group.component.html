@@ -21,7 +21,7 @@
       <mat-toolbar style="height: 56px"
                    class="d-none d-lg-flex blue-toolbar row  px-md-5 justify-content-between">
         <div class="col-auto mat-body-1">
-          <span>سایزها</span>
+          <span>گروه کالا</span>
         </div>
         <div *ngIf="!showSearchField"
              class="col-auto d-flex justify-content-center align-items-center cursor"
@@ -52,7 +52,7 @@
                 </div>
                 <mat-form-field class="col-11"
                                 appearance="outline">
-                  <input formControlName="value"
+                  <input formControlName="name"
                          matInput
                          autocomplete="off"
                          placeholder="نام"/>
@@ -99,7 +99,7 @@
                  *ngFor="let item of result; let i = index"
                  style="border-bottom: 2px solid #f1f1f1; height: 75px">
               <div class="col-4 table-items my-auto mat-title text-center py-2">
-                {{item.value}}
+                {{item.name}}
               </div>
               <div class="col-4 table-items my-auto  text-center py-2">
                 <button mat-icon-button (click)="openDialog(item)"
@@ -156,7 +156,7 @@
                 <div dir="rtl">
                   <mat-form-field class="w-100"
                                   appearance="outline">
-                    <input formControlName="value"
+                    <input formControlName="name"
                            matInput
                            autocomplete="off"
                            placeholder="نام"/>
@@ -183,7 +183,7 @@
                     *ngFor="let item of result; let i = index">
             <div class="row justify-content-between">
               <div class="col-auto mat-body-2">نام</div>
-              <div class="col-auto mat-body" style="text-align: end">{{item.value}}</div>
+              <div class="col-auto mat-body" style="text-align: end">{{item.name}}</div>
             </div>
             <hr class="w-75 mx-auto  mt-4">
             <div class="row justify-content-between pt-1">

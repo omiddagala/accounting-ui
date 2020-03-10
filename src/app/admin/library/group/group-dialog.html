@@ -2,10 +2,15 @@
 <div mat-dialog-content>
   <mat-form-field dir="rtl">
     <mat-label dir="rtl">گروه جدید</mat-label>
-    <input style="direction: rtl" matInput [(ngModel)]="data.value">
+    <input style="direction: rtl"
+           matInput
+           [(ngModel)]="data.name">
   </mat-form-field>
 </div>
 <div mat-dialog-actions dir="rtl">
-  <button mat-button (click)="onNoClick()">لغو</button>
-  <button mat-button (click)="onOkClick(data.value)">ثبت</button>
+  <button mat-button
+          (click)="onNoClick()">لغو</button>
+  <button mat-button
+          (click)="onOkClick(data.name)">ثبت</button>
 </div>
+

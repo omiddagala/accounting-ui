@@ -88,7 +88,7 @@ import {GroupComponent, GroupDialog} from './library/group/group.component';
     VideoUploaderComponent,
     InfinitScrollComponent,
   ],
-  entryComponents: [CountDialog, SizeDialog, ReservoirDialog]
+  entryComponents: [CountDialog, SizeDialog, ReservoirDialog, GroupDialog]
 })
 
 export class AdminModule {

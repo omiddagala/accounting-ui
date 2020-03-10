@@ -7,8 +7,8 @@ import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CommonService} from '../../../../shared/common/common.service';
 
-export interface SizeData {
-  value;
+export interface GroupData {
+  name;
   ok: boolean;
 }
 
@@ -24,7 +24,7 @@ export class GroupComponent implements OnInit {
   formGroup: FormGroup;
   loading = false;
   public result = [];
-  value: any;
+  name: any;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -35,7 +35,7 @@ export class GroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      value: new FormControl(undefined)
+      name: new FormControl(undefined)
     });
     this.search();
   }
@@ -44,9 +44,9 @@ export class GroupComponent implements OnInit {
     this.loading = true;
     this.result = [];
     const param = {
-      value: this.formGroup.get('value').value,
+      name: this.formGroup.get('name').value,
     };
-    this.http.post<any>('http://127.0.0.1:9000/v1/shop/size/list', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/group/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -63,7 +63,7 @@ export class GroupComponent implements OnInit {
 
   saveOrUpdate(size) {
     this.loading = true;
-    this.http.post<any>('http://127.0.0.1:9000/v1/shop/size/save', size, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/group/save', size, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -87,7 +87,7 @@ export class GroupComponent implements OnInit {
       id
     };
     this.loading = true;
-    this.http.post('http://127.0.0.1:9000/v1/shop/size/delete', param, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/group/delete', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -106,16 +106,16 @@ export class GroupComponent implements OnInit {
   openDialog(size): void {
     if (!size) {
       size = {
-        value: ''
+        name: ''
       };
     }
-    this.value = size.value;
+    this.name = size.name;
     const dialogRef = this.dialog.open(GroupDialog, {
-      data: {value: this.value}
+      data: {name: this.name}
     });
 
     dialogRef.componentInstance.onAdd.subscribe((result) => {
-      size.value = result;
+      size.name = result;
       this.saveOrUpdate(size);
       dialogRef.close();
     });
@@ -126,14 +126,14 @@ export class GroupComponent implements OnInit {
 
 
 @Component({
-  selector: 'app-group-dialog',
-  templateUrl: './group-dialog.html',
+  selector: 'group-dialog',
+  templateUrl: 'group-dialog.html',
 })
 export class GroupDialog {
 
   constructor(
-    public dialogRef: MatDialogRef<SizeData>,
-    @Inject(MAT_DIALOG_DATA) public data: SizeData) {
+    public dialogRef: MatDialogRef<GroupData>,
+    @Inject(MAT_DIALOG_DATA) public data: GroupData) {
   }
 
   onAdd = new EventEmitter();
