@@ -37,6 +37,7 @@ import {CreateBarcodeComponent} from './library/barcode/create';
 import { QRCodeModule } from 'angular2-qrcode';
 import {OrderComponent} from './library/order/order.component';
 import {NotificationComponent} from './notification/notification.component';
+import {GroupComponent, GroupDialog} from './library/group/group.component';
 
 @NgModule({
   imports: [
@@ -77,7 +78,9 @@ import {NotificationComponent} from './notification/notification.component';
     MyScanComponent,
     CreateBarcodeComponent,
     OrderComponent,
-    NotificationComponent
+    NotificationComponent,
+    GroupComponent,
+    GroupDialog
   ],
   exports: [
     AudioUploaderComponent,

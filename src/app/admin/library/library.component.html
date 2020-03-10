@@ -34,7 +34,7 @@
         <div class="col-auto d-flex justify-content-center align-items-center cursor"
                 (click)="showSearchField = !showSearchField"
                 *ngIf="showSearchField">
-          <span  class="pr-1 mat-body-1">بستن</span>
+          <span  class="pr-1 mat-body-1">بستن</span>javaheri
           <mat-icon class="close">close</mat-icon>
         </div>
       </mat-toolbar>
@@ -104,11 +104,17 @@
 
               <div class="col-md-3 col-xl-3 mat-body-1 mt-2 gray-color "
                    style="font-weight: 500;">
-                <button class="w-100 mb-2"
+                <button class=" mb-2 mx-1"
                         mat-flat-button
                         routerLink="/admin/library/size"
-                        style="background: green;color: white;min-height: 40px">
-                  درخواست ایجاد سایز
+                        style="background: orangered;color: white;min-height: 40px">
+                   ایجاد سایز
+                </button>
+                <button class=" mb-2 mx-1"
+                        mat-flat-button
+                        routerLink="/admin/library/group"
+                        style="background: orangered;color: white;min-height: 40px">
+                  ایجاد دسته بندی
                 </button>
               </div>
             </div>
