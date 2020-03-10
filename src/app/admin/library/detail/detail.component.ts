@@ -72,6 +72,8 @@ export class DetailComponent implements OnInit {
       day: new FormControl(''),
       month: new FormControl(''),
       year: new FormControl(''),
+      price: new FormControl('', Validators.required),
+      group: new FormControl('', Validators.required)
     });
     let id;
     this.route.queryParams.subscribe(params => {
