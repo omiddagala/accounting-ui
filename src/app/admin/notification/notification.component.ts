@@ -55,6 +55,26 @@ export class NotificationComponent implements OnInit {
         });
   }
 
+  approveOrder(id, orders) {
+    const param = {
+      id,
+      listOrders: JSON.parse(orders)
+    };
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/order/approve', param, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          this.loading = false;
+          // location.reload();
+        },
+        response => {
+          this.loading = false;
+        });
+  }
+
   closeOrder(id) {
     const param = {
       id

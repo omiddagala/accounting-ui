@@ -129,10 +129,15 @@
                 <button mat-button (click)="closeOrder(item.id)"
                         color="warn"
                         matTooltip="ویرایش">
-                  <span>خاتمه</span>
+                  <span>حذف</span>
                 </button>
-
+                <button mat-button (click)="approveOrder(item.id, item.orders)"
+                        style="color: green"
+                        matTooltip="ویرایش">
+                  <span>تایید</span>
+                </button>
               </div>
+
             </div>
             <mat-spinner *ngIf="loading"
                          class="mx-auto my-3"
