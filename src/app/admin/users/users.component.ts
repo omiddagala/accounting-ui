@@ -18,6 +18,41 @@ export class UsersComponent implements OnInit {
   loading = false;
   public result = [];
 
+  rolesType = [
+    {
+      text: 'فروشنده',
+      value: 'SELLER'
+    },
+    {
+      text: 'حسابدار',
+      value: 'ACCOUNTANT'
+    },
+    {
+      text: 'حسابرس',
+      value: 'AUDITOR'
+    },
+    {
+      text: 'حمل و نقل',
+      value: 'TRANSFER'
+    },
+    {
+      text: 'مدیر داخلی',
+      value: 'INTERNAL_MANAGER'
+    },
+    {
+      text: 'صندوق دار',
+      value: 'CASHIER'
+    },
+    {
+      text: 'انباردار',
+      value: 'STOCK_EMPLOYEE'
+    },
+    {
+      text: 'مدیر انبار',
+      value: 'STOCK_MANAGER'
+    },
+  ];
+
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -58,6 +93,14 @@ export class UsersComponent implements OnInit {
 
   edit(id) {
     this.router.navigate(['/admin/users/detail'], { queryParams: { id } });
+  }
+
+  findRole(role) {
+    for (const item of this.rolesType) {
+      if (item.value === role) {
+        return item.text;
+      }
+    }
   }
 
 

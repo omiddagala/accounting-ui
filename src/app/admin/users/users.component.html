@@ -131,7 +131,7 @@
               </div>
 
               <div class="col-3 table-items my-auto mat-title text-center py-2">
-                {{item.family}}
+                {{findRole(item.role)}}
               </div>
 
 
@@ -160,7 +160,7 @@
                    style="background: #236b81 ">
         <div class="col-auto px-md-5">
           <button mat-flat-button
-                  routerLink="/admin/library/detail"
+                  routerLink="/admin/users/detail"
                   class="change-search-btn">
             ایجاد
           </button>
