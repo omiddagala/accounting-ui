@@ -16,6 +16,7 @@ import * as moment from 'jalali-moment';
 
 export class DetailComponent implements OnInit {
   loading = false;
+  isEdit = false;
   formGroup: any = {
     first: FormGroup
   };
@@ -128,12 +129,16 @@ export class DetailComponent implements OnInit {
   }
 
   initFormGroup() {
+    this.isEdit = this.user ? true : false;
     this.formGroup.first.patchValue({
       firstName: this.user ? this.user.name : '',
       lastName: this.user ? this.user.family : '',
       phoneNumber: this.user ? this.user.mobile : '',
       role: this.user ? this.user.role : '',
-      reservoir: this.user ? this.user.resevoir : ''
+      reservoir: this.user ? this.user.reservoir.name : '',
+      username: this.user ? this.user.username : '',
+      password: this.user ? this.user.password : '',
+      repeatPassword: this.user ? this.user.password : ''
     });
   }
 
