@@ -172,12 +172,12 @@ export class DetailComponent implements OnInit {
 
   convertNumbers(str) {
     const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-      arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+      arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
     if (typeof str === 'string') {
-          for (let i = 0; i < 10; i++) {
-            str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
-          }
-        }
+      for (let i = 0; i < 10; i++) {
+        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+      }
+    }
     return str;
   }
 
@@ -205,10 +205,10 @@ export class DetailComponent implements OnInit {
     };
     this.product.group = {
       id: this.formGroup.get('group').value
-    }
+    };
     this.product.expireDate = moment(this.formGroup.get('year').value + '/' + this.formGroup.get('month').value + '/' + this.formGroup.get('day').value, 'YYYY-MM-DD');
     this.product.image = this.url;
-    this.product.price = this.formGroup.get('price').value
+    this.product.price = this.formGroup.get('price').value;
   }
 
   save() {
@@ -241,8 +241,9 @@ export class DetailComponent implements OnInit {
     this.url = file.link;
     type.valid = true;
     type.link = file.link;
-    if (this.product.id)
+    if (this.product.id) {
       this.save();
+    }
   }
 
 }
@@ -256,7 +257,8 @@ export class CountDialog {
 
   constructor(
     public dialogRef: MatDialogRef<CountDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

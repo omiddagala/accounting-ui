@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -6,6 +6,8 @@ import {map, startWith} from 'rxjs/operators';
 import {CommonService} from '../../../../shared/common/common.service';
 import {ValidatorNumberMin} from '../../../../shared/validators/min-max.validator';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {CountDialog, DialogData} from '../detail/detail.component';
 
 @Component({
   selector: 'order-component',
@@ -21,11 +23,13 @@ export class OrderComponent implements OnInit {
   formGroup: FormGroup;
   fromFiltered: Observable<string[]>;
   toFiltered: Observable<string[]>;
-
+  sizes: any;
+  size: any;
   constructor(private  formBuilder: FormBuilder,
               private http: HttpClient,
               private commonService: CommonService,
               private route: ActivatedRoute,
+              public dialog: MatDialog,
               private router: Router) {
   }
 
@@ -33,14 +37,24 @@ export class OrderComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       from: new FormControl('', Validators.required),
       to: new FormControl('', Validators.required),
-      number: new FormControl('', Validators.compose([
-        Validators.required,
-        ValidatorNumberMin(1)
-      ]))
     });
     this.getList();
+    this.fetchSize();
   }
 
+  fetchSize() {
+    this.http.post('http://127.0.0.1:9000/v1/shop/product/sizes', {}, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          this.sizes = val;
+        },
+        response => {
+        });
+  }
 
   autocompleteFilter() {
     console.log(this.formGroup.get('from').valueChanges);
@@ -92,7 +106,7 @@ export class OrderComponent implements OnInit {
   }
 
   getId(value): any {
-    for (let item of this.result) {
+    for (const item of this.result) {
       if (item.name === value) {
         return item;
       }
@@ -122,15 +136,14 @@ export class OrderComponent implements OnInit {
     const from = this.getId(this.formGroup.get('from').value);
     const to = this.getId(this.formGroup.get('to').value);
     // tslint:disable-next-line:variable-name
-    const number = this.formGroup.get('number').value;
     const product = this.route.snapshot.paramMap.get('product');
     if (this.isValid(from.id, to.id)) {
-      this.sendRequest(from.id, to.id, number, product);
+      this.sendRequest(from.id, to.id, product);
     }
   }
 
   // tslint:disable-next-line:variable-name
-  sendRequest(fromId, toId, number, product) {
+  sendRequest(fromId, toId, product) {
     const param = {
       source: {
         id: fromId
@@ -142,9 +155,10 @@ export class OrderComponent implements OnInit {
         // tslint:disable-next-line:radix
         id: parseInt(product)
       },
+      orders: this.setSize()
       // tslint:disable-next-line:radix
-      count: parseInt(number)
     };
+    console.log(param);
     this.http.post('http://127.0.0.1:9000/v1/shop/order/submit', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -159,4 +173,45 @@ export class OrderComponent implements OnInit {
         response => {
         });
   }
+
+  setSize() {
+    let obj = []
+    for (const item of this.sizes) {
+      if (item.count !== null) {
+        obj.push({
+          id: item.size.id,
+          value: item.count
+        });
+      }
+    }
+    return JSON.stringify(obj);
+  }
+
+  openDialog(size): void {
+    this.size = size;
+    const dialogRef = this.dialog.open(OrderCountDialog, {
+      data: {count: this.size.count}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.size.count = (result === '0') ? 'undefined' : result;
+    });
+  }
+}
+
+
+@Component({
+  selector: 'count-dialog',
+  templateUrl: 'order-count-dialog.html',
+})
+export class OrderCountDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<OrderCountDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }

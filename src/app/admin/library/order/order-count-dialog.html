@@ -1,0 +1,23 @@
+<div style="direction: rtl">
+  <h1 mat-dialog-title
+      class="color_236b81" >تعداد کالا را برای این سایز وارد کنید</h1>
+  <div mat-dialog-content dir="rtl">
+    <mat-form-field >
+      <mat-label >تعداد کالا</mat-label>
+      <input style="direction: rtl"
+             matInput
+             [(ngModel)]="data.count">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions dir="rtl">
+    <button mat-button
+            (click)="onNoClick()">
+      <span>لغو</span>
+    </button>
+    <button mat-button
+            [mat-dialog-close]="data.count">
+      <span>ثبت</span>
+    </button>
+  </div>
+</div>
+

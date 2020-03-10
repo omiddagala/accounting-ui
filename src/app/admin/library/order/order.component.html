@@ -64,20 +64,23 @@
                     </mat-error>
                   </mat-form-field>
                 </div>
-                <div>
-                  <mat-form-field appearance="outline">
-                    <mat-label>تعداد</mat-label>
-                    <input formControlName="number"
-                           matInput
-                           placeholder="تعداد">
-                    <mat-error *ngIf="formGroup.get('number').hasError('required')">
-                      این فیلد الزامی است
-                    </mat-error>
-                    <mat-error *ngIf="formGroup.get('number').hasError('validNumMin')">
-                      عدد وارد شده باید بزرگتر از ۱ باشد
-                    </mat-error>
-                  </mat-form-field>
+
+                <div class="row col-md-12 col-sm-12 padding-20 color_236b81">سایزهای کالا را انتخاب و تعداد را برای هرکدام
+                  وارد کنید
                 </div>
+                <div class="w-100 d-flex flex-row flex-wrap">
+                  <div *ngFor="let size of sizes"
+                       class="col-auto">
+                    <button mat-raised-button color="primary"
+                            [matBadge]="size.count ? size.count : '0'"
+                            matBadgePosition="before"
+                            (click)="openDialog(size)"
+                            [matBadgeColor]="size.count ? 'warn' : 'accent'">
+                      {{size.size.value}}
+                    </button>
+                  </div>
+                </div>
+
               </form>
               <app-loading-component *ngIf="loading"></app-loading-component>
             </div>
@@ -87,7 +90,7 @@
                  src="../../../../assets/image/facilities/insurance/Group-796%20.png">
           </div>
         </div>
-        <div class="d-flex justify-content-center my-3">
+        <div class="d-flex justify-content-center my-4 my-xl-3">
           <button class="next"
                   (click)="saveOrder()"
                   mat-flat-button>

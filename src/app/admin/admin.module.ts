@@ -35,7 +35,7 @@ import {MyScanComponent} from './library/barcode/scan';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {CreateBarcodeComponent} from './library/barcode/create';
 import { QRCodeModule } from 'angular2-qrcode';
-import {OrderComponent} from './library/order/order.component';
+import {OrderComponent, OrderCountDialog} from './library/order/order.component';
 import {NotificationComponent} from './notification/notification.component';
 import {GroupComponent, GroupDialog} from './library/group/group.component';
 import {TimelineComponent} from './library/timeline/timeline.component';
@@ -82,7 +82,8 @@ import {TimelineComponent} from './library/timeline/timeline.component';
     NotificationComponent,
     GroupComponent,
     GroupDialog,
-    TimelineComponent
+    TimelineComponent,
+    OrderCountDialog
   ],
   exports: [
     AudioUploaderComponent,
@@ -90,7 +91,13 @@ import {TimelineComponent} from './library/timeline/timeline.component';
     VideoUploaderComponent,
     InfinitScrollComponent,
   ],
-  entryComponents: [CountDialog, SizeDialog, ReservoirDialog, GroupDialog]
+  entryComponents: [
+    CountDialog,
+    SizeDialog,
+    ReservoirDialog,
+    OrderCountDialog,
+    GroupDialog
+  ]
 })
 
 export class AdminModule {
