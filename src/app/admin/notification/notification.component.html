@@ -126,15 +126,21 @@
 
 
               <div class="col-3 table-items my-auto  text-center py-2">
-                <button mat-button (click)="closeOrder(item.id)"
+                <button mat-button
+                        (click)="closeOrder(item.id)"
                         color="warn"
                         matTooltip="ویرایش">
                   <span>حذف</span>
                 </button>
-                <button mat-button (click)="approveOrder(item.id, item.orders)"
+                <button mat-button
+                        (click)="approveOrder(item.id, item.orders)"
                         style="color: green"
                         matTooltip="ویرایش">
                   <span>تایید</span>
+                </button>
+                <button mat-button
+                        (click)="openDialog(item)">
+                  مشاهده
                 </button>
               </div>
 

@@ -180,10 +180,12 @@ export class OrderComponent implements OnInit {
       if (item.count !== null) {
         obj.push({
           id: item.size.id,
-          value: item.count
+          value: item.count,
+          size: item.size.value
         });
       }
     }
+    console.log(obj)
     return JSON.stringify(obj);
   }
 

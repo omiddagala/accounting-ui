@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 // @ts-ignore
 import Menu from '../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {DialogData} from '../library/detail/detail.component';
 
 @Component({
   selector: 'app-notification-component',
@@ -20,6 +22,7 @@ export class NotificationComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
+              public dialog: MatDialog,
               private router: Router) {
   }
 
@@ -75,6 +78,12 @@ export class NotificationComponent implements OnInit {
         });
   }
 
+  openDialog(item) {
+    this.dialog.open(NotificationDialog, {
+      data: item
+    });
+  }
+
   closeOrder(id) {
     const param = {
       id
@@ -92,5 +101,21 @@ export class NotificationComponent implements OnInit {
         response => {
           this.loading = false;
         });
+  }
+}
+
+@Component({
+  selector: 'notification-dialog',
+  templateUrl: './notification-dialog.html'
+})
+
+export class NotificationDialog implements OnInit{
+  constructor(public dialogRef: MatDialogRef<NotificationDialog>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+  size: any;
+  ngOnInit(): void {
+    this.size = JSON.parse(this.data.orders);
+    console.log(this.size);
   }
 }

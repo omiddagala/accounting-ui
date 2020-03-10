@@ -1,0 +1,31 @@
+<div style="direction: rtl; min-width: 250px">
+
+  <div class="d-flex justify-content-between">
+    <div>نام محصول :</div>
+    <div> {{data.product.name}}</div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div>  از  :</div>
+    <div> {{data.source.name}}</div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div>  به :</div>
+    <div> {{data.destination.name}}</div>
+  </div>
+
+  <div class="my-1"> سایز ها :</div>
+  <div class="d-flex flex-row flex-wrap my-1">
+    <button *ngFor="let item of size"
+            mat-raised-button
+            color="primary"
+            [matBadge]="item.value ? item.value : '0'"
+            matBadgePosition="before"
+            class="mx-2"
+            [matBadgeColor]="item.value ? 'warn' : 'accent'">
+      {{item.size}}
+    </button>
+  </div>
+
+</div>
