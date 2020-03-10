@@ -192,7 +192,7 @@ export class DetailComponent implements OnInit {
     this.loading = true;
     const param = this.makeObj();
     console.log(param);
-    this.http.post('http://127.0.0.1:9000/v1/users/saveOrUpdate', param, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/users/saveOrUpdate', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json'
@@ -201,7 +201,7 @@ export class DetailComponent implements OnInit {
       .subscribe(
         (val) => {
           this.loading = false;
-          this.router.navigate(['/auth/users']);
+          this.router.navigate(['/admin/users']);
           this.commonService.showMessage('ثبت نام با موفقیت انجام شد', 'success-msg');
         },
         response => {
