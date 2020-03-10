@@ -10,6 +10,7 @@ import {CreateBarcodeComponent} from "./library/barcode/create";
 import {OrderComponent} from './library/order/order.component';
 import {NotificationComponent} from './notification/notification.component';
 import {GroupComponent} from './library/group/group.component';
+import {TimelineComponent} from './library/timeline/timeline.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
   {
     path: 'library/group',
     component: GroupComponent
+  },
+  {
+    path: 'library/timeline/:id',
+    component: TimelineComponent
   },
   {
     path: 'users',

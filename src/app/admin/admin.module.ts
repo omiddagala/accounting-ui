@@ -38,6 +38,7 @@ import { QRCodeModule } from 'angular2-qrcode';
 import {OrderComponent} from './library/order/order.component';
 import {NotificationComponent} from './notification/notification.component';
 import {GroupComponent, GroupDialog} from './library/group/group.component';
+import {TimelineComponent} from './library/timeline/timeline.component';
 
 @NgModule({
   imports: [
@@ -80,7 +81,8 @@ import {GroupComponent, GroupDialog} from './library/group/group.component';
     OrderComponent,
     NotificationComponent,
     GroupComponent,
-    GroupDialog
+    GroupDialog,
+    TimelineComponent
   ],
   exports: [
     AudioUploaderComponent,

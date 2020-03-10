@@ -157,7 +157,14 @@
                           matTooltip="QR">
                     <mat-icon style="color: red">money</mat-icon>
                   </button>
-                  <button mat-button (click)="routeToOrder(item.id)"> حواله</button>
+                  <button mat-button
+                          (click)="routeToOrder(item.id)">
+                    <span>حواله</span>
+                  </button>
+                  <button mat-button
+                          (click)="routeToTimeline(item.id)">
+                    <span>جدول زمانی</span>
+                  </button>
                 </div>
               </div>
               <mat-spinner *ngIf="loading"

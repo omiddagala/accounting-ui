@@ -162,6 +162,10 @@ export class LibraryComponent implements OnInit {
         });
   }
 
+  routeToTimeline(id) {
+    this.router.navigate(['/admin/library/timeline/' + id]);
+  }
+
   routeToOrder(id) {
     this.router.navigate(['/admin/library/order/' + id]);
   }
