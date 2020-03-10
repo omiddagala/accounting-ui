@@ -52,7 +52,8 @@ export class MainMenuComponent implements OnInit {
       .subscribe(
         (val) => {
           console.log(val);
-          this.notificationNumber = val.length;
+          const result: any = val;
+          this.notificationNumber = result.length;
         },
         response => {
         });
