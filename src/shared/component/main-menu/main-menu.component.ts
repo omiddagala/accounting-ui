@@ -2,34 +2,37 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CommonService} from '../../common/common.service';
 // @ts-ignore
 import Menu from '../../data/menu.json';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.scss']
 })
 
-export class MainMenuComponent implements OnInit{
-  menu = [
-    {
-      text: 'خانه',
-      route: this.routeHome
-    },
-    {
-      text: 'کتابخانه',
-      route: ''
-    },
-    {
-      text: 'قوانین و مقررات',
-      route: this.routeHome
-    }
-
-  ];
+export class MainMenuComponent implements OnInit {
+  // menu = [
+  //   {
+  //     text: 'خانه',
+  //     route: this.routeHome
+  //   },
+  //   {
+  //     text: 'قوانین و مقررات',
+  //     route: this.routeHome
+  //   },
+  //   {
+  //     text: 'کاربران',
+  //     route: this.routeUsers
+  //   }
+  //
+  // ];
   @Input() logo: boolean;
   @Input() mainMenu: boolean;
   @Input() profile: boolean;
   @Input() snav: any;
-  constructor(public commonService: CommonService, private router: Router) {
+
+  constructor(public commonService: CommonService,
+              private router: Router) {
 
   }
 
@@ -46,6 +49,11 @@ export class MainMenuComponent implements OnInit{
   routeHome() {
     this.commonService.locateFirstPage();
   }
+
+  routeUsers() {
+    this.router.navigate(['/admin/users']);
+  }
+
 
   routeLibrary() {
     if (this.commonService.isCustomer()) {

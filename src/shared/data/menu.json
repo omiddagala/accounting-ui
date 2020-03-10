@@ -1,14 +1,14 @@
 [
   {
     "text": "خانه",
-    "route": "/facilities"
-  },
-  {
-    "text": "کتابخانه",
-    "route": "/facilities/library"
+    "route": "/admin"
   },
   {
     "text": "قوانین و مقررات",
-    "route": "/facilities"
+    "route": "/admin"
+  },
+  {
+    "text": "کاربران",
+    "route": "/admin/users"
   }
 ]
