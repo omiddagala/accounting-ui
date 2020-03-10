@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CommonService} from '../../../../shared/common/common.service';
 import {ValidatorNumberMax} from '../../../../shared/validators/min-max.validator';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import * as moment from 'jalali-moment';
 
 @Component({
   selector: 'app-detail-page',
@@ -22,7 +23,7 @@ export class DetailComponent implements OnInit {
     pass: 'password',
     repeat: 'password'
   };
-
+  user: any;
   reservoirList = [];
   reservoirNameList = [];
   reservoirFilter: Observable<string[]>;
@@ -64,7 +65,8 @@ export class DetailComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
               private router: Router,
-              private commonService: CommonService) {
+              private commonService: CommonService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -97,6 +99,7 @@ export class DetailComponent implements OnInit {
       reservoir: new FormControl('', Validators.required),
       role: new FormControl('', Validators.required)
     });
+    this.getEditInformation();
     this.getReservoirList();
   }
 
@@ -112,6 +115,48 @@ export class DetailComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
+  }
+
+  getEditInformation() {
+    let id;
+    this.route.queryParams.subscribe(params => {
+      id = params.id;
+    });
+    if (id) {
+      this.fetchUser(id);
+    }
+  }
+
+  initFormGroup() {
+    this.formGroup.first.patchValue({
+      firstName: this.user ? this.user.name : '',
+      lastName: this.user ? this.user.family : '',
+      phoneNumber: this.user ? this.user.mobile : '',
+      role: this.user ? this.user.role : '',
+      reservoir: this.user ? this.user.resevoir : ''
+    });
+  }
+
+  fetchUser(id) {
+    this.loading = true;
+    const param = {
+      id
+    };
+    this.http.post('http://127.0.0.1:9000/v1/shop/users/findOne', param, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          console.log(val);
+          this.user = val;
+          console.log(this.user);
+          this.initFormGroup();
+        },
+        response => {
+          this.loading = false;
+        });
   }
 
   _filter(value: any) {
@@ -170,7 +215,7 @@ export class DetailComponent implements OnInit {
   }
 
   makeObj(): object {
-    const reservoir =  this.getId(this.formGroup.first.get('reservoir').value)
+    const reservoir = this.getId(this.formGroup.first.get('reservoir').value);
     let obj = {
       username: this.formGroup.first.get('username').value,
       password: this.formGroup.first.get('password').value,
