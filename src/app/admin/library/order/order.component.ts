@@ -102,7 +102,7 @@ export class OrderComponent implements OnInit {
   isValid(fromId, toId) {
     if (fromId === toId) {
       this.commonService.showMessage(' مبدا و مقصد نمیتواند یکی باشد', 'error-msg');
-      return true;
+      return false;
     } else {
       return true;
     }
