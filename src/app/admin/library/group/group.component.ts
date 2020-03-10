@@ -110,7 +110,7 @@ export class GroupComponent implements OnInit {
       };
     }
     this.value = size.value;
-    const dialogRef = this.dialog.open(SizeDialog, {
+    const dialogRef = this.dialog.open(GroupDialog, {
       data: {value: this.value}
     });
 

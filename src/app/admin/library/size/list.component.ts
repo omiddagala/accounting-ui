@@ -82,8 +82,8 @@ export class SizeListComponent implements OnInit {
   }
 
   delete(id, index) {
-    let param = {
-      id: id
+    const param = {
+      id
     };
     this.loading = true;
     this.http.post('http://127.0.0.1:9000/v1/shop/size/delete', param, {

@@ -1,2 +1,214 @@
-this is a test
-this is a test
+<div class="w-100 h-100 wrapper">
+  <mat-drawer-container class="h-100 w-100" dir="rtl">
+    <mat-drawer style="min-width: 40%"
+                #snav mode="over">
+      <mat-nav-list>
+        <a mat-list-item
+           *ngFor="let item of menu"
+           [routerLink]="item.route"
+           class="px-2">
+          {{item.text}}
+        </a>
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content class="h-100">
+      <!--<app-loading-component *ngIf="loading"></app-loading-component>-->
+      <app-main-menu [logo]="true"
+                     [snav]="snav"
+                     [mainMenu]="true"
+                     [profile]="true">
+      </app-main-menu>
+      <mat-toolbar style="height: 56px"
+                   class="d-none d-lg-flex blue-toolbar row  px-md-5 justify-content-between">
+        <div class="col-auto mat-body-1">
+          <span>سایزها</span>
+        </div>
+        <div *ngIf="!showSearchField"
+             class="col-auto d-flex justify-content-center align-items-center cursor"
+             (click)="showSearchField = !showSearchField">
+          <span class="mat-body-1 mr-1">تغییر جستجو</span>
+          <img class="ml-1"
+               width="28"
+               src="../../../../assets/image/facilities/search/search.png"/>
+        </div>
+        <div class="col-auto d-flex justify-content-center align-items-center cursor"
+             (click)="showSearchField = !showSearchField"
+             *ngIf="showSearchField">
+          <span  class="pr-1 mat-body-1">بستن</span>
+          <mat-icon class="close">close</mat-icon>
+        </div>
+      </mat-toolbar>
+      <div *ngIf="showSearchField"
+           class="d-none d-lg-flex field-search w-100 fadeInAnimation">
+        <div class="layer w-100">
+          <form [formGroup]="formGroup">
+            <div class="row mx-5 justify-content-center">
+              <div dir="rtl"
+                   style="padding-top: 22px"
+                   class="col-3 d-flex row justify-content-around">
+                <div class="col-1 mat-body-2 white-color text-center mt-3"
+                     style="padding: 0 !important;">
+                  <span>نام</span>
+                </div>
+                <mat-form-field class="col-11"
+                                appearance="outline">
+                  <input formControlName="value"
+                         matInput
+                         autocomplete="off"
+                         placeholder="نام"/>
+                </mat-form-field>
+              </div>
+              <div class="col-2 py-2 mt-1">
+                <button class="w-100 mat-body-1  search-desktop-btn"
+                        style="background: green"
+                        (click)="search()"
+                        mat-flat-button>
+                  جستجو
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row mx-auto px-lg-5 mt-3  w-100 d-none d-lg-flex">
+        <div class="col-12 mx-auto" style="padding: 0 !important;">
+          <mat-card>
+            <div class="row justify-content-between my-auto top-card">
+              <div class="col-2 col-xl-1 mat-body-1 mt-2 gray-color "
+                   style="font-weight: 500;">
+                <button class="w-100 mb-2"
+                        mat-flat-button
+                        (click)="openDialog(null)"
+                        style="background: green;color: white;min-height: 40px">
+                  افزودن
+                </button>
+              </div>
+            </div>
+
+            <div class="row  justify-content-between"
+                 style="border-bottom: 2px solid #f1f1f1">
+              <div class=" px-1 text-center table-header col-4 py-2">
+                نام
+              </div>
+              <div class=" px-1 text-center table-header col-4 py-2">
+                عملیات
+              </div>
+            </div>
+            <div class="row justify-content-between"
+                 *ngFor="let item of result; let i = index"
+                 style="border-bottom: 2px solid #f1f1f1; height: 75px">
+              <div class="col-4 table-items my-auto mat-title text-center py-2">
+                {{item.value}}
+              </div>
+              <div class="col-4 table-items my-auto  text-center py-2">
+                <button mat-icon-button (click)="openDialog(item)"
+                        matTooltip="ویرایش">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="delete(item.id, i)"
+                        matTooltip="حذف">
+                  <mat-icon style="color: red">delete</mat-icon>
+                </button>
+              </div>
+            </div>
+            <mat-spinner *ngIf="loading"
+                         class="mx-auto my-3"
+                         [diameter]="40"
+                         [strokeWidth]="5">
+            </mat-spinner>
+          </mat-card>
+        </div>
+      </div>
+      <!--  @@@@@@@@@@@@@@@@@@@@ d-block d-lg-none @@@@@@@@@@@@@@@@@@@@@@-->
+      <mat-toolbar class="d-lg-none d-flex justify-content-between zero-padding-mobile"
+                   style="background: #236b81 ">
+        <div class="col-auto px-md-5">
+          <button mat-flat-button
+                  (click)="openDialog(null)"
+                  class="change-search-btn">
+            افزودن
+          </button>
+        </div>
+        <div class="col-auto px-md-5">
+          <button mat-flat-button
+                  *ngIf="!showSearchField"
+                  (click)="showSearchField = !showSearchField"
+                  class="change-search-btn">
+            تغیر جستجو
+          </button>
+          <button mat-icon-button
+                  *ngIf="showSearchField"
+                  (click)="showSearchField = !showSearchField"
+                  class="change-search-btn">
+            <mat-icon class="close">close</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+
+      <div *ngIf="showSearchField"
+           class="d-flex d-lg-none field-search w-100 fadeInAnimation">
+        <div class="layer w-100">
+          <form [formGroup]="formGroup">
+            <div class="d-flex row mx-3 justify-content-center">
+              <div class="pt-1 col-10 col-md-8">
+                <div class="w-100  white-color mat-body-2"> نام</div>
+                <div dir="rtl">
+                  <mat-form-field class="w-100"
+                                  appearance="outline">
+                    <input formControlName="value"
+                           matInput
+                           autocomplete="off"
+                           placeholder="نام"/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="pt-1 col-4 col-md-5 mb-4">
+                <button mat-flat-button
+                        class="w-100"
+                        (click)="search()"
+                        style="background: green;color: white">
+                  جستجو
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="d-flex  d-lg-none flex-wrap">
+        <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"
+             style="margin-left: 0 !important;margin-right: 0 !important;">
+          <!--          ngfor-->
+          <mat-card class="w-100 my-2"
+                    *ngFor="let item of result; let i = index">
+            <div class="row justify-content-between">
+              <div class="col-auto mat-body-2">نام</div>
+              <div class="col-auto mat-body" style="text-align: end">{{item.value}}</div>
+            </div>
+            <hr class="w-75 mx-auto  mt-4">
+            <div class="row justify-content-between pt-1">
+              <div class="col-auto">
+                <button mat-flat-button (click)="openDialog(item)"
+                        class="mat-body-1"
+                        style="background: green;color: white">
+                  ویرایش
+                </button>
+              </div>
+              <div class="col-auto">
+                <button mat-stroked-button class="col-auto mat-body-1"
+                        style="background: red; color: white" (click)="delete(item.id, i)">
+                  حذف
+                </button>
+              </div>
+            </div>
+          </mat-card>
+          <mat-spinner *ngIf="loading"
+                       class="mx-auto my-3"
+                       [diameter]="40"
+                       [strokeWidth]="5">
+          </mat-spinner>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
