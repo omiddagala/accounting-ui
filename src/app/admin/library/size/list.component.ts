@@ -76,6 +76,7 @@ export class SizeListComponent implements OnInit {
           this.commonService.showMessage('عملیات با موفقیت انجام شد.', 'success-msg');
         },
         response => {
+          this.commonService.handleError(response);
           this.loading = false;
         });
   }

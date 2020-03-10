@@ -75,7 +75,7 @@ export class NotificationComponent implements OnInit {
       name: this.formGroup.get('name').value,
       type: this.formGroup.get('type').value
     };
-    this.http.post<any>('http://127.0.0.1:9000/v1/shop/users/list', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/order/fetch', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
