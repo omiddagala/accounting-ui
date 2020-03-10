@@ -36,6 +36,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {CreateBarcodeComponent} from './library/barcode/create';
 import { QRCodeModule } from 'angular2-qrcode';
 import {OrderComponent} from './library/order/order.component';
+import {NotificationComponent} from './notification/notification.component';
 
 @NgModule({
   imports: [
@@ -75,7 +76,8 @@ import {OrderComponent} from './library/order/order.component';
     ReservoirDialog,
     MyScanComponent,
     CreateBarcodeComponent,
-    OrderComponent
+    OrderComponent,
+    NotificationComponent
   ],
   exports: [
     AudioUploaderComponent,

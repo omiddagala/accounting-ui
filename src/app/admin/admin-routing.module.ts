@@ -8,6 +8,7 @@ import {ReservoirComponent} from "./reservoir/reservoir.component";
 import {MyScanComponent} from "./library/barcode/scan";
 import {CreateBarcodeComponent} from "./library/barcode/create";
 import {OrderComponent} from './library/order/order.component';
+import {NotificationComponent} from './notification/notification.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'library/order/:product',
     component: OrderComponent
+  },
+  {
+    path: 'notification',
+    component: NotificationComponent
   },
   {
     path: 'users',

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {MainMenuComponent} from './main-menu.component';
-import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
+import {MatBadgeModule, MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {ProfileMenuComponent} from '../profile-menu/profile-menu.component';
@@ -11,7 +11,8 @@ import {ProfileMenuComponent} from '../profile-menu/profile-menu.component';
     RouterModule,
     CommonModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatBadgeModule
   ],
   exports: [
     MainMenuComponent

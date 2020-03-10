@@ -3,6 +3,7 @@ import {CommonService} from '../../common/common.service';
 // @ts-ignore
 import Menu from '../../data/menu.json';
 import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-main-menu',
@@ -26,17 +27,34 @@ export class MainMenuComponent implements OnInit {
   //   }
   //
   // ];
+  notificationNumber = 0;
   @Input() logo: boolean;
   @Input() mainMenu: boolean;
   @Input() profile: boolean;
   @Input() snav: any;
 
   constructor(public commonService: CommonService,
-              private router: Router) {
+              private router: Router,
+              private http: HttpClient) {
 
   }
 
   ngOnInit(): void {
+    this.getOrders();
+  }
+
+  getOrders() {
+    this.http.post('http://127.0.0.1:9000/v1/shop/order/fetch', {}, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          console.log(val);
+        },
+        response => {
+        });
   }
 
   toggleDrawer() {
@@ -52,6 +70,10 @@ export class MainMenuComponent implements OnInit {
 
   routeUsers() {
     this.router.navigate(['/admin/users']);
+  }
+
+  routeToNotification() {
+    this.router.navigate(['/admin/notification']);
   }
 
 

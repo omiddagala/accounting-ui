@@ -7,6 +7,12 @@
             (click)="toggleDrawer()">
       <mat-icon>menu</mat-icon>
     </button>
+
+    <button class="mr-1"
+            [matBadge]="notificationNumber" matBadgePosition="before" matBadgeColor="warn"
+            mat-button>
+      پیام ها
+    </button>
   </div>
 
   <div *ngIf="logo"
@@ -38,6 +44,12 @@
             mat-button
             (click)="routeUsers()">
       کاربران
+    </button>
+    <button class=""
+            [matBadge]="notificationNumber" matBadgeColor="warn"
+            mat-button
+            (click)="routeToNotification()">
+      پیام ها
     </button>
   </div>
 
