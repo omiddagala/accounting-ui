@@ -76,6 +76,23 @@
               <div class="col-10 col-xl-6" dir="rtl">
                 <mat-form-field class="w-100"
                                 appearance="outline">
+                  <mat-label>گروه کالا</mat-label>
+                  <mat-select formControlName="group">
+                    <mat-option *ngFor="let group of groupList"
+                                [value]="group.id">
+                      {{group.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formGroup.get('group').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+              <div class="col-10 col-xl-6" dir="rtl">
+                <mat-form-field class="w-100"
+                                appearance="outline">
                   <mat-label>توضیحات</mat-label>
                   <input formControlName="description"
                          matInput

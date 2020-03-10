@@ -49,6 +49,7 @@ export class DetailComponent implements OnInit {
     link: undefined
   };
   formGroup: FormGroup;
+  groupList = [];
   count = 0;
   color = 'warn';
 
@@ -75,6 +76,28 @@ export class DetailComponent implements OnInit {
       price: new FormControl('', Validators.required),
       group: new FormControl('', Validators.required)
     });
+    this.getEditInformation();
+    this.getGroupList();
+    this.fetchReservoirs();
+  }
+
+  getGroupList() {
+    this.reservoirs = [];
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/group/list', {name: null}, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          this.groupList.push(...val);
+          console.log(this.groupList);
+        },
+        response => {
+        });
+  }
+
+  getEditInformation() {
     let id;
     this.route.queryParams.subscribe(params => {
       id = params.id;
@@ -84,7 +107,6 @@ export class DetailComponent implements OnInit {
     } else {
       this.fetchSizes();
     }
-    this.fetchReservoirs();
   }
 
   fetchReservoirs() {
@@ -112,6 +134,8 @@ export class DetailComponent implements OnInit {
       day: this.expireDate ? this.expireDate[2] : '',
       month: this.expireDate ? this.expireDate[1] : '',
       year: this.expireDate ? this.expireDate[0] : '',
+      price: this.product ? this.product.price : '',
+      group: this.product ? (this.product.group ? this.product.group.id : '') : ''
     });
   }
 
@@ -172,15 +196,23 @@ export class DetailComponent implements OnInit {
         });
   }
 
-  save() {
+  prepareData() {
     this.product.name = this.formGroup.get('name').value;
     this.product.description = this.formGroup.get('description').value;
     this.product.type = this.formGroup.get('type').value;
     this.product.reservoir = {
       id: this.formGroup.get('reservoir').value
     };
+    this.product.group = {
+      id: this.formGroup.get('group').value
+    }
     this.product.expireDate = moment(this.formGroup.get('year').value + '/' + this.formGroup.get('month').value + '/' + this.formGroup.get('day').value, 'YYYY-MM-DD');
     this.product.image = this.url;
+    this.product.price = this.formGroup.get('price').value
+  }
+
+  save() {
+    this.prepareData();
     this.http.post('http://127.0.0.1:9000/v1/shop/product/save', this.product, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -189,7 +221,6 @@ export class DetailComponent implements OnInit {
       .subscribe(
         (val) => {
           this.commonService.showMessage('عملیات با موفقیت انجام شد.', 'success-msg');
-          this.router.navigate(['/admin/library']);
         },
         response => {
         });
