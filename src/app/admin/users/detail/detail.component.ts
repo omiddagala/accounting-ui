@@ -135,7 +135,7 @@ export class DetailComponent implements OnInit {
       lastName: this.user ? this.user.family : '',
       phoneNumber: this.user ? this.user.mobile : '',
       role: this.user ? this.user.role : '',
-      reservoir: this.user ? this.user.reservoir.name : '',
+      reservoir: this.user && this.user.reservoir ? this.user.reservoir.name : '',
       username: this.user ? this.user.username : '',
       password: this.user ? this.user.password : '',
       repeatPassword: this.user ? this.user.password : ''
