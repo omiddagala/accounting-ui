@@ -15,9 +15,9 @@ import {
   MatSnackBar,
   MatSnackBarModule
 } from '@angular/material';
-import {DatePickerComponent} from "../shared/component/date-picker/date-picker.component";
-import {DrawerComponent} from "../shared/component/drawer/drawer.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {DatePickerComponent} from '../shared/component/date-picker/date-picker.component';
+import {DrawerComponent} from '../shared/component/drawer/drawer.component';
+import {ReactiveFormsModule} from '@angular/forms';
 import {UsersModule} from './admin/users/users.module';
 
 @NgModule({

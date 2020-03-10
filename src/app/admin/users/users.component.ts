@@ -57,7 +57,7 @@ export class UsersComponent implements OnInit {
   }
 
   edit(id) {
-    this.router.navigate(['/admin/library/detail'], { queryParams: { id } });
+    this.router.navigate(['/admin/users/detail'], { queryParams: { id } });
   }
 
 
@@ -80,6 +80,5 @@ export class UsersComponent implements OnInit {
           this.loading = false;
         });
   }
-
 
 }

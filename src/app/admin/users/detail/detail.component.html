@@ -1,0 +1,224 @@
+<div class=" wrapper w-100 h-100" style="min-height: 100%">
+  <div class="row main-row">
+    <div class="col-sm-12 d-none
+                d-xl-flex col-xl-7
+                right-part
+                w-100
+                align-items-center
+                justify-content-center">
+      <div class="welcome-part ">
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center">
+            <img src="../../../assets/image/logo/logo.png" class="logo">
+          </div>
+          <div class="row message w-100"
+               style="margin-top: 4%">
+            <div class="col-12 d-flex justify-content-center mat-headline">
+              سامانه حسابداری و انبارداری های تلکام
+            </div>
+          </div>
+          <div class="row message w-100">
+            <!--<div class="col-12 d-flex justify-content-center mat-headline">
+              خوش آمدید
+            </div>-->
+          </div>
+        </div>
+      </div>
+      <div>
+      </div>
+    </div>
+    <div
+      class="col-12 col-xl-5
+              w-100 py-1
+              left-part d-flex
+              align-items-center
+              justify-content-center">
+      <div class="main w-100">
+        <app-loading-component *ngIf="loading"></app-loading-component>
+        <img class="d-block d-xl-none mx-auto logo mb-2"
+             src="../../../assets/image/logo/logo-black.png"/>
+        <h1 class=" mat-headline">
+          افزودن کاربر جدید
+        </h1>
+        <!--<div class="mat-subheader pb-2 mx-auto" style="text-align: right">
+          اطلاعات شخصی
+        </div>-->
+
+        <form [formGroup]="formGroup.first"
+              class="w-75 mx-auto">
+          <div dir="rtl"
+               class="w-100 login">
+            <mat-form-field class="w-100"
+                            appearance="outline">
+              <mat-label>نام</mat-label>
+              <input formControlName="firstName"
+                     matInput
+                     placeholder="نام">
+              <mat-error *ngIf="formGroup.first.get('firstName').hasError('required')">
+                نام الزامی است
+              </mat-error>
+              <mat-error *ngIf="formGroup.first.get('firstName').hasError('maxlength')">
+                حداکثر ۱۲۰ کاراکتر
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div dir="rtl"
+               class="w-100 login">
+            <mat-form-field class="w-100"
+                            appearance="outline">
+              <mat-label>نام خانوادگی</mat-label>
+              <input formControlName="lastName"
+                     matInput
+                     placeholder="نام خانوادگی">
+              <mat-error *ngIf="formGroup.first.get('lastName').hasError('required')">
+                نام خانوادگی الزامی است
+              </mat-error>
+              <mat-error *ngIf="formGroup.first.get('lastName').hasError('maxlength')">
+                حداکثر ۱۲۰ کاراکتر
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div dir="rtl"
+               class="w-100 login">
+            <mat-form-field class="w-100"
+                            appearance="outline">
+              <mat-label>شماره موبایل</mat-label>
+              <input formControlName="phoneNumber"
+                     matInput
+                     placeholder="شماره موبایل">
+              <mat-error *ngIf="formGroup.first.get('phoneNumber').hasError('required')">
+                شماره موبایل الزامی است
+              </mat-error>
+              <mat-error
+                *ngIf="formGroup.first.get('phoneNumber').hasError('maxlength') || formGroup.first.get('phoneNumber').hasError('minlength')">
+                شماره موبایل معتبر نمی باشد
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div dir="rtl"
+               class="w-100 login">
+            <mat-form-field class="w-100"
+                            appearance="outline">
+              <mat-label>نام کاربری</mat-label>
+              <input formControlName="username"
+                     matInput
+                     placeholder="شماره موبایل">
+              <mat-error *ngIf="formGroup.first.get('username').hasError('required')">
+                نام کاربری الزامی است
+              </mat-error>
+              <mat-error *ngIf="formGroup.first.get('username').hasError('maxlength')">
+                حداکثر ۱۲۰ کاراکتر
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div dir="rtl"
+               class="w-100 login">
+            <mat-form-field class="w-100"
+                            appearance="outline">
+              <mat-label>انبار</mat-label>
+              <input formControlName="reservoir"
+                     matInput
+                     [matAutocomplete]="auto"
+                     placeholder="انبار">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let item of reservoirFilter | async"
+                            [value]="item">
+                  {{item}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="formGroup.first.get('reservoir').hasError('required')">
+                این فیلد الزامی است
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div dir="rtl"
+               class="w-100 login">
+            <mat-form-field class="w-100"
+                            appearance="outline">
+              <mat-label>نقش</mat-label>
+                <mat-select formControlName="role">
+                  <mat-option *ngFor="let item of rolesType"
+                              [value]="item.value">
+                    {{item.text}}
+                  </mat-option>
+                </mat-select>
+              <mat-error *ngIf="formGroup.first.get('role').hasError('required')">
+                این فیلد الزامی است
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div dir="rtl"
+               class="w-100 login">
+            <mat-form-field class="w-100"
+                            appearance="outline">
+              <mat-label>رمز عبور</mat-label>
+              <input formControlName="password"
+                     matInput
+                     [type]="type.pass"
+                     placeholder="رمز عبور">
+              <mat-icon matSuffix
+                        (click)="type.pass = 'text'"
+                        *ngIf="type.pass === 'password'">
+                <img src="../../../assets/image/login/eye-slash-solid.svg"/>
+              </mat-icon>
+              <mat-icon matSuffix
+                        (click)="type.pass = 'password'"
+                        *ngIf="type.pass === 'text'">
+                <img src="../../../assets/image/login/eye-solid.svg"/>
+              </mat-icon>
+              <mat-error *ngIf="formGroup.first.get('password').hasError('required')">
+                رمز عبور الزامی است
+              </mat-error>
+              <mat-error *ngIf="formGroup.first.get('password').hasError('maxlength')">
+                حداکثر ۱۰۰ کاراکتر
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div dir="rtl"
+               class="w-100 login">
+            <mat-form-field class="w-100"
+                            appearance="outline">
+              <mat-label>تکرار رمز عبور</mat-label>
+              <input formControlName="repeatPassword"
+                     matInput
+                     [type]="type.repeat"
+                     placeholder="تکرار رمز عبور">
+              <mat-icon matSuffix
+                        (click)="type.repeat = 'text'"
+                        *ngIf="type.repeat === 'password'">
+                <img src="../../../assets/image/login/eye-slash-solid.svg"/>
+              </mat-icon>
+              <mat-icon matSuffix
+                        (click)="type.repeat = 'password'"
+                        *ngIf="type.repeat === 'text'">
+                <img src="../../../assets/image/login/eye-solid.svg"/>
+              </mat-icon>
+              <mat-error *ngIf="formGroup.first.get('repeatPassword').hasError('required')">
+                تکرار رمز عبور الزامی است
+              </mat-error>
+              <mat-error *ngIf="formGroup.first.get('repeatPassword').hasError('maxlength')">
+                حداکثر ۱۰۰ کاراکتر
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <button mat-flat-button
+                    (click)="register()"
+                    color="primary"
+                    sctyle="font-size: 18px"
+                    class="w-50 login-btn py-2 mb-1">
+              <span>ثبت نهایی</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

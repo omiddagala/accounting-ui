@@ -1,0 +1,117 @@
+.wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+
+  .main-row {
+    min-height: 100% !important;
+  }
+
+  .logo {
+    width: 115px;
+    height: auto;
+  }
+
+  .right-part {
+    background-size: cover;
+    background-image: url("../../../../assets/image/login/register.png") ;
+    min-height: 100%;
+    .welcome-part {
+      margin-top: -15%;
+      .message {
+        color: white;
+        text-align: center;
+        margin-top: 2%;
+      }
+    }
+  }
+
+  .left-part {
+    background-image: url("../../../../assets/image/login/Group 676.png");
+    background-size: cover;
+    min-height: 100%;
+    .main {
+      text-align: center;
+
+      h1{
+        margin-bottom: 6%
+      }
+
+      .login-btn {
+        background: #65a640;
+        color: white;
+        font-weight: bold;
+        padding: 3px 0;
+        font-size: 16px;
+        //margin-top: 4%;
+      }
+
+    }
+    @media(max-width: 1199.98px) {
+      .main {
+        h1 {
+          font-size: 1.5rem
+        }
+      }
+    }
+    @media (max-width: 767.98px) {
+      .main {
+        h1 {
+          font-size: 1.3rem;
+          margin-bottom: 6%
+        }
+      }
+    }
+
+    @media (max-width: 576px) {
+      .main {
+        h1 {
+          font-size: 1.2rem;
+          margin-bottom: 6%
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .logo {
+    width: 90px;
+    height: auto;
+  }
+}
+
+/*@media (min-height: 871px) {
+  .main-row {
+    height: 100% ;
+  }
+}*/
+
+@media (min-width: 1200px) and (max-width: 1600px) {
+  .mat-headline {
+    font-size: 26px !important;
+  }
+  .welcome-part {
+    margin-top: -20%;
+    .logo {
+      width: 100px;
+      height: auto;
+    }
+  }
+  .login {
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      font-size: 14px !important;
+    }
+  }
+}
+
+.login {
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+  }
+}
+
