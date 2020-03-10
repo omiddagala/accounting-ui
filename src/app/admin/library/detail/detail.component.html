@@ -56,6 +56,23 @@
                 </mat-form-field>
               </div>
 
+
+              <div class="col-10 col-xl-6" dir="rtl">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>قیمت</mat-label>
+                  <input formControlName="price"
+                         matInput
+                         required
+                         autocomplete="off"
+                         placeholder="قیمت">
+                  <mat-error *ngIf="formGroup.get('price').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
               <div class="col-10 col-xl-6" dir="rtl">
                 <mat-form-field class="w-100"
                                 appearance="outline">
