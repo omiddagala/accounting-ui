@@ -18,42 +18,6 @@ export class NotificationComponent implements OnInit {
   loading = false;
   public result = [];
 
-  rolesType = [
-    {
-      text: 'فروشنده',
-      value: 'SELLER'
-    },
-    {
-      text: 'حسابدار',
-      value: 'ACCOUNTANT'
-    },
-    {
-      text: 'حسابرس',
-      value: 'AUDITOR'
-    },
-    {
-      text: 'حمل و نقل',
-      value: 'TRANSFER'
-    },
-    {
-      text: 'مدیر داخلی',
-      value: 'INTERNAL_MANAGER'
-    },
-    {
-      text: 'صندوق دار',
-      value: 'CASHIER'
-    },
-    {
-      text: 'انباردار',
-      value: 'STOCK_EMPLOYEE'
-    },
-    {
-      text: 'مدیر انبار',
-      value: 'STOCK_MANAGER'
-    },
-  ];
-
-
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
               private router: Router) {
@@ -84,32 +48,18 @@ export class NotificationComponent implements OnInit {
         (val) => {
           this.loading = false;
           this.result.push(...val);
-          console.log(this.result)
+          console.log(this.result);
         },
         response => {
           this.loading = false;
         });
   }
 
-  edit(id) {
-    this.router.navigate(['/admin/users/detail'], { queryParams: { id } });
-  }
-
-  findRole(role) {
-    for (const item of this.rolesType) {
-      if (item.value === role) {
-        return item.text;
-      }
-    }
-  }
-
-
-  delete(id, index) {
+  closeOrder(id) {
     const param = {
       id
     };
-    this.loading = true;
-    this.http.post('http://127.0.0.1:9000/v1/shop/users/delete', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/order/close', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -117,11 +67,10 @@ export class NotificationComponent implements OnInit {
       .subscribe(
         (val) => {
           this.loading = false;
-          this.result.splice(index, 1);
+          location.reload();
         },
         response => {
           this.loading = false;
         });
   }
-
 }

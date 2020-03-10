@@ -97,13 +97,13 @@
                  style="border-bottom: 2px solid #f1f1f1">
 
               <div class=" px-1 text-center table-header col-3 py-2">
-                نام
+                مبدا
               </div>
               <div class=" px-1 text-center table-header col-3 py-2">
-                نام خانوادگی
+                مقصد
               </div>
               <div class=" px-1 text-center table-header col-3 py-2">
-                نقش
+                محصول
               </div>
               <div class=" px-1 text-center table-header col-3 py-2">
                 عملیات
@@ -114,25 +114,22 @@
                  style="border-bottom: 2px solid #f1f1f1; height: 75px">
 
               <div class="col-3 table-items my-auto mat-title text-center py-2">
-                {{item.name}}
+                {{item.source.name}}
               </div>
               <div class="col-3 table-items my-auto mat-title text-center py-2">
-                {{item.family}}
+                {{item.destination.name}}
               </div>
 
               <div class="col-3 table-items my-auto mat-title text-center py-2">
-                {{findRole(item.role)}}
+                {{item.product.name}}
               </div>
 
 
               <div class="col-3 table-items my-auto  text-center py-2">
-                <button mat-icon-button (click)="edit(item.id)"
+                <button mat-button (click)="closeOrder(item.id)"
+                        color="warn"
                         matTooltip="ویرایش">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button (click)="delete(item.id, i)"
-                        matTooltip="حذف">
-                  <mat-icon style="color: red">delete</mat-icon>
+                  <span>خاتمه</span>
                 </button>
 
               </div>
@@ -221,15 +218,22 @@
           <mat-card class="w-100 my-2"
                     *ngFor="let item of result; let i = index">
             <div class="row justify-content-between">
-              <div class="col-auto mat-body-2">نام</div>
+              <div class="col-auto mat-body-2">مبدا</div>
               <div class="col-auto mat-body"
-                   style="text-align: end">{{item.name}}</div>
+                   style="text-align: end">{{item.source.name}}</div>
             </div>
             <div class="row justify-content-between pt-3 pb-2">
-              <div class="col-auto mat-body-2">نام خانوادگی</div>
+              <div class="col-auto mat-body-2">مقصد</div>
               <div class="col-auto mat-body"
                    style="text-align: end">
-                {{item.family}}
+                {{item.destination.name}}
+              </div>
+            </div>
+            <div class="row justify-content-between pt-3 pb-2">
+              <div class="col-auto mat-body-2">محصول</div>
+              <div class="col-auto mat-body"
+                   style="text-align: end">
+                {{item.product.name}}
               </div>
             </div>
             <hr class="w-75 mx-auto  mt-4">
