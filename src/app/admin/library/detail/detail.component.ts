@@ -208,7 +208,8 @@ export class DetailComponent implements OnInit {
     this.url = file.link;
     type.valid = true;
     type.link = file.link;
-    this.save();
+    if (this.product.id)
+      this.save();
   }
 
 }
