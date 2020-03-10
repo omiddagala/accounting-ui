@@ -42,6 +42,11 @@ const routes: Routes = [
   {
     path: 'library/order/:product',
     component: OrderComponent
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./users/users.module')
+      .then(m => m.UsersModule)
   }
 ];
 

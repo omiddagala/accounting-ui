@@ -18,6 +18,7 @@ import {
 import {DatePickerComponent} from "../shared/component/date-picker/date-picker.component";
 import {DrawerComponent} from "../shared/component/drawer/drawer.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {UsersModule} from './admin/users/users.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     ReactiveFormsModule,
     MatSelectModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    UsersModule
   ],
   exports: [
     DatePickerComponent,
