@@ -12,7 +12,7 @@ import {CommonService} from '../../../shared/common/common.service';
 export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private commonService: CommonService) {
   }
-  passType = 'password'
+  passType = 'password';
   loading = false;
   formGroup: FormGroup;
 
