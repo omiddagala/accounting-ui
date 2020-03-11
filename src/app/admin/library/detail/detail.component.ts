@@ -279,23 +279,57 @@ export class CountDialog implements OnInit {
     return !!Object.keys(this.data.product).length;
   }
 
+  createImage() {
+    const t = document.querySelector('.barcode').children[0];
+    console.log(t);
+    let url = t.getAttribute('src');
+    const img = document.createElement('img');
+    img.setAttribute('src', url);
+    return img;
+  }
+
+  createDivForPrint() {
+    const img = this.createImage();
+    const div = document.createElement('div');
+    div.appendChild(img);
+    div.style.width = '100%';
+    div.style.height = '100%';
+    return div;
+  }
+
   printBarcode() {
     this.showBarcode = true;
     setTimeout(() => {
-      let t = document.querySelector('.barcode').childNodes[0];
-      console.log(t);
-      // const url = t.getAttribute('src')
 
+      this.showPrintPage();
 
-      var mywindow = window.open('', 'print' );
-      mywindow.document.write('<!DOCTYPE html><html><head><style type="text/css">@media print { body { -webkit-print-color-adjust: exact; } }</style><link rel="stylesheet" type="text/css" href="barcode.css" media="all" /></head><body> ' + t + '</body></html>');
+    }, 100);
+  }
 
-      setTimeout(function () {
-        mywindow.focus(); // necessary for IE >= 10*/
-        mywindow.print();
-        mywindow.close();
-      },1000);
-    }, 100)
+  setBarcodeInWindow(mywindow, div) {
+    let [name, price, size] = [this.data.product.name, this.data.product.price, this.data.productSize.size.value];
+    console.log(this.data.productSize);
+    mywindow.document.write('<html><head><title></title>');
+    mywindow.document.write('</head><body  style="padding: 0 !important;margin: 0 !important;display: flex; justify-content: center">');
+    mywindow.document.write('<div class="d-flex flex-column justify-content-center">');
+    mywindow.document.write(div.innerHTML);
+    mywindow.document.write('<div style="display: flex; justify-content: center"> ' + name + '</div>');
+    mywindow.document.write('<div style="display: flex; justify-content: center">' + price + '</div>');
+    mywindow.document.write('<div style="display: flex; justify-content: center">' + size + '</div>');
+    mywindow.document.write('</div>');
+    mywindow.document.write('</body></html>');
+  }
+
+  showPrintPage() {
+    let div = this.createDivForPrint();
+    const mywindow = window.open('', '', 'left=200,top=200,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    this.setBarcodeInWindow(mywindow, div);
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+    setTimeout(function() {
+      mywindow.print();
+      mywindow.close();
+    }, 200);
   }
 
 }
