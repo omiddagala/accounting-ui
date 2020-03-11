@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, OnInit, ViewChild} from '@angular/core';
 // @ts-ignore
 import Menu from '../../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -226,10 +226,14 @@ export class DetailComponent implements OnInit {
         });
   }
 
-  openDialog(size): void {
+  openDialog(size, index): void {
     this.size = size;
     const dialogRef = this.dialog.open(CountDialog, {
-      data: {count: this.size.count}
+      data: {
+        count: this.size.count,
+        product: this.product,
+        productSize: this.product.productSizes[index]
+      },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -253,15 +257,45 @@ export class DetailComponent implements OnInit {
   selector: 'count-dialog',
   templateUrl: 'count-dialog.html',
 })
-export class CountDialog {
+export class CountDialog implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<CountDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(ComponentFactoryResolver) factoryResolver) {
+  }
+
+  showBarcode = false;
+
+  ngOnInit(): void {
+    console.log(this.data);
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  idEdit() {
+    return !!Object.keys(this.data.product).length;
+  }
+
+  printBarcode() {
+    this.showBarcode = true;
+    setTimeout(() => {
+      let t = document.querySelector('.barcode').childNodes[0];
+      console.log(t);
+      // const url = t.getAttribute('src')
+
+
+      var mywindow = window.open('', 'print' );
+      mywindow.document.write('<!DOCTYPE html><html><head><style type="text/css">@media print { body { -webkit-print-color-adjust: exact; } }</style><link rel="stylesheet" type="text/css" href="barcode.css" media="all" /></head><body> ' + t + '</body></html>');
+
+      setTimeout(function () {
+        mywindow.focus(); // necessary for IE >= 10*/
+        mywindow.print();
+        mywindow.close();
+      },1000);
+    }, 100)
   }
 
 }

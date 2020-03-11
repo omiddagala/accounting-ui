@@ -1,11 +1,43 @@
-<h1 mat-dialog-title class="color_236b81" dir="rtl">تعداد کالا را برای این سایز وارد کنید</h1>
-<div mat-dialog-content>
-  <mat-form-field dir="rtl">
-    <mat-label dir="rtl">تعداد کالا</mat-label>
-    <input style="direction: rtl" matInput [(ngModel)]="data.count">
-  </mat-form-field>
+<div style="direction: rtl">
+  <h1 mat-dialog-title
+      class="color_236b81"
+      dir="rtl">تعداد کالا را برای این سایز وارد کنید</h1>
+  <div mat-dialog-content
+       dir="rtl">
+    <mat-form-field >
+      <mat-label >تعداد کالا</mat-label>
+      <input style="direction: rtl"
+             matInput
+             [(ngModel)]="data.count">
+    </mat-form-field>
+  </div>
+
+
+
+  <div mat-dialog-actions dir="rtl">
+    <button mat-button
+            (click)="onNoClick()">
+      <span>لغو</span>
+    </button>
+    <button mat-button
+            [mat-dialog-close]="data.count">
+      <span>ثبت</span>
+    </button>
+
+    <button mat-button
+            (click)="printBarcode()"
+            *ngIf="idEdit()">
+      پرینت
+    </button>
+  </div>
+
+  <div class="mt-3" *ngIf="showBarcode">
+    <ngx-barcode [bc-value]="'sdf'"
+                 bc-element-type="img"
+                 [bc-display-value]="false">
+    </ngx-barcode>
+
+  </div>
+
 </div>
-<div mat-dialog-actions dir="rtl">
-  <button mat-button (click)="onNoClick()">لغو</button>
-  <button mat-button [mat-dialog-close]="data.count">ثبت</button>
-</div>
+
