@@ -45,9 +45,10 @@ export class CommonService {
   }
 
   locateFirstPage() {
-    if (this.isShopAdmin()) {
-      this.router.navigate(['/admin']);
-    }
+    // if (this.isShopAdmin()) {
+    //   this.router.navigate(['/admin']);
+    // }
+    this.router.navigate(['/admin']);
   }
 
   isEnglish(m) {
