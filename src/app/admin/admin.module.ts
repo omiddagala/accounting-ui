@@ -39,6 +39,7 @@ import {OrderComponent, OrderCountDialog} from './library/order/order.component'
 import {NotificationComponent, NotificationDialog} from './notification/notification.component';
 import {GroupComponent, GroupDialog} from './library/group/group.component';
 import {TimelineComponent} from './library/timeline/timeline.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import {TimelineComponent} from './library/timeline/timeline.component';
     MyDatePickerModule,
     ZXingScannerModule,
     QRCodeModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgxBarcodeModule
   ],
   declarations: [
     AdminComponent,

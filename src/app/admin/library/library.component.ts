@@ -89,31 +89,27 @@ export class LibraryComponent implements OnInit {
   };
 
   generateQRCode(item) {
-    // var qr = new QRCode();
-    // qr.addData(new QRAlphaNum(item.reservoir.id + 'Z' + item.id) );
-    // qr.make();
-    // var img = document.createElement('img');
-    // img.setAttribute('src', qr.toDataURL() );
-    // img.style.width = '100%';
-    // img.style.height = '100%';
-    // var div = document.createElement('div');
-    // div.appendChild(img);
-    // div.style.width = '100%';
-    // div.style.height = '100%';
-    //
-    // var mywindow = window.open('', '', 'left=200,top=200,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    // mywindow.document.write('<html><head><title></title>');
-    // mywindow.document.write('</head><body style="padding: 0 !important;margin: 0 !important;">');
-    // mywindow.document.write(div.innerHTML);
-    // mywindow.document.write('</body></html>');
-    //
-    // mywindow.document.close(); // necessary for IE >= 10
-    // mywindow.focus(); // necessary for IE >= 10*/
-    // setTimeout(function () {
-    //   // mywindow.print();
-    //   // mywindow.close();
-    // },1000);
-    this.router.navigate(['/admin/library/create']);
+    var img = document.createElement('img');
+    img.setAttribute('src', '' );
+    img.style.width = '100%';
+    img.style.height = '100%';
+    var div = document.createElement('div');
+    div.appendChild(img);
+    div.style.width = '100%';
+    div.style.height = '100%';
+
+    var mywindow = window.open('', '', 'left=200,top=200,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    mywindow.document.write('<html><head><title></title>');
+    mywindow.document.write('</head><body style="padding: 0 !important;margin: 0 !important;">');
+    mywindow.document.write(div.innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+    setTimeout(function () {
+      mywindow.print();
+      mywindow.close();
+    },1000);
   }
 
   createCanvas(qr : QRCode, cellSize = 2, margin = cellSize * 4) {
