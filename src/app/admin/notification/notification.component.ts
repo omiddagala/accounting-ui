@@ -71,7 +71,7 @@ export class NotificationComponent implements OnInit {
       .subscribe(
         (val) => {
           this.loading = false;
-          // location.reload();
+          location.reload();
         },
         response => {
           this.loading = false;
