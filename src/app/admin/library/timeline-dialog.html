@@ -1,0 +1,22 @@
+<div style="min-width: 300px; direction: rtl">
+  <h1 mat-dialog-title
+      class="color_236b81"
+      dir="rtl">
+    {{data.product.name}}
+  </h1>
+
+  <div class="d-flex flex-column">
+    <div class="mb-1">سایز ها</div>
+    <div class="d-flex flex-row flex-wrap mt-1">
+      <button mat-fab
+              class="mx-1"
+              *ngFor="let item of data.product.productSizes"
+              (click)="routeToTimeline(item.id)">
+        {{item.size.value}}
+      </button>
+    </div>
+  </div>
+
+
+</div>
+

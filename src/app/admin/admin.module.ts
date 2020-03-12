@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {AdminComponent} from './admin.component';
 import {AdminRoutingModule} from './admin-routing.module';
-import {LibraryComponent} from './library/library.component';
+import {LibraryComponent, TimelineDialog} from './library/library.component';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -67,7 +67,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     ZXingScannerModule,
     QRCodeModule,
     MatAutocompleteModule,
-    NgxBarcodeModule
+    NgxBarcodeModule,
   ],
   declarations: [
     AdminComponent,
@@ -86,7 +86,8 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     GroupDialog,
     TimelineComponent,
     OrderCountDialog,
-    NotificationDialog
+    NotificationDialog,
+    TimelineDialog
   ],
   exports: [
     AudioUploaderComponent,
@@ -100,7 +101,8 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     ReservoirDialog,
     OrderCountDialog,
     GroupDialog,
-    NotificationDialog
+    NotificationDialog,
+    TimelineDialog
   ]
 })
 

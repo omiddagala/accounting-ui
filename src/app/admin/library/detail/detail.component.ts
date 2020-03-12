@@ -182,7 +182,7 @@ export class DetailComponent implements OnInit {
   }
 
   fetchSizes() {
-    this.http.post('http://127.0.0.1:9000/v1/shop/product/sizes', {}, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/size/list', {}, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
