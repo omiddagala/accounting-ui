@@ -65,18 +65,19 @@
                   </mat-form-field>
                 </div>
 
-                <div class="row col-md-12 col-sm-12 padding-20 color_236b81">سایزهای کالا را انتخاب و تعداد را برای هرکدام
+                <div class="row col-md-12 col-sm-12 padding-20 color_236b81">
+                  سایزهای کالا را انتخاب و تعداد را برای هرکدام
                   وارد کنید
                 </div>
                 <div class="w-100 d-flex flex-row flex-wrap">
-                  <div *ngFor="let size of sizes"
+                  <div *ngFor="let item of orderSized;let i = index"
                        class="col-auto">
                     <button mat-raised-button color="primary"
-                            [matBadge]="size.count ? size.count : '0'"
+                            [matBadge]="item.value ? item.value : '0'"
                             matBadgePosition="before"
-                            (click)="openDialog(size)"
-                            [matBadgeColor]="size.count ? 'warn' : 'accent'">
-                      {{size.size.value}}
+                            (click)="openDialog(item, i)"
+                            [matBadgeColor]="item.value ? 'warn' : 'accent'">
+                      {{item.size}}
                     </button>
                   </div>
                 </div>

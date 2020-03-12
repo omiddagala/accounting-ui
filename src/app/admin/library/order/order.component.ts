@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {CommonService} from '../../../../shared/common/common.service';
-import {ValidatorNumberMin} from '../../../../shared/validators/min-max.validator';
+import {ValidatorNumberMax, ValidatorNumberMin} from '../../../../shared/validators/min-max.validator';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CountDialog, DialogData} from '../detail/detail.component';
@@ -25,12 +25,16 @@ export class OrderComponent implements OnInit {
   toFiltered: Observable<string[]>;
   sizes: any;
   size: any;
+  productId: any;
+  orderSized = [];
+
   constructor(private  formBuilder: FormBuilder,
               private http: HttpClient,
               private commonService: CommonService,
               private route: ActivatedRoute,
               public dialog: MatDialog,
               private router: Router) {
+    this.productId = route.snapshot.params.product;
   }
 
   ngOnInit() {
@@ -43,7 +47,10 @@ export class OrderComponent implements OnInit {
   }
 
   fetchSize() {
-    this.http.post('http://127.0.0.1:9000/v1/shop/product/sizes', {}, {
+    const param = {
+      id: this.productId
+    };
+    this.http.post('http://127.0.0.1:9000/v1/shop/product/sizes', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -51,9 +58,21 @@ export class OrderComponent implements OnInit {
       .subscribe(
         (val) => {
           this.sizes = val;
+          this.setOrderSizeObj();
         },
-        response => {
+        err => {
+          console.log(err);
         });
+  }
+
+  setOrderSizeObj() {
+    for (const item of this.sizes) {
+      this.orderSized.push({
+        id: item.size.id,
+        value: '',
+        size: item.size.value
+      });
+    }
   }
 
   autocompleteFilter() {
@@ -100,8 +119,9 @@ export class OrderComponent implements OnInit {
           this.makeListFromResult();
           this.autocompleteFilter();
         },
-        response => {
+        err => {
           this.loading = false;
+          console.log(err);
         });
   }
 
@@ -136,11 +156,15 @@ export class OrderComponent implements OnInit {
     const from = this.getId(this.formGroup.get('from').value);
     const to = this.getId(this.formGroup.get('to').value);
     // tslint:disable-next-line:variable-name
-    const product = this.route.snapshot.paramMap.get('product');
     if (this.isValid(from.id, to.id)) {
-      this.sendRequest(from.id, to.id, product);
+      this.sendRequest(from.id, to.id, this.productId);
     }
   }
+
+  getUserId() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user.id;
+  }count
 
   // tslint:disable-next-line:variable-name
   sendRequest(fromId, toId, product) {
@@ -154,6 +178,9 @@ export class OrderComponent implements OnInit {
       product: {
         // tslint:disable-next-line:radix
         id: parseInt(product)
+      },
+      submitter: {
+        id: this.getUserId()
       },
       orders: this.setSize()
       // tslint:disable-next-line:radix
@@ -170,12 +197,24 @@ export class OrderComponent implements OnInit {
           this.commonService.showMessage('عملیات با موفقیت انجام شد.', 'success-msg');
           this.router.navigate(['/admin/library']);
         },
-        response => {
+        err => {
+          console.log(err);
         });
   }
 
   setSize() {
-    let obj = []
+    let obj = [];
+    for (const item of this.orderSized) {
+      if (item.value !== '') {
+        obj.push(item);
+      }
+    }
+    console.log(obj);
+    return JSON.stringify(obj);
+  }
+
+  /*setSize() {
+    let obj = [];
     for (const item of this.sizes) {
       if (item.count !== null) {
         obj.push({
@@ -185,19 +224,43 @@ export class OrderComponent implements OnInit {
         });
       }
     }
-    console.log(obj)
+    console.log(obj);
     return JSON.stringify(obj);
-  }
+  }*/
 
-  openDialog(size): void {
+  openDialog(size, i): void {
     this.size = size;
     const dialogRef = this.dialog.open(OrderCountDialog, {
-      data: {count: this.size.count}
+      data: {
+        count: this.size.count,
+        size: this.sizes[i]
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.size.count = (result === '0') ? 'undefined' : result;
+      this.setCount(result);
     });
+  }
+
+  setCount(result) {
+    if (result !== undefined) {
+      console.log(result);
+      if (result.size.count >= result.count) {
+        // this.size.count = (result.count === '0') ? 'undefined' : result.count;
+        const id = result.size.size.id;
+        for (const index in this.orderSized) {
+          console.log(this.orderSized[index])
+          console.log(id)
+          if (this.orderSized[index].id === id) {
+            this.orderSized[index].value = result.count;
+          }
+        }
+        console.log(this.orderSized);
+      } else {
+        this.commonService.showMessage('تعداد کالاهای درخواستی بیشتر از کالاهای موجود است', 'error-msg');
+      }
+
+    }
   }
 }
 
@@ -206,14 +269,28 @@ export class OrderComponent implements OnInit {
   selector: 'count-dialog',
   templateUrl: 'order-count-dialog.html',
 })
-export class OrderCountDialog {
+export class OrderCountDialog implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<OrderCountDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+
+  input: any;
+
+  ngOnInit(): void {
+    this.input = new FormControl('', ValidatorNumberMax(this.data.size.count));
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  sendData() {
+    return {
+      count: this.input.value,
+      size: this.data.size
+    };
   }
 
 }

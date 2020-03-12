@@ -2,11 +2,18 @@
   <h1 mat-dialog-title
       class="color_236b81" >تعداد کالا را برای این سایز وارد کنید</h1>
   <div mat-dialog-content dir="rtl">
+    <div class="d-flex flex-row mb-2">
+      <div>موجودی : </div>
+      <div>{{data.size.count !== null ? data.size.count: 0}}</div>
+    </div>
     <mat-form-field >
       <mat-label >تعداد کالا</mat-label>
       <input style="direction: rtl"
-             matInput
-             [(ngModel)]="data.count">
+             [formControl]="input"
+             matInput>
+      <mat-error *ngIf="input.hasError('validNumMax')">
+        مقدار وارد شده از مقدار موجودی بیشتر است
+      </mat-error>
     </mat-form-field>
   </div>
   <div mat-dialog-actions dir="rtl">
@@ -15,7 +22,7 @@
       <span>لغو</span>
     </button>
     <button mat-button
-            [mat-dialog-close]="data.count">
+            [mat-dialog-close]="sendData()">
       <span>ثبت</span>
     </button>
   </div>

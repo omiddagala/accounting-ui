@@ -5,12 +5,10 @@ const commonService = new CommonService(undefined, undefined);
 
 
 function isMin(value, min: number) {
-  console.log('isMin');
   return value >= min;
 }
 
 function isMax(value, max: number) {
-  console.log('isMax');
   return value <= max;
 }
 
