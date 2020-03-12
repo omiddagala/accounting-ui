@@ -96,7 +96,7 @@
                    style="font-weight: 500;">
                 <button class="w-100 mb-2"
                         mat-flat-button
-                        routerLink="/admin/library/detail"
+                        (click)="addProduct()"
                         style="background: green;color: white;min-height: 40px">
                   افزودن
                 </button>
@@ -148,6 +148,10 @@
                   <button mat-icon-button (click)="delete(item.id, i)"
                           matTooltip="حذف">
                     <mat-icon style="color: red">delete</mat-icon>
+                  </button>
+                  <button mat-button
+                          (click)="copyProduct(item.id)">
+                    <span>کپی</span>
                   </button>
                   <button mat-button
                           (click)="routeToOrder(item.id)">

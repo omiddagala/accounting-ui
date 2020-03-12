@@ -81,10 +81,16 @@ export class LibraryComponent implements OnInit {
   }
 
   edit(id) {
+    localStorage.setItem('productCopy', JSON.stringify({}));
     this.router.navigate(['/admin/library/detail'], {queryParams: {id: id}});
   }
 
-
+  copyProduct(id) {
+    console.log(this.result);
+    const product = this.result.filter(item => item.id === id);
+    localStorage.setItem('productCopy', JSON.stringify(product[0]));
+    this.router.navigate(['/admin/library/detail']);
+  }
 
   openTimelineDialog(id) {
     this.timelineLoading = true;
@@ -134,6 +140,11 @@ export class LibraryComponent implements OnInit {
         response => {
           this.loading = false;
         });
+  }
+
+  addProduct() {
+    localStorage.setItem('productCopy', JSON.stringify({}));
+    this.router.navigate(['/admin/library/detail']);
   }
 
 

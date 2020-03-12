@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CommonService} from '../../../../shared/common/common.service';
 import * as moment from 'jalali-moment';
+import {error} from 'util';
 
 
 export interface DialogData {
@@ -77,9 +78,37 @@ export class DetailComponent implements OnInit {
       price: new FormControl('', Validators.required),
       group: new FormControl('', Validators.required)
     });
+    this.checkCopyProduct();
     this.getEditInformation();
     this.getGroupList();
     this.fetchReservoirs();
+  }
+
+  checkCopyProduct() {
+    if (this.isCopyProduct()) {
+      this.fillInput();
+    }
+  }
+
+  fillInput() {
+    const obj = JSON.parse(localStorage.getItem('productCopy'));
+    this.product.name = obj.name;
+    this.product.description = obj.description;
+    this.product.type = obj.type;
+    this.product.image = obj.type;
+    this.product.price = parseInt(obj.price);
+    this.product.reservoir = obj.reservoir;
+    this.product.group = obj.group;
+  }
+
+  isCopyProduct() {
+    let obj = localStorage.getItem('productCopy');
+    if (obj) {
+      obj = JSON.parse(obj);
+      return Object.keys(obj).length !== 0;
+    } else {
+      return false;
+    }
   }
 
   getGroupList() {
@@ -199,7 +228,7 @@ export class DetailComponent implements OnInit {
             this.product.productSizes.push({
               size,
               count: null
-            })
+            });
           }
 
         }
@@ -256,6 +285,10 @@ export class DetailComponent implements OnInit {
     this.product.price = this.formGroup.get('price').value;
   }
 
+  deleteCopyProduct() {
+    localStorage.setItem('productCopy', JSON.stringify({}));
+  }
+
   save() {
     this.prepareData();
     this.http.post('http://127.0.0.1:9000/v1/shop/product/save', this.product, {
@@ -266,8 +299,11 @@ export class DetailComponent implements OnInit {
       .subscribe(
         (val) => {
           this.commonService.showMessage('عملیات با موفقیت انجام شد.', 'success-msg');
+          this.deleteCopyProduct();
+          this.router.navigate(['/admin/library']);
         },
-        response => {
+        err => {
+          console.log(err);
         });
   }
 
