@@ -183,22 +183,22 @@
                       *ngFor="let item of result; let i = index">
               <div class="row justify-content-between">
                 <div class="col-auto mat-body-2">نام</div>
-                <div class="col-auto mat-body" style="text-align: end">{{item.value}}</div>
+                <div class="col-auto mt-1 mat-body"
+                     style="text-align: end;font-size: 15px">{{item.value}}</div>
               </div>
               <hr class="w-75 mx-auto  mt-4">
               <div class="row justify-content-between pt-1">
                 <div class="col-auto">
-                  <button mat-flat-button (click)="openDialog(item)"
-                          class="mat-body-1"
-                          style="background: green;color: white">
-                    ویرایش
+                  <button mat-icon-button (click)="openDialog(item)"
+                          matTooltip="ویرایش">
+                    <mat-icon>edit</mat-icon>
                   </button>
                 </div>
                 <div class="col-auto">
-                  <button mat-stroked-button class="col-auto mat-body-1"
-                          style="background: red; color: white" (click)="delete(item.id, i)">
-                    حذف
-                  </button>SizeDialog
+                  <button mat-icon-button (click)="delete(item.id, i)"
+                          matTooltip="حذف">
+                    <mat-icon style="color: red">delete</mat-icon>
+                  </button>
                 </div>
               </div>
             </mat-card>

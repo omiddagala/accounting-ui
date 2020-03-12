@@ -23,20 +23,33 @@
         <div class="col-auto mat-body-1">
           <span>انبارها</span>
         </div>
-        <div *ngIf="!showSearchField"
-             class="col-auto d-flex justify-content-center align-items-center cursor"
-             (click)="showSearchField = !showSearchField">
-          <span class="mat-body-1 mr-1">تغییر جستجو</span>
-          <img class="ml-1"
-               width="28"
-               src="../../../assets/image/facilities/search/search.png"/>
+        <div class="d-flex flex-row">
+
+          <div *ngIf="!showSearchField"
+               class="col-auto d-flex justify-content-center align-items-center cursor"
+               (click)="showSearchField = !showSearchField">
+            <span class="mat-body-1 mr-1">تغییر جستجو</span>
+            <img class="ml-1"
+                 width="28"
+                 src="../../../assets/image/facilities/search/search.png"/>
+          </div>
+
+          <div class="col-auto d-flex justify-content-center align-items-center cursor"
+               (click)="showSearchField = !showSearchField"
+               *ngIf="showSearchField">
+            <span  class="pr-1 mat-body-1">بستن</span>
+            <mat-icon class="close">close</mat-icon>
+          </div>
+
+          <button mat-icon-button
+                  (click)="router.navigate(['/admin'])"
+                  style="color: white">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+
         </div>
-        <div class="col-auto d-flex justify-content-center align-items-center cursor"
-             (click)="showSearchField = !showSearchField"
-             *ngIf="showSearchField">
-          <span  class="pr-1 mat-body-1">بستن</span>
-          <mat-icon class="close">close</mat-icon>
-        </div>
+
+
       </mat-toolbar>
       <div *ngIf="showSearchField"
            class="d-none d-lg-flex field-search w-100 fadeInAnimation">
@@ -77,7 +90,7 @@
             <div class="row justify-content-between my-auto top-card">
               <div class="col-2 col-xl-1 mat-body-1 mt-2 gray-color "
                    style="font-weight: 500;">
-                <button class="w-100"
+                <button class="w-100 mb-2"
                         mat-flat-button
                         (click)="openDialog(null)"
                         style="background: green;color: white;min-height: 40px">
@@ -143,6 +156,13 @@
                   class="change-search-btn">
             تغیر جستجو
           </button>
+
+          <button mat-icon-button
+                  (click)="router.navigate(['/admin'])"
+                  style="color: white">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+
           <button mat-icon-button
                   *ngIf="showSearchField"
                   (click)="showSearchField = !showSearchField"

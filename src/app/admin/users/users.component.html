@@ -10,6 +10,7 @@
           {{item.text}}
         </a>
       </mat-nav-list>
+
     </mat-drawer>
     <mat-drawer-content class="h-100">
       <!--<app-loading-component *ngIf="loading"></app-loading-component>-->
@@ -23,20 +24,32 @@
         <div class="col-auto mat-body-1">
           <span>کاربران</span>
         </div>
-        <div *ngIf="!showSearchField"
-             class="col-auto d-flex justify-content-center align-items-center cursor"
-             (click)="showSearchField = !showSearchField">
-          <span class="mat-body-1 mr-1">تغییر جستجو</span>
-          <img class="ml-1"
-               width="28"
-               src="../../../assets/image/facilities/search/search.png"/>
+
+        <div class="d-flex flex-row">
+          <div *ngIf="!showSearchField"
+               class="col-auto d-flex justify-content-center align-items-center cursor"
+               (click)="showSearchField = !showSearchField">
+            <span class="mat-body-1 mr-1">تغییر جستجو</span>
+            <img class="ml-1"
+                 width="28"
+                 src="../../../assets/image/facilities/search/search.png"/>
+          </div>
+
+          <div class="col-auto d-flex justify-content-center align-items-center cursor"
+               (click)="showSearchField = !showSearchField"
+               *ngIf="showSearchField">
+            <span class="pr-1 mat-body-1">بستن</span>
+            <mat-icon class="close">close</mat-icon>
+          </div>
+
+          <button mat-icon-button
+                  (click)="router.navigate(['/admin'])"
+                  style="color: white">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
         </div>
-        <div class="col-auto d-flex justify-content-center align-items-center cursor"
-             (click)="showSearchField = !showSearchField"
-             *ngIf="showSearchField">
-          <span class="pr-1 mat-body-1">بستن</span>
-          <mat-icon class="close">close</mat-icon>
-        </div>
+
+
       </mat-toolbar>
       <div *ngIf="showSearchField"
            class="d-none d-lg-flex field-search w-100 fadeInAnimation">
@@ -172,11 +185,18 @@
                   class="change-search-btn">
             تغیر جستجو
           </button>
+
           <button mat-icon-button
                   *ngIf="showSearchField"
                   (click)="showSearchField = !showSearchField"
                   class="change-search-btn">
             <mat-icon class="close">close</mat-icon>
+          </button>
+
+          <button mat-icon-button
+                  (click)="router.navigate(['/admin'])"
+                  style="color: white">
+            <mat-icon>arrow_back_ios</mat-icon>
           </button>
         </div>
       </mat-toolbar>
@@ -232,13 +252,13 @@
                     *ngFor="let item of result; let i = index">
             <div class="row justify-content-between">
               <div class="col-auto mat-body-2">نام</div>
-              <div class="col-auto mat-body"
-                   style="text-align: end">{{item.name}}</div>
+              <div class="col-auto mat-body-2"
+                   style="text-align: end;">{{item.name}}</div>
             </div>
             <div class="row justify-content-between pt-3 pb-2">
               <div class="col-auto mat-body-2">نام خانوادگی</div>
-              <div class="col-auto mat-body"
-                   style="text-align: end">
+              <div class="col-auto mat-body-2"
+                   style="text-align: end;">
                 {{item.family}}
               </div>
             </div>

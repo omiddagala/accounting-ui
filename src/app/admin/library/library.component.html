@@ -23,20 +23,29 @@
         <div class="col-auto mat-body-1">
           <span>محصولات</span>
         </div>
-        <div *ngIf="!showSearchField"
-             class="col-auto d-flex justify-content-center align-items-center cursor"
-             (click)="showSearchField = !showSearchField">
+
+        <div class="d-flex flex-row">
+          <div *ngIf="!showSearchField"
+               class="col-auto d-flex justify-content-center align-items-center cursor"
+               (click)="showSearchField = !showSearchField">
             <span class="mat-body-1 mr-1">تغییر جستجو</span>
             <img class="ml-1"
                  width="28"
                  src="../../../assets/image/facilities/search/search.png"/>
+          </div>
+          <div class="col-auto d-flex justify-content-center align-items-center cursor"
+               (click)="showSearchField = !showSearchField"
+               *ngIf="showSearchField">
+            <span  class="pr-1 mat-body-1">بستن</span>
+            <mat-icon class="close">close</mat-icon>
+          </div>
+          <button mat-icon-button
+                  (click)="router.navigate(['/admin'])"
+                  style="color: white">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
         </div>
-        <div class="col-auto d-flex justify-content-center align-items-center cursor"
-                (click)="showSearchField = !showSearchField"
-                *ngIf="showSearchField">
-          <span  class="pr-1 mat-body-1">بستن</span>
-          <mat-icon class="close">close</mat-icon>
-        </div>
+
       </mat-toolbar>
       <div *ngIf="showSearchField"
            class="d-none d-lg-flex field-search w-100 fadeInAnimation">
@@ -173,30 +182,54 @@
         </div>
       </div>
       <!--  @@@@@@@@@@@@@@@@@@@@ d-block d-lg-none @@@@@@@@@@@@@@@@@@@@@@-->
-      <mat-toolbar class="d-lg-none d-flex justify-content-between zero-padding-mobile"
-                   style="background: #236b81 ">
-        <div class="col-auto px-md-5">
-          <button mat-flat-button
-                  routerLink="/admin/library/detail"
-                  class="change-search-btn">
-            ایجاد
-          </button>
-        </div>
-        <div class="col-auto px-md-5">
-          <button mat-flat-button
-                  *ngIf="!showSearchField"
-                  (click)="showSearchField = !showSearchField"
-                  class="change-search-btn">
-            تغیر جستجو
-          </button>
-          <button mat-icon-button
-                  *ngIf="showSearchField"
-                  (click)="showSearchField = !showSearchField"
-                  class="change-search-btn">
-            <mat-icon class="close">close</mat-icon>
-          </button>
-        </div>
+      <mat-toolbar class="d-lg-none d-flex flex-row justify-content-between zero-padding-mobile"
+                   style="background: #236b81">
+
+          <div class="col-auto px-lg-5">
+            <button mat-flat-button
+                    routerLink="/admin/library/detail"
+                    class="change-search-btn">
+              ایجاد
+            </button>
+          </div>
+
+          <div class="col-auto px-lg-5">
+            <button mat-flat-button
+                    *ngIf="!showSearchField"
+                    (click)="showSearchField = !showSearchField"
+                    class="change-search-btn">
+              تغیر جستجو
+            </button>
+            <button mat-icon-button
+                    *ngIf="showSearchField"
+                    (click)="showSearchField = !showSearchField"
+                    class="change-search-btn">
+              <mat-icon class="close">close</mat-icon>
+            </button>
+
+            <button mat-icon-button
+                    (click)="router.navigate(['/admin'])"
+                    style="color: white">
+              <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+          </div>
+
       </mat-toolbar>
+
+      <div class="d-flex flex-row w-100 mt-2 justify-content-between">
+          <button class="col-auto mt-2 mx-2"
+                  mat-flat-button
+                  routerLink="/admin/library/size"
+                  style="background: orangered;color: white;min-height: 40px">
+            ایجاد سایز
+          </button>
+          <button class="col-auto mt-2 mx-2"
+                  mat-flat-button
+                  routerLink="/admin/library/group"
+                  style="background: orangered;color: white;min-height: 40px">
+            ایجاد گروه کالا
+          </button>
+      </div>
 
       <div *ngIf="showSearchField"
            class="d-flex d-lg-none field-search w-100 fadeInAnimation">
