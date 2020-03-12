@@ -60,7 +60,7 @@ export class UsersComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
-              private router: Router) {
+              public router: Router) {
   }
 
   ngOnInit(): void {

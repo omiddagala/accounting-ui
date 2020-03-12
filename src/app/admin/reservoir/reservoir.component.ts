@@ -29,7 +29,7 @@ export class ReservoirComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
-              private router: Router,
+              public router: Router,
               public dialog: MatDialog,
               private commonService: CommonService) {
   }

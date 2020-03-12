@@ -37,7 +37,7 @@ export class LibraryComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
-              private router: Router,
+              public router: Router,
               private dialog: MatDialog) {
   }
 
