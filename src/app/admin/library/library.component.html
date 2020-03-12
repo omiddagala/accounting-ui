@@ -34,7 +34,7 @@
         <div class="col-auto d-flex justify-content-center align-items-center cursor"
                 (click)="showSearchField = !showSearchField"
                 *ngIf="showSearchField">
-          <span  class="pr-1 mat-body-1">بستن</span>javaheri
+          <span  class="pr-1 mat-body-1">بستن</span>
           <mat-icon class="close">close</mat-icon>
         </div>
       </mat-toolbar>
@@ -258,29 +258,36 @@
                      style="text-align: end">{{findTypeById(item.type)}}</div>
               </div>
               <hr class="w-75 mx-auto  mt-4">
-              <div class="row justify-content-between pt-1">
-                <div class="col-auto">
-                  <button mat-flat-button
+              <div class="d-flex flex-row flex-wrap pt-1">
+                <div class="col-2">
+                  <button mat-icon-button
                           (click)="edit(item.id)"
-                          class="mat-body-1"
-                          style="background: green;color: white">
-                    ویرایش
+                          matTooltip="ویرایش">
+                    <mat-icon>edit</mat-icon>
                   </button>
                 </div>
-                <div class="col-auto">
-                  <button mat-stroked-button class="col-auto mat-body-1"
-                          style="background: red; color: white"
-                          (click)="delete(item.id, i)">
-                    حذف
+                <div class="col-2">
+                  <button mat-icon-button (click)="delete(item.id, i)"
+                          matTooltip="حذف">
+                    <mat-icon style="color: red">delete</mat-icon>
                   </button>
                 </div>
 
-                <div class="col-auto">
+                <div class="col-4">
                   <button mat-stroked-button
-                          class="col-auto mat-body-1">
-                    <a [routerLink]="['/admin/library/order', item.id]"></a>
+                          (click)="copyProduct(item.id)">
+                    <span>کپی</span>
                   </button>
                 </div>
+
+                <div class="col-4">
+                  <button mat-stroked-button
+                          color="success"
+                          (click)="openTimelineDialog(item.id)">
+                    <span>تاریخچه</span>
+                  </button>
+                </div>
+
               </div>
             </mat-card>
             <mat-spinner *ngIf="loading"

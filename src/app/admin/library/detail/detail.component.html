@@ -152,7 +152,7 @@
                 وارد کنید
               </div>
                 <div *ngFor="let size of product.productSizes; let i = index"
-                     class="col-sm-12 col-md-2">
+                     class="col-6 my-2 col-md-2">
                   <button mat-raised-button
                           color="primary"
                           (click)="openDialog(size, i)"
@@ -164,7 +164,7 @@
                 </div>
 
               <div class="col-12 pt-3 d-flex flex-row justify-content-center">
-                <div class="col-3">
+                <div class="col-12 col-md-4 col-xl-3">
                   <app-video-uploader #uploader
                                       [defaultStyle]="true"
                                       [addLayout]="true"
@@ -183,8 +183,8 @@
           </div>
         </div>
         <div *ngIf="!product.id"
-             class="d-flex justify-content-center justify-content-xl-end mt-5 mt-xl-0">
-          <div class="col-4 d-flex justify-content-center">
+             class="d-flex justify-content-center justify-content-xl-end mt-5 mt-lg-0">
+          <div class="col-4 d-flex justify-content-center my-2  my-lg-0">
             <button (click)="save()"
                     class="next "
                     mat-flat-button>
@@ -193,8 +193,8 @@
           </div>
         </div>
         <div *ngIf="product.id"
-             class="d-flex justify-content-center justify-content-xl-end  mt-5 mt-xl-0">
-          <div class="col-4 d-flex justify-content-center">
+             class="d-flex justify-content-center justify-content-xl-end  mt-5 mt-lg-0">
+          <div class="col-4 d-flex justify-content-center my-2  my-lg-0">
             <button (click)="save()"
                     class="next margin-bottom-40"
                     mat-flat-button>
