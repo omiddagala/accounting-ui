@@ -56,7 +56,6 @@
                 </mat-form-field>
               </div>
 
-
               <div class="col-10 col-xl-6" dir="rtl">
                 <mat-form-field class="w-100"
                                 appearance="outline">
@@ -87,7 +86,6 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-
 
               <div class="col-10 col-xl-6" dir="rtl">
                 <mat-form-field class="w-100"
@@ -150,7 +148,6 @@
                 </mat-form-field>
               </div>
 
-
               <div class="row col-md-12 col-sm-12 padding-20 color_236b81">سایزهای کالا را انتخاب و تعداد را برای هرکدام
                 وارد کنید
               </div>
@@ -165,9 +162,6 @@
                     {{size.size.value}}
                   </button>
                 </div>
-
-
-
 
               <div class="col-12 pt-3 d-flex flex-row justify-content-center">
                 <div class="col-3">
@@ -188,7 +182,8 @@
                  src="../../../../assets/image/facilities/insurance/Group-796%20.png">
           </div>
         </div>
-        <div *ngIf="!product.id" class="d-flex justify-content-center justify-content-xl-end mt-5 mt-xl-0">
+        <div *ngIf="!product.id"
+             class="d-flex justify-content-center justify-content-xl-end mt-5 mt-xl-0">
           <div class="col-4 d-flex justify-content-center">
             <button (click)="save()"
                     class="next "
@@ -197,7 +192,8 @@
             </button>
           </div>
         </div>
-        <div *ngIf="product.id" class="d-flex justify-content-center justify-content-xl-end  mt-5 mt-xl-0">
+        <div *ngIf="product.id"
+             class="d-flex justify-content-center justify-content-xl-end  mt-5 mt-xl-0">
           <div class="col-4 d-flex justify-content-center">
             <button (click)="save()"
                     class="next margin-bottom-40"

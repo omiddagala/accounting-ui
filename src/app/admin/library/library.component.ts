@@ -84,9 +84,7 @@ export class LibraryComponent implements OnInit {
     this.router.navigate(['/admin/library/detail'], {queryParams: {id: id}});
   }
 
-  readQR() {
-    this.router.navigate(['/admin/library/scan']);
-  };
+
 
   openTimelineDialog(id) {
     this.timelineLoading = true;

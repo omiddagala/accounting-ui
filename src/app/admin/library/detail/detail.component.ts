@@ -94,7 +94,8 @@ export class DetailComponent implements OnInit {
           this.groupList.push(...val);
           console.log(this.groupList);
         },
-        response => {
+        err => {
+          console.log(err);
         });
   }
 
@@ -167,10 +168,42 @@ export class DetailComponent implements OnInit {
           }
           this.initFormGroup();
           this.loading = false;
+          this.addSizeIsNotInProductSize();
         },
-        response => {
+        err => {
           this.loading = false;
+          console.log(err);
         });
+  }
+
+  addSizeIsNotInProductSize() {
+    this.http.post('http://127.0.0.1:9000/v1/shop/size/list', {}, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        val => {
+          console.log('sizes');
+          console.log(val);
+          let list: any = val;
+          const otherSize = list.filter(size => {
+            for (const item of this.product.productSizes) {
+              if (item.size.id === size.id) {
+                return false;
+              }
+            }
+            return true;
+          });
+          for (let size of otherSize) {
+            this.product.productSizes.push({
+              size,
+              count: null
+            })
+          }
+
+        }
+      );
   }
 
   convertNumbers(str) {
@@ -192,7 +225,7 @@ export class DetailComponent implements OnInit {
     })
       .subscribe(
         (val) => {
-          console.log(val)
+          console.log(val);
           this.initFormGroup();
           const sizeList: any = val;
           this.product.productSizes = [];

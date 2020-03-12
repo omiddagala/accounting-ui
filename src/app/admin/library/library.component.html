@@ -149,18 +149,13 @@
                           matTooltip="حذف">
                     <mat-icon style="color: red">delete</mat-icon>
                   </button>
-
-                  <button mat-icon-button (click)="readQR()"
-                          matTooltip="QR">
-                    <mat-icon style="color: red">money</mat-icon>
-                  </button>
                   <button mat-button
                           (click)="routeToOrder(item.id)">
                     <span>حواله</span>
                   </button>
                   <button mat-button
                           (click)="openTimelineDialog(item.id)">
-                    <span>جدول زمانی</span>
+                    <span>تاریخچه</span>
                   </button>
                   <app-loading-component *ngIf="timelineLoading"></app-loading-component>
                 </div>
