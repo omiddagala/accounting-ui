@@ -52,6 +52,7 @@ export class DetailComponent implements OnInit {
   groupList = [];
   count = 0;
   color = 'warn';
+  isEdit: any;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -104,8 +105,10 @@ export class DetailComponent implements OnInit {
     });
     if (id) {
       this.fetchProduct(id);
+      this.isEdit = true;
     } else {
       this.fetchSizes();
+      this.isEdit = false;
     }
   }
 
@@ -189,8 +192,17 @@ export class DetailComponent implements OnInit {
     })
       .subscribe(
         (val) => {
+          console.log(val)
           this.initFormGroup();
-          this.product.productSizes = val;
+          const sizeList: any = val;
+          this.product.productSizes = [];
+          for (const size of sizeList) {
+            this.product.productSizes.push({
+              size,
+              count: null
+            });
+          }
+          console.log(this.product.productSizes);
         },
         response => {
         });
@@ -232,6 +244,7 @@ export class DetailComponent implements OnInit {
       data: {
         count: this.size.count,
         product: this.product,
+        isEdit: this.isEdit,
         productSize: this.product.productSizes[index]
       },
     });
@@ -275,9 +288,6 @@ export class CountDialog implements OnInit {
     this.dialogRef.close();
   }
 
-  idEdit() {
-    return !!Object.keys(this.data.product).length;
-  }
 
   createImage() {
     const t = document.querySelector('.barcode').children[0];
