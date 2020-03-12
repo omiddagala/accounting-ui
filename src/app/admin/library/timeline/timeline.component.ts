@@ -31,7 +31,7 @@ export class TimelineComponent implements OnInit {
     let m = moment.from(date, 'fa', 'YYYY/MM/DDTHH:mmZ');
     console.log(m)
     // console.log(m.local('fa').format('hh:mm')
-    return m.local('fa').format('jYYYY/jMM/jDD hh:mm');
+    return m.format('jYYYY/jMM/jDD hh:mm');
   }
 
   getData() {
