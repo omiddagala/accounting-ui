@@ -30,6 +30,10 @@ export class DetailComponent implements OnInit {
   reservoirFilter: Observable<string[]>;
   rolesType = [
     {
+      text: 'مدیر',
+      value: 'ROLE_SHXXOP_ADXXMIN'
+    },
+    {
       text: 'فروشنده',
       value: 'SELLER'
     },

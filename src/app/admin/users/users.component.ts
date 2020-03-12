@@ -20,6 +20,10 @@ export class UsersComponent implements OnInit {
 
   rolesType = [
     {
+      text: 'مدیر',
+      value: 'ROLE_SHXXOP_ADXXMIN'
+    },
+    {
       text: 'فروشنده',
       value: 'SELLER'
     },
