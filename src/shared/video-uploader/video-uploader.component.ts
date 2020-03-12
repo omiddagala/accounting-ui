@@ -88,7 +88,7 @@ export class VideoUploaderComponent implements OnInit {
     const url = 'https://api.parsaspace.com/v1/files/upload';
     const formData = new FormData();
     formData.append('domain', 'sandogh.parsaspace.com');
-    formData.append('file', fileToSend, fileToSend.name);
+    formData.append('file', fileToSend, new Date().getMilliseconds() + "." + fileToSend.type.split('/')[1]);
     const request = new HttpRequest('POST', url, formData, httpOptions);
     this.http.request(request)
       .subscribe(event => {
