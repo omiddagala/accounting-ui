@@ -230,35 +230,41 @@
                     *ngFor="let item of result; let i = index">
             <div class="row justify-content-between">
               <div class="col-auto mat-body-2">مبدا</div>
-              <div class="col-auto mat-body"
+              <div class="col-auto mat-body-2"
                    style="text-align: end">{{item.source.name}}</div>
             </div>
             <div class="row justify-content-between pt-3 pb-2">
               <div class="col-auto mat-body-2">مقصد</div>
-              <div class="col-auto mat-body"
+              <div class="col-auto mat-body-2"
                    style="text-align: end">
                 {{item.destination.name}}
               </div>
             </div>
             <div class="row justify-content-between pt-3 pb-2">
               <div class="col-auto mat-body-2">محصول</div>
-              <div class="col-auto mat-body"
+              <div class="col-auto mat-body-2"
                    style="text-align: end">
                 {{item.product.name}}
               </div>
             </div>
             <hr class="w-75 mx-auto  mt-4">
             <div class="row justify-content-between pt-1">
-              <div class="col-auto">
-                <button mat-flat-button
-                        class="mat-body-1"
-                        style="background: green;color: white">
-                  ویرایش
-                </button>
-              </div>
-              <div class="col-auto">
-
-              </div>
+              <button mat-button
+                      (click)="closeOrder(item.id)"
+                      color="warn"
+                      matTooltip="ویرایش">
+                <span>حذف</span>
+              </button>
+              <button mat-button
+                      (click)="approveOrder(item.id, item.orders)"
+                      style="color: green"
+                      matTooltip="ویرایش">
+                <span>تایید</span>
+              </button>
+              <button mat-button
+                      (click)="openDialog(item)">
+                مشاهده
+              </button>
             </div>
           </mat-card>
           <mat-spinner *ngIf="loading"
