@@ -116,7 +116,6 @@ export class LibraryComponent implements OnInit {
       data: {product: productt}
     });
 
-
   }
 
   delete(id, index) {

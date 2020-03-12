@@ -250,7 +250,9 @@ export class DetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.size.count = result === '0' ? null : result;
+      if (result !== undefined) {
+        this.size.count = result === '0' ? null : result;
+      }
     });
   }
 
