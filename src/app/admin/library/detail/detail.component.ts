@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CommonService} from '../../../../shared/common/common.service';
 import * as moment from 'jalali-moment';
-import {error} from 'util';
+
 
 
 export interface DialogData {
@@ -197,7 +197,7 @@ export class DetailComponent implements OnInit {
           }
           this.initFormGroup();
           this.loading = false;
-          this.addSizeIsNotInProductSize();
+          // this.addSizeIsNotInProductSize();
         },
         err => {
           this.loading = false;
@@ -205,7 +205,7 @@ export class DetailComponent implements OnInit {
         });
   }
 
-  addSizeIsNotInProductSize() {
+  /*addSizeIsNotInProductSize() {
     this.http.post('http://127.0.0.1:9000/v1/shop/size/list', {}, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -233,7 +233,7 @@ export class DetailComponent implements OnInit {
 
         }
       );
-  }
+  }*/
 
   convertNumbers(str) {
     const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
@@ -388,12 +388,14 @@ export class CountDialog implements OnInit {
   }
 
   setBarcodeInWindow(mywindow, div) {
-    let [name, price, size] = [this.data.product.name, this.data.product.price, this.data.productSize.size.value];
+    console.log(this.data)
+    const [id , name, price, size] = [this.data.productSize.id ,this.data.product.name, this.data.product.price, this.data.productSize.size.value];
     console.log(this.data.productSize);
     mywindow.document.write('<html><head><title></title>');
     mywindow.document.write('</head><body  style="padding: 0 !important;margin: 0 !important;display: flex; justify-content: center">');
     mywindow.document.write('<div class="d-flex flex-column justify-content-center">');
     mywindow.document.write(div.innerHTML);
+    mywindow.document.write('<div style="display: flex; justify-content: center"> ' + id + '</div>');
     mywindow.document.write('<div style="display: flex; justify-content: center"> ' + name + '</div>');
     mywindow.document.write('<div style="display: flex; justify-content: center">' + price + '</div>');
     mywindow.document.write('<div style="display: flex; justify-content: center">' + size + '</div>');

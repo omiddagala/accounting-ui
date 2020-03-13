@@ -46,7 +46,8 @@ export class LibraryComponent implements OnInit {
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
       type: new FormControl(undefined),
-      name: new FormControl(undefined)
+      name: new FormControl(undefined),
+      productCode: new FormControl(undefined)
     });
     this.search();
   }
@@ -65,7 +66,8 @@ export class LibraryComponent implements OnInit {
     this.result = [];
     const param = {
       name: this.formGroup.get('name').value,
-      type: this.formGroup.get('type').value
+      type: this.formGroup.get('type').value,
+      id: this.formGroup.get('productCode').value
     };
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/product/list', param, {
       headers: {
