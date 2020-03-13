@@ -60,7 +60,7 @@ export class DetailComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               public dialog: MatDialog,
-              private commonService: CommonService) {
+              public commonService: CommonService) {
 
   }
 

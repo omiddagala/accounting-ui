@@ -31,7 +31,7 @@ export class ReservoirComponent implements OnInit {
               private http: HttpClient,
               public router: Router,
               public dialog: MatDialog,
-              private commonService: CommonService) {
+              public commonService: CommonService) {
   }
 
   ngOnInit(): void {

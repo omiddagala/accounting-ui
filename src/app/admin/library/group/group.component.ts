@@ -30,7 +30,7 @@ export class GroupComponent implements OnInit {
               private http: HttpClient,
               private router: Router,
               public dialog: MatDialog,
-              private commonService: CommonService) {
+              public commonService: CommonService) {
   }
 
   ngOnInit(): void {
