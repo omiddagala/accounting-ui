@@ -286,14 +286,22 @@
           <!--          ngfor-->
             <mat-card class="w-100 my-2"
                       *ngFor="let item of result; let i = index">
-              <div class="row justify-content-between">
-                <div class="col-auto mat-body-2">نام</div>
-                <div class="col-auto mat-body-2"
+              <div class="row justify-content-between pb-1">
+                <div class="col-4 mat-body-2">نام</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
                      style="text-align: end">{{item.name}}</div>
               </div>
-              <div class="row justify-content-between pt-3 pb-2">
-                <div class="col-auto mat-body-2">نوع</div>
-                <div class="col-auto mat-body-2"
+              <div class="row justify-content-between py-2">
+                <div class="col-4 mat-body-2">انبار</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2 "
+                     style="text-align: end">{{item.reservoir.name}}</div>
+              </div>
+              <div class="row justify-content-between py-1">
+                <div class="col-4 mat-body-2">نوع</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
                      style="text-align: end">{{findTypeById(item.type)}}</div>
               </div>
               <hr class="w-75 mx-auto  mt-4">
