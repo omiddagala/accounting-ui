@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {GroupData, GroupDialog} from './group/group.component';
+import {CommonService} from '../../../shared/common/common.service';
 
 @Component({
   selector: 'app-admin-library',
@@ -38,7 +39,8 @@ export class LibraryComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
               public router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private commonService: CommonService) {
   }
 
   ngOnInit(): void {
