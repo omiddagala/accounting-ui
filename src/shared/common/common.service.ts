@@ -37,7 +37,7 @@ export class CommonService {
   }
 
   isAdmin() {
-    return this.hasRole('Princess_Leia');
+    return this.hasRole('ROLE_SHXXOP_ADXXMIN');
   }
 
   isShopAdmin() {

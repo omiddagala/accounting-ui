@@ -9,6 +9,11 @@
            class="px-2">
           {{item.text}}
         </a>
+        <a mat-list-item
+           (click)="commonService.logOut()"
+           class="px-2">
+          خروج
+        </a>
       </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content class="h-100">

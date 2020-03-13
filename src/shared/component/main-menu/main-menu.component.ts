@@ -80,11 +80,12 @@ export class MainMenuComponent implements OnInit {
 
 
   routeLibrary() {
-    if (this.commonService.isCustomer()) {
-      this.router.navigate(['/facilities/library/list']);
-    } else if (this.commonService.isAdmin()) {
+
+      if (this.commonService.isAdmin()) {
       this.router.navigate(['/admin/library']);
-    }
+    } else {
+        this.router.navigate(['/admin/notification']);
+      }
   }
 
 
