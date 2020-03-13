@@ -4,6 +4,7 @@ import Menu from '../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {CommonService} from '../../../shared/common/common.service';
 
 @Component({
   selector: 'app-users-library',
@@ -60,7 +61,8 @@ export class UsersComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
-              public router: Router) {
+              public router: Router,
+              private commonService: CommonService) {
   }
 
   ngOnInit(): void {
@@ -68,6 +70,9 @@ export class UsersComponent implements OnInit {
       type: new FormControl(undefined),
       name: new FormControl(undefined)
     });
+    if (!this.commonService.isAdmin()) {
+      this.router.navigate(['/admin']);
+    }
     this.search();
   }
 

@@ -3,15 +3,18 @@
     <mat-drawer style="min-width: 40%"
                 #snav mode="over">
       <mat-nav-list>
-        <a mat-list-item
-           *ngFor="let item of menu"
-           [routerLink]="item.route"
-           class="px-2">
-          {{item.text}}
-        </a>
+        <div *ngFor="let item of menu">
+          <a mat-list-item
+             *ngIf="commonService.canSeePage(item.value)"
+             [routerLink]="item.route"
+             class="px-2">
+            {{item.text}}
+          </a>
+        </div>
+
         <a mat-list-item
            (click)="commonService.logOut()"
-            class="px-2">
+           class="px-2">
           خروج
         </a>
       </mat-nav-list>
@@ -325,18 +328,25 @@
                   </button>
                 </div>
 
-                <div class="col-4">
-                  <button mat-stroked-button
+                <div class="col-2">
+                  <button mat-icon-button
                           (click)="copyProduct(item.id)">
-                    <span>کپی</span>
+                    <mat-icon>file_copy</mat-icon>
                   </button>
                 </div>
 
-                <div class="col-4">
-                  <button mat-stroked-button
+                <div class="col-2">
+                  <button mat-icon-button
                           color="success"
                           (click)="openTimelineDialog(item.id)">
-                    <span>تاریخچه</span>
+                    <mat-icon color="primary">timeline</mat-icon>
+                  </button>
+                </div>
+
+                <div class="col-3 ">
+                  <button mat-stroked-button
+                          (click)="routeToOrder(item.id)">
+                    <span>حواله</span>
                   </button>
                 </div>
 

@@ -3,12 +3,15 @@
     <mat-drawer style="min-width: 40%"
                 #snav mode="over">
       <mat-nav-list>
-        <a mat-list-item
-           *ngFor="let item of menu"
-           [routerLink]="item.route"
-           class="px-2">
-          {{item.text}}
-        </a>
+        <div *ngFor="let item of menu">
+          <a mat-list-item
+             *ngIf="commonService.canSeePage(item.value)"
+             [routerLink]="item.route"
+             class="px-2">
+            {{item.text}}
+          </a>
+        </div>
+
         <a mat-list-item
            (click)="commonService.logOut()"
            class="px-2">

@@ -11,7 +11,6 @@ import * as moment from 'jalali-moment';
 export class CommonService {
 
   private user: any;
-
   constructor(private router: Router,
               public snackbar: MatSnackBar) {
   }
@@ -19,6 +18,25 @@ export class CommonService {
   setUser(u) {
     this.user = u;
   }
+
+/*
+  getUserRole() {
+    return this.getUser().roles[0];
+  }
+*/
+
+  canSeePage(page) {
+    if (page === 'users') {
+      if (this.isAdmin()) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
 
   getUser() {
     return this.user;
@@ -45,15 +63,13 @@ export class CommonService {
   }
 
   locateFirstPage() {
-    // if (this.isShopAdmin()) {
-    //   this.router.navigate(['/admin']);
-    // }
+
     this.router.navigate(['/admin']);
   }
 
   isEnglish(m) {
     return /^[A-Za-z0-9]*$/.test(m.charAt(0));
-  };
+  }
 
   handleError(e) {
     if (e.status === 400) {
@@ -85,6 +101,10 @@ export class CommonService {
     this.router.navigate(['/auth/login']);
     localStorage.clear();
   }
+
+
+
+
 
   public toEnglishDigits(str) {
     const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];

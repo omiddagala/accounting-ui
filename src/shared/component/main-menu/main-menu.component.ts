@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonService} from '../../common/common.service';
 // @ts-ignore
 import Menu from '../../data/menu.json';
@@ -12,58 +12,63 @@ import {HttpClient} from '@angular/common/http';
 })
 
 export class MainMenuComponent implements OnInit {
-  // menu = [
-  //   {
-  //     text: 'خانه',
-  //     route: this.routeHome
-  //   },
-  //   {
-  //     text: 'قوانین و مقررات',
-  //     route: this.routeHome
-  //   },
-  //   {
-  //     text: 'کاربران',
-  //     route: this.routeUsers
-  //   }
-  //
-  // ];
-  notificationNumber = 0;
+
   @Input() logo: boolean;
   @Input() mainMenu: boolean;
   @Input() profile: boolean;
   @Input() snav: any;
-
+  @Output() ordersList = new EventEmitter<object>();
+  notificationsNumber: any;
   constructor(public commonService: CommonService,
               private router: Router,
               private http: HttpClient) {
 
   }
 
-  ngOnInit(): void {
-    this.getOrders();
+   ngOnInit() {
+     this.getOrders();
   }
 
-  getOrders() {
-    this.http.post('http://127.0.0.1:9000/v1/shop/order/fetch', {}, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
-    })
-      .subscribe(
-        (val) => {
-          console.log(val);
-          const result: any = val;
-          this.notificationNumber = result.length;
-        },
-        response => {
-        });
-  }
 
   toggleDrawer() {
     // console.log(this.snav.drawer);
     // this.snav.drawer.toggle();
     this.snav.toggle();
     // snav.toggle()
+  }
+
+   getOrders() {
+    const TIME = 20000;
+    this.ordersList.emit({
+      orders: [],
+      loading: true
+    });
+     this.gerOrdersRequest();
+    setInterval(() => {
+      this.gerOrdersRequest();
+    }, TIME);
+
+  }
+
+   gerOrdersRequest() {
+      this.http.post('http://127.0.0.1:9000/v1/shop/order/fetch', {}, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
+        .subscribe(
+          (val) => {
+            const result: any = val;
+            this.notificationsNumber = result.length;
+            this.ordersList.emit({
+              orders: val,
+              loading: false
+            });
+          },
+          err => {
+            console.log(err);
+          });
+
   }
 
   routeHome() {
@@ -80,12 +85,11 @@ export class MainMenuComponent implements OnInit {
 
 
   routeLibrary() {
-
-      if (this.commonService.isAdmin()) {
+    if (this.commonService.isAdmin()) {
       this.router.navigate(['/admin/library']);
     } else {
-        this.router.navigate(['/admin/notification']);
-      }
+      this.router.navigate(['/admin/notification']);
+    }
   }
 
 

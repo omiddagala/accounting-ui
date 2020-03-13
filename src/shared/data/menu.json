@@ -1,14 +1,17 @@
 [
   {
     "text": "خانه",
+    "value": "home",
     "route": "/admin"
   },
   {
     "text": "قوانین و مقررات",
+    "value": "home",
     "route": "/admin"
   },
   {
     "text": "کاربران",
+    "value": "users",
     "route": "/admin/users"
   }
 ]
