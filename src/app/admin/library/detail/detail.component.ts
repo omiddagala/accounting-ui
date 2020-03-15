@@ -372,7 +372,7 @@ export class CountDialog implements OnInit {
   createBarcodeContainer() {
     const imageContainer = document.createElement('div');
     // imageContainer.style.width = 100+'px';
-    imageContainer.style.backgroundColor = 'red';
+    // imageContainer.style.backgroundColor = 'red';
     imageContainer.style.width = 23+'mm';
     imageContainer.style.height = 33+'mm';
     const img = this.createImage();
