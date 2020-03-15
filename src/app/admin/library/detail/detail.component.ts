@@ -9,7 +9,6 @@ import {CommonService} from '../../../../shared/common/common.service';
 import * as moment from 'jalali-moment';
 
 
-
 export interface DialogData {
   count;
 }
@@ -340,6 +339,7 @@ export class DetailComponent implements OnInit {
 @Component({
   selector: 'count-dialog',
   templateUrl: 'count-dialog.html',
+  styleUrls: ['./detail.component.scss']
 })
 export class CountDialog implements OnInit {
 
@@ -361,57 +361,72 @@ export class CountDialog implements OnInit {
 
 
   createImage() {
-    const t = document.querySelector('.barcode').children[0];
-    console.log(t);
-    let url = t.getAttribute('src');
+    const barcodeImage = document.querySelector('.barcode').children[0];
+    let url = barcodeImage.getAttribute('src');
     const img = document.createElement('img');
+    img.style.width = 23+'mm';
     img.setAttribute('src', url);
     return img;
   }
 
-  createDivForPrint() {
+  createBarcodeContainer() {
+    const imageContainer = document.createElement('div');
+    // imageContainer.style.width = 100+'px';
+    imageContainer.style.backgroundColor = 'red';
+    imageContainer.style.width = 23+'mm';
+    imageContainer.style.height = 33+'mm';
     const img = this.createImage();
-    const div = document.createElement('div');
-    div.appendChild(img);
-    div.style.width = '100%';
-    div.style.height = '100%';
-    return div;
+    imageContainer.style.display = 'flex';
+    imageContainer.style.flexDirection = 'column';
+    imageContainer.style.justifyContent = 'center';
+    imageContainer.append(img);
+    const info = [this.data.productSize.id, this.data.product.name, this.data.product.price, this.data.productSize.size.value];
+    for (const item of info) {
+      const infoDiv = document.createElement('div');
+      infoDiv.style.fontSize = 11+'px';
+      infoDiv.innerHTML = item;
+      infoDiv.style.display = 'flex';
+      infoDiv.style.justifyContent = 'center';
+      imageContainer.append(infoDiv);
+    }
+    return imageContainer;
   }
 
   printBarcode() {
     this.showBarcode = true;
     setTimeout(() => {
-
       this.showPrintPage();
-
     }, 100);
   }
 
   setBarcodeInWindow(mywindow, div) {
-    console.log(this.data)
-    const [id , name, price, size] = [this.data.productSize.id ,this.data.product.name, this.data.product.price, this.data.productSize.size.value];
-    console.log(this.data.productSize);
+    // style="@media print { width: 370px}"
     mywindow.document.write('<html><head><title></title>');
-    mywindow.document.write('</head><body  style="padding: 0 !important;margin: 0 !important;display: flex; justify-content: center">');
-    mywindow.document.write('<div class="d-flex flex-column justify-content-center">');
+    mywindow.document.write('</head><body  style="padding: 0 !important;margin: 0 !important;display: flex;flex-wrap: wrap;align-content: baseline">');
     mywindow.document.write(div.innerHTML);
-    mywindow.document.write('<div style="display: flex; justify-content: center"> ' + id + '</div>');
-    mywindow.document.write('<div style="display: flex; justify-content: center"> ' + name + '</div>');
-    mywindow.document.write('<div style="display: flex; justify-content: center">' + price + '</div>');
-    mywindow.document.write('<div style="display: flex; justify-content: center">' + size + '</div>');
-    mywindow.document.write('</div>');
     mywindow.document.write('</body></html>');
   }
 
   showPrintPage() {
-    let div = this.createDivForPrint();
-    const mywindow = window.open('', '', 'left=200,top=200,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    this.setBarcodeInWindow(mywindow, div);
-    mywindow.document.close(); // necessary for IE >= 10
-    mywindow.focus(); // necessary for IE >= 10*/
+    const container = document.createElement('div');
+    container.style.width = 100+'%'
+    container.style.display = 'flex';
+    container.style.flexDirection = 'row';
+    container.style.flexWrap = 'wrap';
+    for (let i = 0; i < this.data.count; i++) {
+      const div = this.createBarcodeContainer();
+      div.style.margin = 1+'mm';
+      console.log(i)
+      container.appendChild(div);
+    }
+    console.log(container);
+    const myWindow = window.open('', '', 'left=200,top=200,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    this.setBarcodeInWindow(myWindow, container);
+    myWindow.document.close(); // necessary for IE >= 10
+    myWindow.focus(); // necessary for IE >= 10*/
     setTimeout(function() {
-      mywindow.print();
-      mywindow.close();
+      myWindow.print();
+      myWindow.close();
     }, 200);
   }
 
