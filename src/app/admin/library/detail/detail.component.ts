@@ -402,7 +402,7 @@ export class CountDialog implements OnInit {
   setBarcodeInWindow(mywindow, div) {
     // style="@media print { width: 370px}"
     mywindow.document.write('<html><head><title></title>');
-    mywindow.document.write('</head><body  style="padding: 0 !important;margin: 0 !important;display: flex;flex-wrap: wrap;align-content: baseline">');
+    mywindow.document.write('</head><body  style="padding: 0 !important;margin: 0 !important;display: flex;flex-wrap: wrap;align-content: baseline;padding: 1mm">');
     mywindow.document.write(div.innerHTML);
     mywindow.document.write('</body></html>');
   }
