@@ -40,7 +40,7 @@ export class LibraryComponent implements OnInit {
               private http: HttpClient,
               public router: Router,
               private dialog: MatDialog,
-              private commonService: CommonService) {
+              public commonService: CommonService) {
   }
 
   ngOnInit(): void {

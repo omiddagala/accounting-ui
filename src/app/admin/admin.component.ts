@@ -9,6 +9,6 @@ import {CommonService} from '../../shared/common/common.service';
 })
 
 export class AdminComponent {
-  constructor(private commonService: CommonService){}
+  constructor(public commonService: CommonService){}
   menu: any = Menu;
 }

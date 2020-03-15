@@ -25,7 +25,7 @@ export class NotificationComponent implements OnInit {
               private http: HttpClient,
               public dialog: MatDialog,
               private router: Router,
-              private commonService: CommonService) {
+              public commonService: CommonService) {
   }
 
   ngOnInit(): void {
