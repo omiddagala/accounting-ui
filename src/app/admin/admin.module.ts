@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {AdminComponent} from './admin.component';
 import {AdminRoutingModule} from './admin-routing.module';
 import {LibraryComponent, TimelineDialog} from './library/library.component';
+import { NgxCurrencyModule } from "ngx-currency";
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -16,7 +17,7 @@ import {
   MatSelectModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
 } from '@angular/material';
 import {MainMenuModule} from '../../shared/component/main-menu/MainMenu.module';
 import {CommonModule} from '@angular/common';
@@ -68,6 +69,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     QRCodeModule,
     MatAutocompleteModule,
     NgxBarcodeModule,
+    NgxCurrencyModule,
   ],
   declarations: [
     AdminComponent,

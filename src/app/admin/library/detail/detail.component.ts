@@ -369,10 +369,12 @@ export class CountDialog implements OnInit {
     return img;
   }
 
+   numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   createBarcodeContainer() {
     const imageContainer = document.createElement('div');
-    // imageContainer.style.width = 100+'px';
-    // imageContainer.style.backgroundColor = 'red';
     imageContainer.style.width = 23+'mm';
     imageContainer.style.height = 33+'mm';
     const img = this.createImage();
@@ -380,7 +382,7 @@ export class CountDialog implements OnInit {
     imageContainer.style.flexDirection = 'column';
     imageContainer.style.justifyContent = 'center';
     imageContainer.append(img);
-    const info = [this.data.productSize.id, this.data.product.name, this.data.product.price, this.data.productSize.size.value];
+    const info = [this.data.productSize.id, this.data.product.name, this.numberWithCommas(this.data.product.price)  + 'R', this.data.productSize.size.value];
     for (const item of info) {
       const infoDiv = document.createElement('div');
       infoDiv.style.fontSize = 11+'px';

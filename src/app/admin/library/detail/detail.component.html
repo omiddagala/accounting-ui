@@ -71,6 +71,8 @@
                   <input formControlName="price"
                          matInput
                          required
+                         currencyMask
+                         [options]="{ prefix: '', thousands: ',', precision: 0 }"
                          autocomplete="off"
                          placeholder="قیمت">
                   <mat-error *ngIf="formGroup.get('price').hasError('required')">
