@@ -204,35 +204,6 @@ export class DetailComponent implements OnInit {
         });
   }
 
-  /*addSizeIsNotInProductSize() {
-    this.http.post('http://127.0.0.1:9000/v1/shop/size/list', {}, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
-    })
-      .subscribe(
-        val => {
-          console.log('sizes');
-          console.log(val);
-          let list: any = val;
-          const otherSize = list.filter(size => {
-            for (const item of this.product.productSizes) {
-              if (item.size.id === size.id) {
-                return false;
-              }
-            }
-            return true;
-          });
-          for (let size of otherSize) {
-            this.product.productSizes.push({
-              size,
-              count: null
-            });
-          }
-
-        }
-      );
-  }*/
 
   convertNumbers(str) {
     const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
@@ -346,9 +317,11 @@ export class CountDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CountDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    @Inject(ComponentFactoryResolver) factoryResolver) {
+    @Inject(ComponentFactoryResolver) factoryResolver,
+    private router: Router,
+    private commonService: CommonService) {
   }
-
+  printer:any;
   showBarcode = false;
 
   ngOnInit(): void {
@@ -364,7 +337,9 @@ export class CountDialog implements OnInit {
     const barcodeImage = document.querySelector('.barcode').children[0];
     let url = barcodeImage.getAttribute('src');
     const img = document.createElement('img');
-    img.style.width = 23+'mm';
+    img.style.width = `${this.printer.barcodeWidth}mm`;
+    img.style.margin = 'auto';
+    img.style.height = `${this.printer.barcodeHeight}mm`;
     img.setAttribute('src', url);
     return img;
   }
@@ -375,17 +350,18 @@ export class CountDialog implements OnInit {
 
   createBarcodeContainer() {
     const imageContainer = document.createElement('div');
-    imageContainer.style.width = 23+'mm';
-    imageContainer.style.height = 33+'mm';
+    imageContainer.style.width = `${this.printer.labelWidth}mm`;
+    imageContainer.style.height = `${this.printer.labelHeight}mm`;
     const img = this.createImage();
     imageContainer.style.display = 'flex';
+    imageContainer.style.backgroundColor = 'red';
     imageContainer.style.flexDirection = 'column';
     imageContainer.style.justifyContent = 'center';
     imageContainer.append(img);
     const info = [this.data.productSize.id, this.data.product.name, this.numberWithCommas(this.data.product.price)  + 'R', this.data.productSize.size.value];
     for (const item of info) {
       const infoDiv = document.createElement('div');
-      infoDiv.style.fontSize = 11+'px';
+      infoDiv.style.fontSize = `${this.printer.fontSize}px`;
       infoDiv.innerHTML = item;
       infoDiv.style.display = 'flex';
       infoDiv.style.justifyContent = 'center';
@@ -394,31 +370,57 @@ export class CountDialog implements OnInit {
     return imageContainer;
   }
 
+  getPrinterInfo() {
+    const obj = localStorage.getItem('printer');
+    const printerInfo = JSON.parse(obj);
+    this.printer = printerInfo;
+  }
+
   printBarcode() {
-    this.showBarcode = true;
-    setTimeout(() => {
-      this.showPrintPage();
-    }, 100);
+    if (localStorage.getItem('printer')) {
+      this.getPrinterInfo();
+      this.showBarcode = true;
+      setTimeout(() => {
+        this.showPrintPage();
+      }, 100);
+    } else {
+      this.onNoClick();
+      this.commonService.showMessage('ابتدا تنظیمات پرینت رو مشخص کنید', 'error-msg');
+      this.router.navigate(['/admin/printer']);
+    }
   }
 
   setBarcodeInWindow(mywindow, div) {
     // style="@media print { width: 370px}"
+    const body = document.createElement('body');
+    // body.style.width = `50px`;
+    body.style.display = 'flex';
+    body.style.flexWrap = 'wrap';
+    body.style.alignContent = 'baseline';
+    body.appendChild(div);
+    console.log(body);
     mywindow.document.write('<html><head><title></title>');
-    mywindow.document.write('</head><body  style="padding: 0 !important;margin: 0 !important;display: flex;flex-wrap: wrap;align-content: baseline;padding: 1mm">');
-    mywindow.document.write(div.innerHTML);
-    mywindow.document.write('</body></html>');
+    mywindow.document.write('</head>');
+    mywindow.document.write(body.innerHTML);
+    mywindow.document.write('</html>');
   }
 
   showPrintPage() {
     const container = document.createElement('div');
-    container.style.width = 100+'%'
+    container.style.width = `100%`;
+    container.style.paddingRight = `${this.printer.paperPaddingX}mm`;
+    container.style.paddingLeft = `${this.printer.paperPaddingX}mm`;
+    container.style.paddingTop = `${this.printer.paperPaddingY}mm`;
+    container.style.paddingBottom = `${this.printer.paperPaddingY}mm`;
     container.style.display = 'flex';
     container.style.flexDirection = 'row';
     container.style.flexWrap = 'wrap';
     for (let i = 0; i < this.data.count; i++) {
       const div = this.createBarcodeContainer();
-      div.style.margin = 1+'mm';
-      console.log(i)
+      div.style.marginLeft = `${this.printer.labelMarginX}mm`;
+      div.style.marginRight = `${this.printer.labelMarginX}mm`;
+      div.style.marginTop = `${this.printer.labelMarginY}mm`;
+      div.style.marginBottom = `${this.printer.labelMarginY}mm`;
       container.appendChild(div);
     }
     console.log(container);

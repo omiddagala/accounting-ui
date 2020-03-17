@@ -3,14 +3,14 @@
     <mat-drawer style="min-width: 40%"
                 #snav mode="over">
       <mat-nav-list>
-        <!--<div *ngFor="let item of menu">
+        <div *ngFor="let item of menu">
           <a mat-list-item
              *ngIf="commonService.canSeePage(item.value)"
              [routerLink]="item.route"
              class="px-2">
             {{item.text}}
           </a>
-        </div>-->
+        </div>
 
         <a mat-list-item
            (click)="commonService.logOut()"
@@ -26,42 +26,161 @@
                      [profile]="true">
       </app-main-menu>
       <mat-toolbar style="height: 56px"
-                   class="d-none d-lg-flex blue-toolbar row  px-md-5 justify-content-between">
+                   class="d-flex blue-toolbar row  px-md-5 justify-content-between">
         <div class="col-auto mat-body-1">
-          <span>حواله ها</span>
+          <span> تنظیمات پرینت</span>
         </div>
 
       </mat-toolbar>
 
-      <div class="row mx-auto px-lg-5 mt-3  w-100 d-none d-lg-flex">
+      <div class="row mx-auto px-lg-5 mt-3  w-100  d-flex">
         <div class="col-12 mx-auto" style="padding: 0 !important;">
-          <mat-card>
+          <mat-card class="py-lg-4 px-lg-5">
 
-            <!--salam-->
+            <div class="w-100 mb-2">
+              <div class="mat-card-title">توجه:</div>
+              <div> * همه  اندازه ها به جز سایز فونت بر حسب میلیمتر می باشد . سایز فونت بر حسب پیکسل می باشد</div>
+            </div>
 
-          </mat-card>
-        </div>
-      </div>
-      <!--  @@@@@@@@@@@@@@@@@@@@ d-block d-lg-none @@@@@@@@@@@@@@@@@@@@@@-->
-      <mat-toolbar class="d-lg-none d-flex justify-content-between zero-padding-mobile"
-                   style="background: #236b81 ">
-        <div class="col-auto px-md-5">
-          <button mat-flat-button
-                  routerLink="/admin/users/detail"
-                  class="change-search-btn">
-            ایجاد
-          </button>
-        </div>
+            <form [formGroup]="formGroup"
+                  class="d-flex flex-row justify-content-between flex-wrap w-100">
 
-      </mat-toolbar>
+              <div dir="rtl" class="col-12 col-lg-6 px-3" >
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>حاشیه افقی از کناره کاغذ</mat-label>
+                  <input formControlName="paperPaddingX"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 15">
+                  <mat-error *ngIf="formGroup.get('paperPaddingX').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
-      <div class="d-flex  d-lg-none flex-wrap">
-        <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"
-             style="margin-left: 0 !important;margin-right: 0 !important;">
+              <div dir="rtl" class="col-12 col-lg-6 px-3" >
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>حاشیه عمودی از کناره کاغذ</mat-label>
+                  <input formControlName="paperPaddingY"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 15">
+                  <mat-error *ngIf="formGroup.get('paperPaddingY').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
-          <mat-card class="w-100 my-2">
+              <div dir="rtl" class="col-12 col-lg-6 px-3" >
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>طول برچسب</mat-label>
+                  <input formControlName="labelWidth"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 15">
+                  <mat-error *ngIf="formGroup.get('labelWidth').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
-          <!---->
+              <div dir="rtl" class="col-12 col-lg-6 px-3">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>عرض برچسب</mat-label>
+                  <input formControlName="labelHeight"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 10">
+                  <mat-error *ngIf="formGroup.get('labelHeight').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div dir="rtl" class="col-12 col-lg-6 px-3">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>فاصله افقی بین برچسب ها</mat-label>
+                  <input formControlName="labelMarginX"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 10">
+                  <mat-error *ngIf="formGroup.get('labelMarginX').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div dir="rtl" class="col-12 col-lg-6 px-3">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>فاصله عمودی بین برچسب ها</mat-label>
+                  <input formControlName="labelMarginY"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 10">
+                  <mat-error *ngIf="formGroup.get('labelMarginY').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div dir="rtl" class="col-12 col-lg-6 px-3">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>طول بارکد</mat-label>
+                  <input formControlName="barcodeWidth"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 10">
+                  <mat-error *ngIf="formGroup.get('barcodeWidth').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div dir="rtl" class="col-12 col-lg-6 px-3">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>عرض بارکد</mat-label>
+                  <input formControlName="barcodeHeight"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 10">
+                  <mat-error *ngIf="formGroup.get('barcodeHeight').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div dir="rtl" class="col-12 col-lg-6 px-3">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>سایز فونت</mat-label>
+                  <input formControlName="fontSize"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 10">
+                  <mat-error *ngIf="formGroup.get('fontSize').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+            </form>
+
+            <div class="w-100 d-flex justify-content-center my-2">
+              <button mat-button
+                      class="mx-auto"
+                      (click)="savePrinterSetting()"
+                      style="background-color: green;color: white">
+                ثبت
+              </button>
+            </div>
 
           </mat-card>
         </div>
