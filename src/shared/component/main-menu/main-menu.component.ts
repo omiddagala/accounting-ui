@@ -83,6 +83,10 @@ export class MainMenuComponent implements OnInit {
     this.router.navigate(['/admin/notification']);
   }
 
+  routeToPrinter() {
+    this.router.navigate(['/admin/printer']);
+  }
+
 
   routeLibrary() {
     if (this.commonService.isAdmin()) {

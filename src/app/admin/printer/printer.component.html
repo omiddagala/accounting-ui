@@ -1,0 +1,72 @@
+<div class="w-100 h-100 wrapper">
+  <mat-drawer-container class="h-100 w-100" dir="rtl">
+    <mat-drawer style="min-width: 40%"
+                #snav mode="over">
+      <mat-nav-list>
+        <!--<div *ngFor="let item of menu">
+          <a mat-list-item
+             *ngIf="commonService.canSeePage(item.value)"
+             [routerLink]="item.route"
+             class="px-2">
+            {{item.text}}
+          </a>
+        </div>-->
+
+        <a mat-list-item
+           (click)="commonService.logOut()"
+           class="px-2">
+          خروج
+        </a>
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content class="h-100">
+      <app-main-menu [logo]="true"
+                     [snav]="snav"
+                     [mainMenu]="true"
+                     [profile]="true">
+      </app-main-menu>
+      <mat-toolbar style="height: 56px"
+                   class="d-none d-lg-flex blue-toolbar row  px-md-5 justify-content-between">
+        <div class="col-auto mat-body-1">
+          <span>حواله ها</span>
+        </div>
+
+      </mat-toolbar>
+
+      <div class="row mx-auto px-lg-5 mt-3  w-100 d-none d-lg-flex">
+        <div class="col-12 mx-auto" style="padding: 0 !important;">
+          <mat-card>
+
+            <!--salam-->
+
+          </mat-card>
+        </div>
+      </div>
+      <!--  @@@@@@@@@@@@@@@@@@@@ d-block d-lg-none @@@@@@@@@@@@@@@@@@@@@@-->
+      <mat-toolbar class="d-lg-none d-flex justify-content-between zero-padding-mobile"
+                   style="background: #236b81 ">
+        <div class="col-auto px-md-5">
+          <button mat-flat-button
+                  routerLink="/admin/users/detail"
+                  class="change-search-btn">
+            ایجاد
+          </button>
+        </div>
+
+      </mat-toolbar>
+
+      <div class="d-flex  d-lg-none flex-wrap">
+        <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"
+             style="margin-left: 0 !important;margin-right: 0 !important;">
+
+          <mat-card class="w-100 my-2">
+
+          <!---->
+
+          </mat-card>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
+

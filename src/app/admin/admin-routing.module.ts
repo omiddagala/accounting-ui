@@ -11,6 +11,7 @@ import {OrderComponent} from './library/order/order.component';
 import {NotificationComponent} from './notification/notification.component';
 import {GroupComponent} from './library/group/group.component';
 import {TimelineComponent} from './library/timeline/timeline.component';
+import {PrinterComponent} from './printer/printer.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
   {
     path: 'library/timeline/:id',
     component: TimelineComponent
+  },
+  {
+    path: 'printer',
+    component: PrinterComponent
   },
   {
     path: 'users',

@@ -41,6 +41,7 @@ import {NotificationComponent, NotificationDialog} from './notification/notifica
 import {GroupComponent, GroupDialog} from './library/group/group.component';
 import {TimelineComponent} from './library/timeline/timeline.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
+import {PrinterComponent} from './printer/printer.component';
 
 @NgModule({
   imports: [
@@ -89,7 +90,8 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     TimelineComponent,
     OrderCountDialog,
     NotificationDialog,
-    TimelineDialog
+    TimelineDialog,
+    PrinterComponent
   ],
   exports: [
     AudioUploaderComponent,
