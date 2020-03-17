@@ -354,7 +354,6 @@ export class CountDialog implements OnInit {
     imageContainer.style.height = `${this.printer.labelHeight}mm`;
     const img = this.createImage();
     imageContainer.style.display = 'flex';
-    imageContainer.style.backgroundColor = 'red';
     imageContainer.style.flexDirection = 'column';
     imageContainer.style.justifyContent = 'center';
     imageContainer.append(img);

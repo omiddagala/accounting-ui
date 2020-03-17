@@ -15,7 +15,7 @@ export class PrinterComponent implements OnInit {
   formGroup: FormGroup;
   menu: any = Menu;
 
-  constructor(private commonService: CommonService,
+  constructor(public commonService: CommonService,
               private formBuilder: FormBuilder,
               private router: Router) {
   }
