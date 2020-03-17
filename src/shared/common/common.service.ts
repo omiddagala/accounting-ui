@@ -99,7 +99,9 @@ export class CommonService {
 
   logOut() {
     this.router.navigate(['/auth/login']);
-    localStorage.clear();
+    // localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
 
