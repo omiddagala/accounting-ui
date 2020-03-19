@@ -160,6 +160,20 @@
               <div dir="rtl" class="col-12 col-lg-6 px-3">
                 <mat-form-field class="w-100"
                                 appearance="outline">
+                  <mat-label>عرض صفحه</mat-label>
+                  <input formControlName="paperHeight"
+                         matInput
+                         autocomplete="off"
+                         placeholder="مثال: 10">
+                  <mat-error *ngIf="formGroup.get('paperHeight').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div dir="rtl" class="col-12 col-lg-6 px-3">
+                <mat-form-field class="w-100"
+                                appearance="outline">
                   <mat-label>سایز فونت</mat-label>
                   <input formControlName="fontSize"
                          matInput

@@ -396,6 +396,7 @@ export class CountDialog implements OnInit {
     body.style.display = 'flex';
     body.style.flexWrap = 'wrap';
     body.style.alignContent = 'baseline';
+    body.style.backgroundColor = 'green';
     body.appendChild(div);
     console.log(body);
     mywindow.document.write('<html><head><title></title>');
@@ -408,9 +409,11 @@ export class CountDialog implements OnInit {
     const container = document.createElement('div');
     container.style.width = `100%`;
     container.style.paddingRight = `${this.printer.paperPaddingX}mm`;
+    container.style.height = `${this.printer.paperHeight}mm`;
     container.style.paddingLeft = `${this.printer.paperPaddingX}mm`;
     container.style.paddingTop = `${this.printer.paperPaddingY}mm`;
     container.style.paddingBottom = `${this.printer.paperPaddingY}mm`;
+    container.style.alignContent = 'baseline';
     container.style.display = 'flex';
     container.style.flexDirection = 'row';
     container.style.flexWrap = 'wrap';

@@ -30,7 +30,8 @@ export class PrinterComponent implements OnInit {
       barcodeHeight: new FormControl('', Validators.required),
       fontSize: new FormControl('', Validators.required),
       paperPaddingX: new FormControl('', Validators.required),
-      paperPaddingY: new FormControl('', Validators.required)
+      paperPaddingY: new FormControl('', Validators.required),
+      paperHeight: new FormControl('', Validators.required)
     });
 
     this.initForm();
@@ -49,7 +50,8 @@ export class PrinterComponent implements OnInit {
         barcodeHeight: obj.barcodeHeight,
         fontSize: obj.fontSize,
         paperPaddingX: obj.paperPaddingX,
-        paperPaddingY: obj.paperPaddingY
+        paperPaddingY: obj.paperPaddingY,
+        paperHeight: obj.paperHeight
       });
     }
   }
@@ -63,7 +65,7 @@ export class PrinterComponent implements OnInit {
   savePrinterSetting() {
     this.checkFormValidation();
     if (!this.formGroup.valid) {
-      console.log('here')
+      console.log('here');
       return;
     }
     let obj: any = {
@@ -75,7 +77,8 @@ export class PrinterComponent implements OnInit {
       barcodeHeight: this.commonService.toEnglishDigits(this.formGroup.get('barcodeHeight').value),
       fontSize: this.commonService.toEnglishDigits(this.formGroup.get('fontSize').value),
       paperPaddingX: this.commonService.toEnglishDigits(this.formGroup.get('paperPaddingX').value),
-      paperPaddingY: this.commonService.toEnglishDigits(this.formGroup.get('paperPaddingY').value)
+      paperPaddingY: this.commonService.toEnglishDigits(this.formGroup.get('paperPaddingY').value),
+      paperHeight: this.commonService.toEnglishDigits(this.formGroup.get('paperHeight').value)
     };
 
     obj = JSON.stringify(obj);
