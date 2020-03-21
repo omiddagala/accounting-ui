@@ -410,6 +410,7 @@ export class CountDialog implements OnInit {
     container.style.width = `100%`;
     container.style.paddingRight = `${this.printer.paperPaddingX}mm`;
     container.style.height = `${this.printer.paperHeight}mm`;
+    container.style.backgroundColor = 'red';
     container.style.paddingLeft = `${this.printer.paperPaddingX}mm`;
     container.style.paddingTop = `${this.printer.paperPaddingY}mm`;
     container.style.paddingBottom = `${this.printer.paperPaddingY}mm`;
@@ -421,7 +422,7 @@ export class CountDialog implements OnInit {
       const div = this.createBarcodeContainer();
       div.style.marginLeft = `${this.printer.labelMarginX}mm`;
       div.style.marginRight = `${this.printer.labelMarginX}mm`;
-      div.style.marginTop = `${this.printer.labelMarginY}mm`;
+      // div.style.marginTop = `${this.printer.labelMarginY}mm`;
       div.style.marginBottom = `${this.printer.labelMarginY}mm`;
       container.appendChild(div);
     }
