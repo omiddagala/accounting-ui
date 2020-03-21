@@ -321,7 +321,8 @@ export class CountDialog implements OnInit {
     private router: Router,
     private commonService: CommonService) {
   }
-  printer:any;
+
+  printer: any;
   showBarcode = false;
 
   ngOnInit(): void {
@@ -344,8 +345,8 @@ export class CountDialog implements OnInit {
     return img;
   }
 
-   numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   createBarcodeContainer() {
@@ -357,7 +358,7 @@ export class CountDialog implements OnInit {
     imageContainer.style.flexDirection = 'column';
     imageContainer.style.justifyContent = 'center';
     imageContainer.append(img);
-    const info = [this.data.productSize.id, this.data.product.name, this.numberWithCommas(this.data.product.price)  + 'R', this.data.productSize.size.value];
+    const info = [this.data.productSize.id, this.data.product.name, this.numberWithCommas(this.data.product.price) + 'R', this.data.productSize.size.value];
     for (const item of info) {
       const infoDiv = document.createElement('div');
       infoDiv.style.fontSize = `${this.printer.fontSize}px`;
@@ -410,7 +411,7 @@ export class CountDialog implements OnInit {
     container.style.width = `100%`;
     container.style.paddingRight = `${this.printer.paperPaddingX}mm`;
     container.style.height = `${this.printer.paperHeight}mm`;
-    container.style.backgroundColor = 'red';
+    // container.style.backgroundColor = 'red';
     container.style.paddingLeft = `${this.printer.paperPaddingX}mm`;
     container.style.paddingTop = `${this.printer.paperPaddingY}mm`;
     container.style.paddingBottom = `${this.printer.paperPaddingY}mm`;
@@ -418,12 +419,22 @@ export class CountDialog implements OnInit {
     container.style.display = 'flex';
     container.style.flexDirection = 'row';
     container.style.flexWrap = 'wrap';
+    let flag = 0; // is center
     for (let i = 0; i < this.data.count; i++) {
       const div = this.createBarcodeContainer();
-      div.style.marginLeft = `${this.printer.labelMarginX}mm`;
-      div.style.marginRight = `${this.printer.labelMarginX}mm`;
+
       // div.style.marginTop = `${this.printer.labelMarginY}mm`;
+      console.log(flag)
       div.style.marginBottom = `${this.printer.labelMarginY}mm`;
+      if (flag === 1) {
+        div.style.marginLeft = `${this.printer.labelMarginX}mm`;
+        div.style.marginRight = `${this.printer.labelMarginX}mm`;
+      }
+      if (flag === 2) {
+        flag = 0;
+      } else {
+        flag++;
+      }
       container.appendChild(div);
     }
     console.log(container);
