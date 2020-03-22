@@ -67,15 +67,32 @@
               <div class="col-10 col-xl-6" dir="rtl">
                 <mat-form-field class="w-100"
                                 appearance="outline">
-                  <mat-label>قیمت</mat-label>
+                  <mat-label>قیمت فروش</mat-label>
                   <input formControlName="price"
                          matInput
                          required
                          currencyMask
                          [options]="{ prefix: '', thousands: ',', precision: 0 }"
                          autocomplete="off"
-                         placeholder="قیمت">
+                         placeholder="قیمت فروش">
                   <mat-error *ngIf="formGroup.get('price').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-10 col-xl-6" dir="rtl">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>قیمت خرید</mat-label>
+                  <input formControlName="buyPrice"
+                         matInput
+                         required
+                         currencyMask
+                         [options]="{ prefix: '', thousands: ',', precision: 0 }"
+                         autocomplete="off"
+                         placeholder="قیمت خرید">
+                  <mat-error *ngIf="formGroup.get('buyPrice').hasError('required')">
                     این فیلد الزامی است
                   </mat-error>
                 </mat-form-field>

@@ -75,7 +75,8 @@ export class DetailComponent implements OnInit {
       month: new FormControl(''),
       year: new FormControl(''),
       price: new FormControl('', Validators.required),
-      group: new FormControl('', Validators.required)
+      group: new FormControl('', Validators.required),
+      buyPrice: new FormControl('', Validators.required)
     });
     this.checkCopyProduct();
     this.getEditInformation();
@@ -167,7 +168,8 @@ export class DetailComponent implements OnInit {
       month: this.expireDate ? this.expireDate[1] : '',
       year: this.expireDate ? this.expireDate[0] : '',
       price: this.product ? this.product.price : '',
-      group: this.product ? (this.product.group ? this.product.group.id : '') : ''
+      group: this.product ? (this.product.group ? this.product.group.id : '') : '',
+      buyPrice: this.product ? this.product.buyPrice : ''
     });
   }
 
@@ -253,6 +255,7 @@ export class DetailComponent implements OnInit {
     this.product.expireDate = moment(this.formGroup.get('year').value + '/' + this.formGroup.get('month').value + '/' + this.formGroup.get('day').value, 'YYYY-MM-DD');
     this.product.image = this.url;
     this.product.price = this.formGroup.get('price').value;
+    this.product.buyPrice = this.formGroup.get('buyPrice').value;
   }
 
   deleteCopyProduct() {
@@ -261,6 +264,7 @@ export class DetailComponent implements OnInit {
 
   save() {
     this.prepareData();
+    console.log(this.product)
     this.http.post('http://127.0.0.1:9000/v1/shop/product/save', this.product, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')

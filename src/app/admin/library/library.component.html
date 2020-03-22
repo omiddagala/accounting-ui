@@ -153,13 +153,13 @@
 
             <div class="row  justify-content-between"
                  style="border-bottom: 2px solid #f1f1f1">
-              <div class=" px-1 text-center table-header col-3 py-2">
+              <div class=" px-1 text-center table-header col-4 py-2">
                 نام
               </div>
-              <div class=" px-1 text-center table-header col-3 py-2">
+             <!-- <div class=" px-1 text-center table-header col-3 py-2">
                 انبار
-              </div>
-              <div class=" px-1 text-center table-header col-2 py-2">
+              </div>-->
+              <div class=" px-1 text-center table-header col-4 py-2">
                 نوع
               </div>
               <div class=" px-1 text-center table-header col-4 py-2">
@@ -169,13 +169,13 @@
               <div class="row justify-content-between"
                    *ngFor="let item of result; let i = index"
                    style="border-bottom: 2px solid #f1f1f1; height: 75px">
-                <div class="col-3 table-items my-auto mat-title text-center py-2">
+                <div class="col-4 table-items my-auto mat-title text-center py-2">
                   {{item.name}}
                 </div>
-                <div class="col-3 table-items my-auto  text-center py-2">
+               <!-- <div class="col-4 table-items my-auto  text-center py-2">
                   {{item.reservoir.name}}
-                </div>
-                <div class="col-2 table-items my-auto  text-center py-2">
+                </div>-->
+                <div class="col-4 table-items my-auto  text-center py-2">
                   {{findTypeById(item.type)}}
                 </div>
                 <div class="col-4 table-items my-auto  text-center py-2">
@@ -332,12 +332,12 @@
                 <div class="col-4 mat-body-2"
                      style="text-align: end">{{item.name}}</div>
               </div>
-              <div class="row justify-content-between py-2">
-                <div class="col-4 mat-body-2">انبار</div>
-                <div class="col-4 d-flex my-auto between-two-content-border"></div>
-                <div class="col-4 mat-body-2 "
-                     style="text-align: end">{{item.reservoir.name}}</div>
-              </div>
+<!--              <div class="row justify-content-between py-2">-->
+<!--                <div class="col-4 mat-body-2">انبار</div>-->
+<!--                <div class="col-4 d-flex my-auto between-two-content-border"></div>-->
+<!--                <div class="col-4 mat-body-2 "-->
+<!--                     style="text-align: end">{{item.reservoir.name}}</div>-->
+<!--              </div>-->
               <div class="row justify-content-between py-1">
                 <div class="col-4 mat-body-2">نوع</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
