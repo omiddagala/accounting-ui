@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, OnInit} from '@angular/core';
 // @ts-ignore
 import Menu from '../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {GroupData, GroupDialog} from './group/group.component';
 import {CommonService} from '../../../shared/common/common.service';
+import {CountDialog} from './detail/detail.component';
 
 @Component({
   selector: 'app-admin-library',
@@ -119,6 +120,16 @@ export class LibraryComponent implements OnInit {
       );
   }
 
+  openDeleteDialog(id, index): void {
+    const dialogRef = this.dialog.open(DeleteDialog, {
+      data: {
+        result : this.result,
+        index: index,
+        id: id
+      }
+    })
+  }
+
   openDialog(productt) {
     const dialogRef = this.dialog.open(TimelineDialog, {
       data: {product: productt}
@@ -126,25 +137,6 @@ export class LibraryComponent implements OnInit {
 
   }
 
-  delete(id, index) {
-    let param = {
-      id: id
-    };
-    this.loading = true;
-    this.http.post('http://127.0.0.1:9000/v1/shop/product/delete', param, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
-    })
-      .subscribe(
-        (val) => {
-          this.loading = false;
-          this.result.splice(index, 1);
-        },
-        response => {
-          this.loading = false;
-        });
-  }
 
   addProduct() {
     localStorage.setItem('productCopy', JSON.stringify({}));
@@ -177,5 +169,51 @@ export class TimelineDialog implements OnInit{
   routeToTimeline(id) {
     this.dialogRef.close();
     this.router.navigate(['/admin/library/timeline/' + id]);
+  }
+}
+
+
+@Component({
+  selector: 'delete-dialog',
+  templateUrl: './delete-dialog.html',
+})
+
+export class DeleteDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DeleteDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(ComponentFactoryResolver) factoryResolver,
+    private http: HttpClient,
+    private commonService: CommonService) {
+  }
+
+  loading = false;
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  delete() {
+    let param = {
+      id: this.data.id
+    };
+    this.loading = true;
+    this.http.post('http://127.0.0.1:9000/v1/shop/product/delete', param, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          this.loading = false;
+          this.data.result.splice(this.data.index, 1);
+          this.onNoClick();
+          this.commonService.showMessage('محصول با موفقیت حذف شد', 'success-msg');
+        },
+        response => {
+          this.loading = false;
+          this.onNoClick();
+          this.commonService.showMessage('خطایی رخ داده است', 'error-msg');
+        });
   }
 }

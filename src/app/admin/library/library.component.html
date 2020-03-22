@@ -183,7 +183,7 @@
                           matTooltip="ویرایش">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button mat-icon-button (click)="delete(item.id, i)"
+                  <button mat-icon-button (click)="openDeleteDialog(item.id, i)"
                           matTooltip="حذف">
                     <mat-icon style="color: red">delete</mat-icon>
                   </button>
@@ -354,7 +354,7 @@
                   </button>
                 </div>
                 <div class="col-2">
-                  <button mat-icon-button (click)="delete(item.id, i)"
+                  <button mat-icon-button (click)="openDeleteDialog(item.id, i)"
                           matTooltip="حذف">
                     <mat-icon style="color: red">delete</mat-icon>
                   </button>

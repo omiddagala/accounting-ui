@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {AdminComponent} from './admin.component';
 import {AdminRoutingModule} from './admin-routing.module';
-import {LibraryComponent, TimelineDialog} from './library/library.component';
+import {DeleteDialog, LibraryComponent, TimelineDialog} from './library/library.component';
 import { NgxCurrencyModule } from "ngx-currency";
 import {
   MatAutocompleteModule,
@@ -91,7 +91,8 @@ import {PrinterComponent} from './printer/printer.component';
     OrderCountDialog,
     NotificationDialog,
     TimelineDialog,
-    PrinterComponent
+    PrinterComponent,
+    DeleteDialog
   ],
   exports: [
     AudioUploaderComponent,
@@ -106,7 +107,8 @@ import {PrinterComponent} from './printer/printer.component';
     OrderCountDialog,
     GroupDialog,
     NotificationDialog,
-    TimelineDialog
+    TimelineDialog,
+    DeleteDialog
   ]
 })
 
