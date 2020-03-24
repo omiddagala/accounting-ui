@@ -1,16 +1,38 @@
-<h1 mat-dialog-title>گروه جدید را وارد کنید</h1>
-<div mat-dialog-content>
-  <mat-form-field dir="rtl">
-    <mat-label dir="rtl">گروه جدید</mat-label>
-    <input style="direction: rtl"
-           matInput
-           [(ngModel)]="data.name">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions dir="rtl">
-  <button mat-button
-          (click)="onNoClick()">لغو</button>
-  <button mat-button
-          (click)="onOkClick(data.name)">ثبت</button>
+<div style="min-width: 280px;" dir="rtl">
+  <h1 mat-dialog-title>گروه جدید را وارد کنید</h1>
+  <div mat-dialog-content>
+    <div dir="rtl">
+      <mat-form-field>
+        <mat-label dir="rtl">گروه جدید</mat-label>
+        <input matInput
+               [(ngModel)]="data.name">
+      </mat-form-field>
+    </div>
+
+    <div dir="rtl">
+      <mat-form-field>
+        <mat-label dir="rtl">از کد</mat-label>
+        <input matInput
+               [(ngModel)]="data.fromCode">
+      </mat-form-field>
+    </div>
+
+    <div dir="rtl">
+      <mat-form-field>
+        <mat-label dir="rtl">تا کد</mat-label>
+        <input matInput
+               [(ngModel)]="data.toCode">
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions
+       dir="rtl"
+       class="d-flex justify-content-between">
+    <button mat-button
+            (click)="onNoClick()">لغو</button>
+    <button mat-button
+            (click)="onOkClick(data)">ثبت</button>
+  </div>
+
 </div>
 

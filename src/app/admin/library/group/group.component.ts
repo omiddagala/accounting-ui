@@ -9,6 +9,8 @@ import {CommonService} from '../../../../shared/common/common.service';
 
 export interface GroupData {
   name;
+  fromCode;
+  toCode;
   ok: boolean;
 }
 
@@ -25,6 +27,8 @@ export class GroupComponent implements OnInit {
   loading = false;
   public result = [];
   name: any;
+  fromCode: any;
+  toCode: any;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -62,6 +66,9 @@ export class GroupComponent implements OnInit {
   }
 
   saveOrUpdate(size) {
+    if (!size.id) {
+      delete size.id;
+    }
     this.loading = true;
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/group/save', size, {
       headers: {
@@ -106,16 +113,27 @@ export class GroupComponent implements OnInit {
   openDialog(size): void {
     if (!size) {
       size = {
-        name: ''
+        name: '',
+        fromCode: '',
+        toCode: ''
       };
     }
+    // console.log(size);
     this.name = size.name;
+    this.fromCode = size.fromCode;
+    this.toCode = size.toCode;
     const dialogRef = this.dialog.open(GroupDialog, {
-      data: {name: this.name}
+      data: {
+        name: this.name,
+        fromCode: this.fromCode,
+        toCode: this.toCode,
+        id: size.id ? size.id : null
+      }
     });
 
     dialogRef.componentInstance.onAdd.subscribe((result) => {
-      size.name = result;
+      console.log(result);
+      size = result;
       this.saveOrUpdate(size);
       dialogRef.close();
     });
