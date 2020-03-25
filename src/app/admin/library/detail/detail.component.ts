@@ -363,7 +363,7 @@ export class CountDialog implements OnInit {
     imageContainer.style.flexDirection = 'column';
     imageContainer.style.justifyContent = 'center';
     imageContainer.append(img);
-    const info = [this.data.productSize.code, this.data.product.name, this.numberWithCommas(this.data.product.price) + 'R', this.data.productSize.size.value];
+    const info = [this.data.productSize.code, this.data.product.group.name, this.numberWithCommas(this.data.product.price) + 'R', this.data.productSize.size.value];
     for (const item of info) {
       const infoDiv = document.createElement('div');
       infoDiv.style.fontSize = `${this.printer.fontSize}px`;
