@@ -47,39 +47,50 @@
                  style="border-bottom: 2px solid #f1f1f1">
 
               <div class=" px-1 text-center table-header col-3 py-2">
-                مبدا
+                عکس
               </div>
-              <div class=" px-1 text-center table-header col-3 py-2">
-                مقصد
-              </div>
-              <div class=" px-1 text-center table-header col-3 py-2">
+
+              <div class=" px-1 text-center table-header col-2 py-2">
                 محصول
               </div>
+
+              <div class=" px-1 text-center table-header col-2 py-2">
+                مبدا
+              </div>
+
+              <div class=" px-1 text-center table-header col-2 py-2">
+                مقصد
+              </div>
+
               <div class=" px-1 text-center table-header col-3 py-2">
                 عملیات
               </div>
             </div>
             <div class="row justify-content-between"
                  *ngFor="let item of result; let i = index"
-                 style="border-bottom: 2px solid #f1f1f1; height: 75px">
+                 style="border-bottom: 2px solid #f1f1f1; height: 85px">
 
               <div class="col-3 table-items my-auto mat-title text-center py-2">
+                <img [src]="item.product.image" height="65">
+              </div>
+
+              <div class="col-2 table-items my-auto mat-title text-center py-2">
                 {{item.source.name}}
               </div>
-              <div class="col-3 table-items my-auto mat-title text-center py-2">
+              <div class="col-2 table-items my-auto mat-title text-center py-2">
                 {{item.destination.name}}
               </div>
 
-              <div class="col-3 table-items my-auto mat-title text-center py-2">
+              <div class="col-2 table-items my-auto mat-title text-center py-2">
                 {{item.product.name}}
               </div>
 
               <div class="col-3 table-items my-auto  text-center py-2">
-                <button mat-button
+                <button mat-icon-button
                         (click)="closeOrder(item.id)"
                         color="warn"
-                        matTooltip="ویرایش">
-                  <span>حذف</span>
+                        matTooltip="حذف">
+                  <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-button
                         (click)="approveOrder(item.id, item.orders)"
@@ -121,6 +132,11 @@
           <!--          ngfor-->
           <mat-card class="w-100 my-2"
                     *ngFor="let item of result; let i = index">
+
+            <div class="row justify-content-between py-1">
+              <img *ngIf="item.product.image" [src]="item.product.image" height="85" class="mx-auto">
+            </div>
+
             <div class="row justify-content-between">
               <div class="col-auto mat-body-2">مبدا</div>
               <div class="col-auto mat-body-2"
