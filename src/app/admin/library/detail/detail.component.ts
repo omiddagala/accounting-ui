@@ -277,7 +277,7 @@ export class DetailComponent implements OnInit {
           this.router.navigate(['/admin/library']);
         },
         err => {
-          console.log(err);
+          this.commonService.handleError(err);
         });
   }
 
