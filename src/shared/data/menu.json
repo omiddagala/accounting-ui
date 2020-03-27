@@ -10,6 +10,11 @@
     "route": "/admin/users"
   },
   {
+    "text": "حواله جمعی",
+    "value": "orders",
+    "route": "/admin/library/collective-orders"
+  },
+  {
     "text": "پرینتر",
     "value": "printer",
     "route": "/admin/printer"

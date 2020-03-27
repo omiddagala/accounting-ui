@@ -75,6 +75,10 @@ export class MainMenuComponent implements OnInit {
     this.commonService.locateFirstPage();
   }
 
+  routeCollectiveOrders() {
+    this.router.navigate(['/admin/library/collective-orders']);
+  }
+
   routeUsers() {
     this.router.navigate(['/admin/users']);
   }

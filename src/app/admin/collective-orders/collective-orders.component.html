@@ -1,0 +1,131 @@
+<div class="w-100 h-100">
+  <mat-drawer-container class="h-100 w-100" dir="rtl">
+    <mat-drawer style="min-width: 40%"
+                #snav mode="over">
+      <mat-nav-list>
+        <!--        <a mat-list-item-->
+        <!--           *ngFor="let item of menu"-->
+        <!--           [routerLink]="item.route"-->
+        <!--           class="px-2">-->
+        <!--          {{item.text}}-->
+        <!--        </a>-->
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content class="h-100">
+      <app-loading-component *ngIf="loading"></app-loading-component>
+      <app-main-menu [logo]="true"
+                     [snav]="snav"
+                     [mainMenu]="true"
+                     [profile]="true">
+      </app-main-menu>
+      <div class="wrapper">
+        <div class="d-flex flex-row">
+          <div class="col-12 col-xl-7">
+            <div class="w-100 pl-xl-5">
+
+              <div class="mat-title my-3 px-2">درخواست حواله</div>
+              <form [formGroup]="formGroup"
+                    *ngIf="!loading"
+                    class="d-flex flex-column flex-wrap ml-2 ml-xl-5">
+
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>محصول</mat-label>
+                    <input formControlName="product"
+                           matInput
+                           (ngModelChange)="checkProduct($event)"
+                           [matAutocomplete]="autoProduct"
+                           placeholder="محصول">
+                    <mat-autocomplete
+                        #autoProduct="matAutocomplete">
+                      <mat-option *ngFor="let item of productFiltered | async"
+                                  [value]="item">
+                        {{item}}
+                      </mat-option>
+                    </mat-autocomplete>
+
+                    <mat-error *ngIf="formGroup.get('from').hasError('required')">
+                      این فیلد الزامی است
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>از</mat-label>
+                    <input formControlName="from"
+                           matInput
+                           [matAutocomplete]="auto"
+                           placeholder="از">
+                    <mat-autocomplete
+                        #auto="matAutocomplete">
+                      <mat-option *ngFor="let item of fromFiltered | async"
+                                  [value]="item">
+                        {{item}}
+                      </mat-option>
+                    </mat-autocomplete>
+
+                    <mat-error *ngIf="formGroup.get('from').hasError('required')">
+                      این فیلد الزامی است
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>به</mat-label>
+                    <input formControlName="to"
+                           matInput
+                           [matAutocomplete]="autoTo"
+                           placeholder="به">
+                    <mat-autocomplete #autoTo="matAutocomplete">
+                      <mat-option *ngFor="let item of toFiltered | async"
+                                  [value]="item">
+                        {{item}}
+                      </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="formGroup.get('to').hasError('required')">
+                      این فیلد الزامی است
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="row col-md-12 col-sm-12 padding-20 mt-2 color_236b81"
+                     *ngIf="productId">
+                  سایزهای کالا را انتخاب و تعداد را برای هرکدام
+                  وارد کنید
+                </div>
+                <div class="w-100 d-flex flex-row flex-wrap mt-3">
+                  <div *ngFor="let item of orderSized;let i = index"
+                       class="col-auto">
+                    <button mat-raised-button color="primary"
+                            class="my-2"
+                            [matBadge]="item.value ? item.value : '0'"
+                            matBadgePosition="before"
+                            (click)="openDialog(item, i)"
+                            [matBadgeColor]="item.value ? 'warn' : 'accent'">
+                      {{item.size}}
+                    </button>
+                  </div>
+                </div>
+
+              </form>
+              <app-loading-component *ngIf="loading"></app-loading-component>
+            </div>
+          </div>
+          <div class="col-5 d-none d-xl-flex justify-content-center mt-2">
+            <img class="vector"
+                 src="../../../../assets/image/facilities/insurance/Group-796%20.png">
+          </div>
+        </div>
+        <div class="d-flex justify-content-center my-4 my-xl-3">
+          <button class="next"
+                  (click)="saveOrder()"
+                  style="background-color: green;color: white"
+                  mat-flat-button>
+            افزودن
+          </button>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

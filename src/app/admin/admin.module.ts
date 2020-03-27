@@ -42,6 +42,7 @@ import {GroupComponent, GroupDialog} from './library/group/group.component';
 import {TimelineComponent} from './library/timeline/timeline.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import {PrinterComponent} from './printer/printer.component';
+import {CollectiveOrderCountDialog, CollectiveOrdersComponent} from './collective-orders/collective-orders.component';
 
 @NgModule({
   imports: [
@@ -92,7 +93,9 @@ import {PrinterComponent} from './printer/printer.component';
     NotificationDialog,
     TimelineDialog,
     PrinterComponent,
-    DeleteDialog
+    DeleteDialog,
+    CollectiveOrdersComponent,
+    CollectiveOrderCountDialog
   ],
   exports: [
     AudioUploaderComponent,
@@ -108,7 +111,8 @@ import {PrinterComponent} from './printer/printer.component';
     GroupDialog,
     NotificationDialog,
     TimelineDialog,
-    DeleteDialog
+    DeleteDialog,
+    CollectiveOrderCountDialog
   ]
 })
 
