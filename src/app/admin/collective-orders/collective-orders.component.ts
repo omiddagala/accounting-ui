@@ -30,12 +30,12 @@ export class CollectiveOrdersComponent implements OnInit {
   productId: any;
   orderSized = [];
 
-  constructor(private  formBuilder: FormBuilder,
-              private http: HttpClient,
-              private commonService: CommonService,
-              private route: ActivatedRoute,
+  constructor(public  formBuilder: FormBuilder,
+              public http: HttpClient,
+              public commonService: CommonService,
+              public route: ActivatedRoute,
               public dialog: MatDialog,
-              private router: Router) {
+              public router: Router) {
     // this.productId = route.snapshot.params.product;
   }
 
