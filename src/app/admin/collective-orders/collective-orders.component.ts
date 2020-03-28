@@ -7,6 +7,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {map, startWith} from 'rxjs/operators';
 import {ValidatorNumberMax} from '../../../shared/validators/min-max.validator';
+// @ts-ignore
+import Menu from '../../../shared/data/menu.json';
 
 @Component({
   selector: 'app-collective-order',
@@ -17,7 +19,6 @@ import {ValidatorNumberMax} from '../../../shared/validators/min-max.validator';
 export class CollectiveOrdersComponent implements OnInit {
 
   list = [];
-  productList = [];
   result = [];
   product = [];
   loading = false;
@@ -36,6 +37,7 @@ export class CollectiveOrdersComponent implements OnInit {
     sortBy: 'name',
   };
   productLoading = true;
+  menu: any = Menu;
 
   constructor(public  formBuilder: FormBuilder,
               public http: HttpClient,
@@ -99,19 +101,6 @@ export class CollectiveOrdersComponent implements OnInit {
       this.getProduct(value);
     }, 2000);
   }
-
-  /*  showProduct() {
-          this.product.forEach((item, index) => {
-       if (item.name === value) {
-         console.log(index);
-         console.log(this.product[index]);
-         this.productId = this.product[index].id
-         // this.productId = item.id;
-         this.fetchSize();
-         return;
-       }
-     });
-    }*/
 
 
   fetchSize() {
@@ -188,9 +177,7 @@ export class CollectiveOrdersComponent implements OnInit {
     this.result.forEach(item => {
       this.list.push(item.name);
     });
-    /* this.product.forEach(item => {
-       this.productList.push(item.name);
-     });*/
+
     console.log(this.list);
   }
 

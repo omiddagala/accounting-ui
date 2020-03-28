@@ -8,6 +8,8 @@ import {ValidatorNumberMax, ValidatorNumberMin} from '../../../../shared/validat
 import {ActivatedRoute, Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CountDialog, DialogData} from '../detail/detail.component';
+// @ts-ignore
+import Menu from '../../../../shared/data/menu.json';
 
 @Component({
   selector: 'order-component',
@@ -27,7 +29,7 @@ export class OrderComponent implements OnInit {
   size: any;
   productId: any;
   orderSized = [];
-
+  menu: any = Menu;
   constructor(private  formBuilder: FormBuilder,
               private http: HttpClient,
               private commonService: CommonService,
