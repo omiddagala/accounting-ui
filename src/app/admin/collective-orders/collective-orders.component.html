@@ -39,8 +39,8 @@
                     <mat-autocomplete
                         #autoProduct="matAutocomplete">
                       <mat-option *ngFor="let item of productFiltered | async"
-                                  [value]="item">
-                        {{item}}
+                                  [value]="item.name">
+                        {{item.name}}
                       </mat-option>
                     </mat-autocomplete>
 

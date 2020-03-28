@@ -70,14 +70,20 @@ export class CollectiveOrdersComponent implements OnInit {
   }
 
   checkProduct(value) {
-    this.productList.forEach(item => {
-      if (item === value) {
-        this.showProductSize(value);
+    console.log(value)
+    this.product.forEach((item, index) => {
+      if (item.name === value) {
+        console.log(index);
+        console.log(this.product[index]);
+        this.productId = this.product[index].id
+        // this.productId = item.id;
+        this.fetchSize();
+        return;
       }
     });
   }
 
-  showProductSize(value) {
+  /*showProductSize(value) {
     this.product.forEach(item => {
       if (item.name === value) {
         console.log(item);
@@ -85,7 +91,7 @@ export class CollectiveOrdersComponent implements OnInit {
         this.fetchSize();
       }
     });
-  }
+  }*/
 
   fetchSize() {
     this.loading = true;
@@ -146,17 +152,24 @@ export class CollectiveOrdersComponent implements OnInit {
   }
 
   private _filterProduct(value: any) {
-    const filterValue = value.toLowerCase();
-    return this.productList.filter(item => item.toLowerCase().includes(filterValue));
+    console.log('here');
+    console.log(value);
+    let filterValue = value;
+    /*if (Object.keys(value).length > 0) {
+      filterValue = value.name.toLowerCase();
+    } else {
+      filterValue = value.toLowerCase();
+    }*/
+    return this.product.filter(item => item.name.toLowerCase().includes(filterValue));
   }
 
   makeListFromResult() {
     this.result.forEach(item => {
       this.list.push(item.name);
     });
-    this.product.forEach(item => {
+   /* this.product.forEach(item => {
       this.productList.push(item.name);
-    });
+    });*/
     console.log(this.list);
   }
 
