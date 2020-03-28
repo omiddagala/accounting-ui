@@ -22,6 +22,13 @@ export class LibraryComponent implements OnInit {
   loading = false;
   public result = [];
   timelineLoading = false;
+  pageableDTO = {
+    page: 0,
+    size: 20,
+    direction: 'ASC',
+    sortBy: 'name',
+  };
+  loadMore = true;
   types = [
     {
       text: 'زنانه',
@@ -50,7 +57,7 @@ export class LibraryComponent implements OnInit {
       name: new FormControl(undefined),
       productCode: new FormControl(undefined)
     });
-    this.search();
+    this.makeRequest();
   }
 
   findTypeById(id) {
@@ -62,13 +69,14 @@ export class LibraryComponent implements OnInit {
   }
 
 
-  search() {
+  makeRequest() {
     this.loading = true;
-    this.result = [];
+    // this.result = [];
     const param = {
       name: this.formGroup.get('name').value,
       type: this.formGroup.get('type').value,
-      id: this.formGroup.get('productCode').value
+      id: this.formGroup.get('productCode').value,
+      pageableDTO: this.pageableDTO
     };
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/product/list', param, {
       headers: {
@@ -79,10 +87,28 @@ export class LibraryComponent implements OnInit {
         (val) => {
           this.loading = false;
           this.result.push(...val);
+          this.pageableDTO.page++;
+          if (val.length === this.pageableDTO.size) {
+            this.loadMore = true;
+          }
         },
         response => {
           this.loading = false;
         });
+  }
+
+  search() {
+    this.pageableDTO.page = 0;
+    this.result = [];
+    this.makeRequest();
+  }
+
+  onScroll() {
+    console.log('scrolled !!');
+    if (this.loadMore) {
+      this.loadMore = false;
+      this.makeRequest();
+    }
   }
 
   edit(id) {

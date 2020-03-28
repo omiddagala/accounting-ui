@@ -44,7 +44,7 @@
           <div class="col-auto d-flex justify-content-center align-items-center cursor"
                (click)="showSearchField = !showSearchField"
                *ngIf="showSearchField">
-            <span  class="pr-1 mat-body-1">بستن</span>
+            <span class="pr-1 mat-body-1">بستن</span>
             <mat-icon class="close">close</mat-icon>
           </div>
           <button mat-icon-button
@@ -142,13 +142,13 @@
                         mat-flat-button
                         routerLink="/admin/library/size"
                         style="background: orangered;color: white;min-height: 40px">
-                   ایجاد سایز
+                  ایجاد سایز
                 </button>
                 <button class=" mb-2 mx-1"
                         mat-flat-button
                         routerLink="/admin/library/group"
                         style="background: orangered;color: white;min-height: 40px">
-                 ایجاد گروه کالا
+                  ایجاد گروه کالا
                 </button>
               </div>
             </div>
@@ -156,7 +156,7 @@
             <div class="row  justify-content-between"
                  style="border-bottom: 2px solid #f1f1f1">
 
-               <div class=" px-1 text-center table-header col-3 py-2">
+              <div class=" px-1 text-center table-header col-3 py-2">
                 عکس
               </div>
 
@@ -173,6 +173,7 @@
               </div>
 
             </div>
+            <infinite-scroll (scrolled)="onScroll()">
               <div class="row justify-content-between"
                    *ngFor="let item of result; let i = index"
                    style="border-bottom: 2px solid #f1f1f1; height: 85px">
@@ -218,6 +219,8 @@
                            [diameter]="40"
                            [strokeWidth]="5">
               </mat-spinner>
+            </infinite-scroll>
+
           </mat-card>
         </div>
       </div>
@@ -225,37 +228,36 @@
       <mat-toolbar class="d-lg-none d-flex flex-row justify-content-between zero-padding-mobile"
                    style="background: #236b81">
 
-          <div class="col-auto px-lg-5">
-            <button mat-flat-button
-                    routerLink="/admin/library/detail"
-                    class="change-search-btn">
-              ایجاد
-            </button>
-          </div>
+        <div class="col-auto px-lg-5">
+          <button mat-flat-button
+                  routerLink="/admin/library/detail"
+                  class="change-search-btn">
+            ایجاد
+          </button>
+        </div>
 
-          <div class="col-auto px-lg-5">
-            <button mat-flat-button
-                    *ngIf="!showSearchField"
-                    (click)="showSearchField = !showSearchField"
-                    class="change-search-btn">
-              تغیر جستجو
-            </button>
-            <button mat-icon-button
-                    *ngIf="showSearchField"
-                    (click)="showSearchField = !showSearchField"
-                    class="change-search-btn">
-              <mat-icon class="close">close</mat-icon>
-            </button>
+        <div class="col-auto px-lg-5">
+          <button mat-flat-button
+                  *ngIf="!showSearchField"
+                  (click)="showSearchField = !showSearchField"
+                  class="change-search-btn">
+            تغیر جستجو
+          </button>
+          <button mat-icon-button
+                  *ngIf="showSearchField"
+                  (click)="showSearchField = !showSearchField"
+                  class="change-search-btn">
+            <mat-icon class="close">close</mat-icon>
+          </button>
 
-            <button mat-icon-button
-                    (click)="router.navigate(['/admin'])"
-                    style="color: white">
-              <mat-icon>arrow_back_ios</mat-icon>
-            </button>
-          </div>
+          <button mat-icon-button
+                  (click)="router.navigate(['/admin'])"
+                  style="color: white">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </div>
 
       </mat-toolbar>
-
 
       <div *ngIf="showSearchField"
            class="d-flex d-lg-none field-search w-100 fadeInAnimation">
@@ -333,7 +335,9 @@
       <div class="d-flex  d-lg-none flex-wrap">
         <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"
              style="margin-left: 0 !important;margin-right: 0 !important;">
-          <!--          ngfor-->
+
+          <infinite-scroll (scrolled)="onScroll()"
+                           class="w-100">
             <mat-card class="w-100 my-2"
                       *ngFor="let item of result; let i = index">
               <div class="row justify-content-between py-1">
@@ -346,12 +350,6 @@
                 <div class="col-4 mat-body-2"
                      style="text-align: end">{{item.name}}</div>
               </div>
-<!--              <div class="row justify-content-between py-2">-->
-<!--                <div class="col-4 mat-body-2">انبار</div>-->
-<!--                <div class="col-4 d-flex my-auto between-two-content-border"></div>-->
-<!--                <div class="col-4 mat-body-2 "-->
-<!--                     style="text-align: end">{{item.reservoir.name}}</div>-->
-<!--              </div>-->
 
               <div class="row justify-content-between py-1">
                 <div class="col-4 mat-body-2">نوع</div>
@@ -404,6 +402,8 @@
                          [diameter]="40"
                          [strokeWidth]="5">
             </mat-spinner>
+          </infinite-scroll>
+
         </div>
       </div>
     </mat-drawer-content>

@@ -452,5 +452,4 @@ export class CountDialog implements OnInit {
       myWindow.close();
     }, 200);
   }
-
 }
