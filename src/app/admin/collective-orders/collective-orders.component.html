@@ -38,7 +38,15 @@
                            placeholder="محصول">
                     <mat-autocomplete
                         #autoProduct="matAutocomplete">
-                      <mat-option *ngFor="let item of productFiltered | async"
+
+                      <mat-option *ngIf="productLoading">
+                        <mat-spinner class="mx-auto"
+                                     strokeWidth="3"
+                                     diameter="30">
+                        </mat-spinner>
+                      </mat-option>
+
+                      <mat-option *ngFor="let item of product"
                                   [value]="item.name">
                         {{item.name}}
                       </mat-option>

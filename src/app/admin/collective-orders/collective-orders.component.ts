@@ -29,6 +29,13 @@ export class CollectiveOrdersComponent implements OnInit {
   size: any;
   productId: any;
   orderSized = [];
+  pageableDTO = {
+    page: 0,
+    size: 30,
+    direction: 'ASC',
+    sortBy: 'name',
+  };
+  productLoading = true;
 
   constructor(private  formBuilder: FormBuilder,
               private http: HttpClient,
@@ -45,53 +52,67 @@ export class CollectiveOrdersComponent implements OnInit {
       to: new FormControl('', Validators.required),
       product: new FormControl('', Validators.required)
     });
-    this.getProduct();
+    // this.getProduct();
     this.getList();
   }
 
-  getProduct() {
-    this.loading = true;
+  getProduct(value) {
+    this.productLoading = true;
     this.product = [];
-    this.http.post<any>('http://127.0.0.1:9000/v1/shop/product/list', {}, {
+    const param = {
+      name: value,
+      type: null,
+      id: null,
+      pageableDTO: this.pageableDTO
+    };
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/product/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
     })
       .subscribe(
         (val) => {
-          this.loading = false;
           this.product.push(...val);
           console.log(this.product);
+          this.productLoading = false;
+          // this.showProduct()
         },
         res => {
-          this.loading = false;
+          this.productLoading = false;
           console.log(res);
         });
   }
 
   checkProduct(value) {
-    console.log(value)
-    this.product.forEach((item, index) => {
-      if (item.name === value) {
-        console.log(index);
-        console.log(this.product[index]);
-        this.productId = this.product[index].id
-        // this.productId = item.id;
-        this.fetchSize();
-        return;
+    this.productLoading = true;
+    console.log(value);
+    setTimeout(() => {
+      if (this.product.length > 0) {
+        this.product.forEach(item => {
+          if (item.name === value) {
+            this.productId = item.id;
+            this.fetchSize();
+            return;
+          }
+        });
       }
-    });
+      this.getProduct(value);
+    }, 2000);
   }
 
-  /*showProductSize(value) {
-    this.product.forEach(item => {
-      if (item.name === value) {
-        console.log(item);
-        this.productId = item.id;
-        this.fetchSize();
-      }
-    });
-  }*/
+  /*  showProduct() {
+          this.product.forEach((item, index) => {
+       if (item.name === value) {
+         console.log(index);
+         console.log(this.product[index]);
+         this.productId = this.product[index].id
+         // this.productId = item.id;
+         this.fetchSize();
+         return;
+       }
+     });
+    }*/
+
 
   fetchSize() {
     this.loading = true;
@@ -167,9 +188,9 @@ export class CollectiveOrdersComponent implements OnInit {
     this.result.forEach(item => {
       this.list.push(item.name);
     });
-   /* this.product.forEach(item => {
-      this.productList.push(item.name);
-    });*/
+    /* this.product.forEach(item => {
+       this.productList.push(item.name);
+     });*/
     console.log(this.list);
   }
 
