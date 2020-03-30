@@ -24,7 +24,7 @@ export class LibraryComponent implements OnInit {
   timelineLoading = false;
   pageableDTO = {
     page: 0,
-    size: 20,
+    size: 3,
     direction: 'ASC',
     sortBy: 'name',
   };
@@ -87,6 +87,7 @@ export class LibraryComponent implements OnInit {
         (val) => {
           this.loading = false;
           this.result.push(...val);
+          this.addValueToResult();
           this.pageableDTO.page++;
           if (val.length === this.pageableDTO.size) {
             this.loadMore = true;
@@ -95,6 +96,31 @@ export class LibraryComponent implements OnInit {
         response => {
           this.loading = false;
         });
+  }
+
+  addValueToResult() {
+    if (this.result.length <= this.pageableDTO.size * 2) {
+      let flag: any = [];
+      this.result.forEach(item => {
+        flag.push(0);
+      })
+      this.result.forEach((item, index) => {
+        this.result.forEach((secondItem, secondIndex) => {
+          if (item.name === secondItem.name) {
+            flag[index] += 1;
+            if (flag[index] >= 2) {
+              this.result.splice(index, 1);
+              flag.splice(index, 1);
+            }
+          }
+        });
+      });
+      /*flag.forEach((item, index) => {
+        if (flag >= 2) {
+          this.result.splice(index, 1);
+        }
+      });*/
+    }
   }
 
   search() {
