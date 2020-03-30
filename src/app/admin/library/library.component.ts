@@ -24,7 +24,7 @@ export class LibraryComponent implements OnInit {
   timelineLoading = false;
   pageableDTO = {
     page: 0,
-    size: 3,
+    size: 20,
     direction: 'ASC',
     sortBy: 'name',
   };
