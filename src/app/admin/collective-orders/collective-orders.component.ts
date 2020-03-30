@@ -65,6 +65,7 @@ export class CollectiveOrdersComponent implements OnInit {
       name: value,
       type: null,
       id: null,
+      order: true,
       pageableDTO: this.pageableDTO
     };
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/product/list', param, {
