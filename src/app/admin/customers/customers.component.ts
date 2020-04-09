@@ -22,7 +22,7 @@ export class CustomersComponent implements OnInit {
   timelineLoading = false;
   pageableDTO = {
     page: 0,
-    size: 20,
+    size: 3,
     direction: 'ASC',
     sortBy: 'name',
   };
@@ -51,9 +51,10 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      type: new FormControl(undefined),
       name: new FormControl(undefined),
-      productCode: new FormControl(undefined)
+      family: new FormControl(undefined),
+      nationalCode: new FormControl(undefined),
+      mobile: new FormControl(undefined),
     });
     this.makeRequest();
   }
@@ -67,13 +68,25 @@ export class CustomersComponent implements OnInit {
   }
 
 
+  convertNumbers(str) {
+    const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+      arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+    if (typeof str === 'string') {
+      for (let i = 0; i < 10; i++) {
+        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+      }
+    }
+    return str;
+  }
+
   makeRequest() {
     this.loading = true;
     // this.result = [];
     const param = {
       name: this.formGroup.get('name').value,
-      type: this.formGroup.get('type').value,
-      id: this.formGroup.get('productCode').value,
+      family: this.formGroup.get('family').value,
+      nationalCode: this.convertNumbers(this.formGroup.get('nationalCode').value),
+      mobile: this.convertNumbers(this.formGroup.get('mobile').value),
       pageableDTO: this.pageableDTO
     };
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/customer/list', param, {

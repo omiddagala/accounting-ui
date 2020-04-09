@@ -60,23 +60,6 @@
         <div class="layer w-100">
           <form [formGroup]="formGroup">
             <div class="row mx-5 justify-content-center">
-              <div dir="rtl"
-                   style="padding-top: 22px"
-                   class="col-3 d-flex row justify-content-around">
-                <div class="col-1 mat-body-2 white-color text-center mt-3"
-                     style="padding: 0 !important;">
-                  <span>نوع</span>
-                </div>
-                <mat-form-field class="col-11"
-                                appearance="outline">
-                  <mat-select formControlName="type">
-                    <mat-option *ngFor="let type of types"
-                                [value]="type.value">
-                      {{type.text}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
 
               <div dir="rtl"
                    style="padding-top: 22px"
@@ -93,22 +76,52 @@
                          placeholder="نام"/>
                 </mat-form-field>
               </div>
-
               <div dir="rtl"
                    style="padding-top: 22px"
                    class="col-3 d-flex row justify-content-around">
                 <div class="col-1 mat-body-2 white-color text-center mt-3"
                      style="padding: 0 !important;">
-                  <span>کد </span>
+                  <span>نام خانوادگی</span>
                 </div>
                 <mat-form-field class="col-11"
                                 appearance="outline">
-                  <input formControlName="productCode"
+                  <input formControlName="family"
                          matInput
                          autocomplete="off"
-                         placeholder="کد"/>
+                         placeholder="نام خانوادگی"/>
                 </mat-form-field>
               </div>
+              <div dir="rtl"
+                   style="padding-top: 22px"
+                   class="col-3 d-flex row justify-content-around">
+                <div class="col-1 mat-body-2 white-color text-center mt-3"
+                     style="padding: 0 !important;">
+                  <span>کد ملی</span>
+                </div>
+                <mat-form-field class="col-11"
+                                appearance="outline">
+                  <input formControlName="nationalCode"
+                         matInput
+                         autocomplete="off"
+                         placeholder="کد ملی"/>
+                </mat-form-field>
+              </div>
+              <div dir="rtl"
+                   style="padding-top: 22px"
+                   class="col-3 d-flex row justify-content-around">
+                <div class="col-1 mat-body-2 white-color text-center mt-3"
+                     style="padding: 0 !important;">
+                  <span>شماره موبایل</span>
+                </div>
+                <mat-form-field class="col-11"
+                                appearance="outline">
+                  <input formControlName="mobile"
+                         matInput
+                         autocomplete="off"
+                         placeholder="شماره موبایل"/>
+                </mat-form-field>
+              </div>
+
               <div class="col-2 py-2 mt-1">
                 <button class="w-100 mat-body-1  search-desktop-btn"
                         style="background: green"
@@ -141,15 +154,15 @@
                  style="border-bottom: 2px solid #f1f1f1">
 
               <div class=" px-1 text-center table-header col-3 py-2">
-                عکس
-              </div>
-
-              <div class=" px-1 text-center table-header col-3 py-2">
                 نام
               </div>
 
+              <div class=" px-1 text-center table-header col-3 py-2">
+                نام خانوداگی
+              </div>
+
               <div class=" px-1 text-center table-header col-2 py-2">
-                نوع
+                کد ملی
               </div>
 
               <div class=" px-1 text-center table-header col-4 py-2">
@@ -163,15 +176,15 @@
                    style="border-bottom: 2px solid #f1f1f1; height: 85px">
 
                 <div class="col-3 table-items my-auto mat-title text-center py-2">
-                  <img [src]="item.image" height="65">
-                </div>
-
-                <div class="col-3 table-items my-auto mat-title text-center py-2">
                   {{item.name}}
                 </div>
 
+                <div class="col-3 table-items my-auto mat-title text-center py-2">
+                  {{item.family}}
+                </div>
+
                 <div class="col-2 table-items my-auto  text-center py-2">
-                  {{findTypeById(item.type)}}
+                  {{item.nationalCode}}
                 </div>
 
                 <div class="col-4 table-items my-auto  text-center py-2">
@@ -237,20 +250,7 @@
         <div class="layer w-100">
           <form [formGroup]="formGroup">
             <div class="d-flex row mx-3 justify-content-center">
-              <div class="pt-1 col-10 col-md-8">
-                <div class="w-100   white-color mat-body-2"> نوع</div>
-                <div dir="rtl">
-                  <mat-form-field class="w-100"
-                                  appearance="outline">
-                    <mat-select formControlName="type">
-                      <mat-option *ngFor="let type of types"
-                                  [value]="type.value">
-                        {{type.text}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
+
               <div class="pt-1 col-10 col-md-8">
                 <div class="w-100  white-color mat-body-2"> نام</div>
                 <div dir="rtl">
@@ -265,14 +265,40 @@
               </div>
 
               <div class="pt-1 col-10 col-md-8">
-                <div class="w-100  white-color mat-body-2"> کد</div>
+                <div class="w-100  white-color mat-body-2"> نام خانوادگی</div>
                 <div dir="rtl">
                   <mat-form-field class="w-100"
                                   appearance="outline">
-                    <input formControlName="productCode"
+                    <input formControlName="family"
                            matInput
                            autocomplete="off"
-                           placeholder="کد"/>
+                           placeholder="نام خانوداگی"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="pt-1 col-10 col-md-8">
+                <div class="w-100  white-color mat-body-2"> کد ملی</div>
+                <div dir="rtl">
+                  <mat-form-field class="w-100"
+                                  appearance="outline">
+                    <input formControlName="nationalCode"
+                           matInput
+                           autocomplete="off"
+                           placeholder="کد ملی"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="pt-1 col-10 col-md-8">
+                <div class="w-100  white-color mat-body-2"> شماره موبایل</div>
+                <div dir="rtl">
+                  <mat-form-field class="w-100"
+                                  appearance="outline">
+                    <input formControlName="mobile"
+                           matInput
+                           autocomplete="off"
+                           placeholder="شماره موبایل"/>
                   </mat-form-field>
                 </div>
               </div>
@@ -298,9 +324,6 @@
                            class="w-100">
             <mat-card class="w-100 my-2"
                       *ngFor="let item of result; let i = index">
-              <div class="row justify-content-between py-1">
-                <img *ngIf="item.image" [src]="item.image" height="85" class="mx-auto">
-              </div>
 
               <div class="row justify-content-between pb-1">
                 <div class="col-4 mat-body-2">نام</div>
@@ -310,10 +333,16 @@
               </div>
 
               <div class="row justify-content-between py-1">
-                <div class="col-4 mat-body-2">نوع</div>
+                <div class="col-4 mat-body-2">نام خانوادگی</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
                 <div class="col-4 mat-body-2"
-                     style="text-align: end">{{findTypeById(item.type)}}</div>
+                     style="text-align: end">{{item.family}}</div>
+              </div>
+              <div class="row justify-content-between py-1">
+                <div class="col-4 mat-body-2">کد ملی</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
+                     style="text-align: end">{{item.nationalCode}}</div>
               </div>
               <hr class="w-75 mx-auto  mt-4">
               <div class="d-flex flex-row flex-wrap justify-content-between pt-1">
