@@ -17,6 +17,7 @@ import {SharedModule} from '../../../shared/shared.module';
 import {LoadingModule} from '../../../shared/component/loading/loading.module';
 import {RouterModule} from '@angular/router';
 import {MainMenuModule} from '../../../shared/component/main-menu/MainMenu.module';
+import {DetailComponent} from './detail/detail.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import {MainMenuModule} from '../../../shared/component/main-menu/MainMenu.modul
     MatToolbarModule,
   ],
   declarations: [
-    CustomersComponent
+    CustomersComponent,
+    DetailComponent
   ],
   exports: [],
   entryComponents: []

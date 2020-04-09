@@ -130,25 +130,9 @@
                    style="font-weight: 500;">
                 <button class="w-100 mb-2"
                         mat-flat-button
-                        (click)="addProduct()"
+                        (click)="addCustomer()"
                         style="background: green;color: white;min-height: 40px">
                   افزودن
-                </button>
-              </div>
-
-              <div class="col-md-3 col-xl-3 mat-body-1 mt-2 gray-color "
-                   style="font-weight: 500;">
-                <button class=" mb-2 mx-1"
-                        mat-flat-button
-                        routerLink="/admin/library/size"
-                        style="background: orangered;color: white;min-height: 40px">
-                  ایجاد سایز
-                </button>
-                <button class=" mb-2 mx-1"
-                        mat-flat-button
-                        routerLink="/admin/library/group"
-                        style="background: orangered;color: white;min-height: 40px">
-                  ایجاد گروه کالا
                 </button>
               </div>
             </div>
@@ -199,18 +183,7 @@
                           matTooltip="حذف">
                     <mat-icon style="color: red">delete</mat-icon>
                   </button>
-                  <button mat-button
-                          (click)="copyProduct(item.id)">
-                    <span>کپی</span>
-                  </button>
-                  <button mat-button
-                          (click)="routeToOrder(item.id)">
-                    <span>حواله</span>
-                  </button>
-                  <!--<button mat-button
-                          (click)="openTimelineDialog(item.id)">
-                    <span>تاریخچه</span>
-                  </button>-->
+
                   <app-loading-component *ngIf="timelineLoading"></app-loading-component>
                 </div>
               </div>
@@ -230,7 +203,7 @@
 
         <div class="col-auto px-lg-5">
           <button mat-flat-button
-                  routerLink="/admin/library/detail"
+                  routerLink="/admin/customers/detail"
                   class="change-search-btn">
             ایجاد
           </button>
@@ -317,21 +290,6 @@
         </div>
       </div>
 
-      <div class=" d-lg-none d-flex flex-row w-100 mt-2 justify-content-between">
-        <button class="col-auto mt-2 mx-2"
-                mat-flat-button
-                routerLink="/admin/library/size"
-                style="background: orangered;color: white;min-height: 40px">
-          ایجاد سایز
-        </button>
-        <button class="col-auto mt-2 mx-2"
-                mat-flat-button
-                routerLink="/admin/library/group"
-                style="background: orangered;color: white;min-height: 40px">
-          ایجاد گروه کالا
-        </button>
-      </div>
-
       <div class="d-flex  d-lg-none flex-wrap">
         <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"
              style="margin-left: 0 !important;margin-right: 0 !important;">
@@ -358,40 +316,18 @@
                      style="text-align: end">{{findTypeById(item.type)}}</div>
               </div>
               <hr class="w-75 mx-auto  mt-4">
-              <div class="d-flex flex-row flex-wrap pt-1">
-                <div class="col-2">
+              <div class="d-flex flex-row flex-wrap justify-content-between pt-1">
+                <div class="col-3 col-md-1">
                   <button mat-icon-button
                           (click)="edit(item.id)"
                           matTooltip="ویرایش">
                     <mat-icon>edit</mat-icon>
                   </button>
                 </div>
-                <div class="col-2">
+                <div class="col-3 col-md-1">
                   <button mat-icon-button (click)="openDeleteDialog(item.id, i)"
                           matTooltip="حذف">
                     <mat-icon style="color: red">delete</mat-icon>
-                  </button>
-                </div>
-
-                <div class="col-2">
-                  <button mat-icon-button
-                          (click)="copyProduct(item.id)">
-                    <mat-icon>file_copy</mat-icon>
-                  </button>
-                </div>
-
-                <!--<div class="col-2">
-                  <button mat-icon-button
-                          color="success"
-                          (click)="openTimelineDialog(item.id)">
-                    <mat-icon color="primary">timeline</mat-icon>
-                  </button>
-                </div>-->
-
-                <div class="col-3 ">
-                  <button mat-stroked-button
-                          (click)="routeToOrder(item.id)">
-                    <span>حواله</span>
                   </button>
                 </div>
 

@@ -1,0 +1,134 @@
+<div class="w-100 h-100">
+  <mat-drawer-container class="h-100 w-100" dir="rtl">
+    <mat-drawer style="min-width: 40%"
+                #snav mode="over">
+      <mat-nav-list>
+        <div *ngFor="let item of menu">
+          <a mat-list-item
+             *ngIf="commonService.canSeePage(item.value)"
+             [routerLink]="item.route"
+             class="px-2">
+            {{item.text}}
+          </a>
+        </div>
+
+        <a mat-list-item
+           (click)="commonService.logOut()"
+           class="px-2">
+          خروج
+        </a>
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content class="h-100">
+      <app-loading-component *ngIf="loading"></app-loading-component>
+      <app-main-menu [logo]="true"
+                     [snav]="snav"
+                     [mainMenu]="true"
+                     [profile]="true">
+      </app-main-menu>
+      <div class="wrapper">
+        <div class="d-flex flex-row ">
+          <div class="col-12 col-xl-7">
+            <form [formGroup]="formGroup"
+                  class="d-flex w-100 flex-wrap pl-0 pl-xl-5  justify-content-center">
+              <div class="col-12 mat-title py-3">اطلاعات مشتری را وارد کنید</div>
+
+              <div class="col-10 col-xl-6" dir="rtl">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>نام</mat-label>
+                  <input formControlName="name"
+                         matInput
+                         required
+                         autocomplete="off"
+                         placeholder="نام "/>
+                  <mat-error *ngIf="formGroup.get('name').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-10 col-xl-6" dir="rtl">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>نام خانوادگی</mat-label>
+                  <input formControlName="family"
+                         matInput
+                         required
+                         autocomplete="off"
+                         placeholder="نام خانوادگی "/>
+                  <mat-error *ngIf="formGroup.get('family').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-10 col-xl-6" dir="rtl">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>کد ملی</mat-label>
+                  <input formControlName="nationalCode"
+                         matInput
+                         required
+                         autocomplete="off"
+                         placeholder="کد ملی "/>
+                  <mat-error *ngIf="formGroup.get('nationalCode').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-10 col-xl-6" dir="rtl">
+                <mat-form-field class="w-100"
+                                appearance="outline">
+                  <mat-label>شماه موبایل</mat-label>
+                  <input formControlName="mobile"
+                         matInput
+                         required
+                         autocomplete="off"
+                         placeholder="شماه موبایل "/>
+                  <mat-error *ngIf="formGroup.get('mobile').hasError('required')">
+                    این فیلد الزامی است
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+            </form>
+          </div>
+          <div class="col-5 d-none d-xl-flex justify-content-center">
+            <img class="vector"
+                 src="../../../../assets/image/facilities/insurance/Group-796%20.png">
+          </div>
+        </div>
+        <div *ngIf="!customer.id"
+             class="d-flex justify-content-center justify-content-xl-end mt-1 mt-lg-5">
+          <div class="col-4 d-flex justify-content-center my-2  my-lg-0">
+            <button (click)="save()"
+                    class="next"
+                    mat-flat-button>
+              {{saveLoading ? '' : 'افزودن'}}
+              <mat-spinner *ngIf="saveLoading"
+                           color="white"
+                           class="mx-auto"
+                           value="25"
+                           diameter="40"
+                           strokeWidth="4">
+              </mat-spinner>
+            </button>
+
+          </div>
+        </div>
+        <div *ngIf="customer.id"
+             class="d-flex justify-content-center justify-content-xl-end  mt-5 mt-lg-0">
+          <div class="col-4 d-flex justify-content-center my-2  my-lg-0">
+            <button (click)="save()"
+                    class="next margin-bottom-40"
+                    mat-flat-button>
+              ویرایش
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

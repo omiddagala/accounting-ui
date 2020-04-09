@@ -76,7 +76,7 @@ export class CustomersComponent implements OnInit {
       id: this.formGroup.get('productCode').value,
       pageableDTO: this.pageableDTO
     };
-    this.http.post<any>('http://127.0.0.1:9000/v1/shop/product/list', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/customer/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -101,7 +101,7 @@ export class CustomersComponent implements OnInit {
       let flag: any = [];
       this.result.forEach(item => {
         flag.push(0);
-      })
+      });
       this.result.forEach((item, index) => {
         this.result.forEach((secondItem, secondIndex) => {
           if (item.name === secondItem.name) {
@@ -140,35 +140,6 @@ export class CustomersComponent implements OnInit {
     this.router.navigate(['/admin/library/detail'], {queryParams: {id: id}});
   }
 
-  copyProduct(id) {
-    console.log(this.result);
-    const product = this.result.filter(item => item.id === id);
-    localStorage.setItem('productCopy', JSON.stringify(product[0]));
-    this.router.navigate(['/admin/library/detail']);
-  }
-
-  /*openTimelineDialog(id) {
-    this.timelineLoading = true;
-    const param = {
-      id
-    };
-    this.http.post('http://127.0.0.1:9000/v1/shop/product/fetch', param, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
-    })
-      .subscribe(
-        val => {
-          console.log(val);
-          this.timelineLoading = false;
-          this.openDialog(val);
-        },
-        err => {
-          console.log(err);
-          this.timelineLoading = false;
-        }
-      );
-  }*/
 
   openDeleteDialog(id, index): void {
     /*const dialogRef = this.dialog.open(DeleteDialog, {
@@ -180,71 +151,7 @@ export class CustomersComponent implements OnInit {
     })*/
   }
 
- /* openDialog(productt) {
-    const dialogRef = this.dialog.open(TimelineDialog, {
-      data: {product: productt}
-    });
-
-  }*/
-
-
-  addProduct() {
-    localStorage.setItem('productCopy', JSON.stringify({}));
-    this.router.navigate(['/admin/library/detail']);
-  }
-
-
-  routeToOrder(id) {
-    this.router.navigate(['/admin/library/order/' + id]);
-  }
-
-}
-
-
-
-/*
-@Component({
-  selector: 'delete-dialog',
-  templateUrl: './delete-dialog.html',
-})
-
-export class DeleteDialog {
-  constructor(
-    public dialogRef: MatDialogRef<DeleteDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    @Inject(ComponentFactoryResolver) factoryResolver,
-    private http: HttpClient,
-    private commonService: CommonService) {
-  }
-
-  loading = false;
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  delete() {
-    let param = {
-      id: this.data.id
-    };
-    this.loading = true;
-    this.http.post('http://127.0.0.1:9000/v1/shop/product/delete', param, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
-    })
-      .subscribe(
-        (val) => {
-          this.loading = false;
-          this.data.result.splice(this.data.index, 1);
-          this.onNoClick();
-          this.commonService.showMessage('محصول با موفقیت حذف شد', 'success-msg');
-        },
-        response => {
-          this.loading = false;
-          this.onNoClick();
-          this.commonService.showMessage('خطایی رخ داده است', 'error-msg');
-        });
+  addCustomer() {
+    this.router.navigate(['/admin/customers/detail']);
   }
 }
-*/
