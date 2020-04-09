@@ -149,8 +149,7 @@ export class CustomersComponent implements OnInit {
   }
 
   edit(id) {
-    localStorage.setItem('productCopy', JSON.stringify({}));
-    this.router.navigate(['/admin/library/detail'], {queryParams: {id: id}});
+    this.router.navigate(['/admin/customers/detail'], {queryParams: {id: id}});
   }
 
 

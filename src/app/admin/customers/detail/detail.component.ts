@@ -89,14 +89,14 @@ export class DetailComponent implements OnInit {
     const param = {
       id
     };
-    this.http.post('http://127.0.0.1:9000/v1/shop/customer/fetch', param, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/customer/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
     })
       .subscribe(
         (val) => {
-          this.customer = val;
+          this.customer = val[0];
           this.initFormGroup();
           this.loading = false;
           // this.addSizeIsNotInProductSize();
