@@ -15,7 +15,24 @@ export class AdminComponent implements OnInit {
 
   menu: any = Menu;
 
+  pages = [
+    {
+      name: 'محصولات',
+      image: '../../assets/image/facilities/home/store.jpg',
+      route: '/admin/library'
+    },
+    {
+      name: 'مشتریان',
+      image: '../../assets/image/facilities/home/buy.jpg',
+      route: '/admin/customers'
+    },
+    {
+      name: 'انبارها',
+      image: '../../assets/image/facilities/home/buy.jpg',
+      route: '/admin/reservoir'
+    }
+  ]
+
   ngOnInit(): void {
-    // localStorage.setItem('obj', 'this is just a test');
   }
 }

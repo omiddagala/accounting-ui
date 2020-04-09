@@ -43,6 +43,7 @@ import {TimelineComponent} from './library/timeline/timeline.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import {PrinterComponent} from './printer/printer.component';
 import {CollectiveOrderCountDialog, CollectiveOrdersComponent} from './collective-orders/collective-orders.component';
+import {CustomersModule} from './customers/customers.module';
 
 @NgModule({
   imports: [
@@ -72,6 +73,7 @@ import {CollectiveOrderCountDialog, CollectiveOrdersComponent} from './collectiv
     MatAutocompleteModule,
     NgxBarcodeModule,
     NgxCurrencyModule,
+    CustomersModule
   ],
   declarations: [
     AdminComponent,
