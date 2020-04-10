@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CustomersComponent} from './customers.component';
+import {CustomersComponent, DeleteCustomerDialog} from './customers.component';
 import {CustomersRoutingModule} from './customers-routing.module';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -44,10 +44,13 @@ import {DetailComponent} from './detail/detail.component';
   ],
   declarations: [
     CustomersComponent,
-    DetailComponent
+    DetailComponent,
+    DeleteCustomerDialog
   ],
   exports: [],
-  entryComponents: []
+  entryComponents: [
+    DeleteCustomerDialog
+  ]
 })
 
 export class CustomersModule{}

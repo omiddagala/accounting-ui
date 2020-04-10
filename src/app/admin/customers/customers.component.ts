@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CommonService} from '../../../shared/common/common.service';
+import {DeleteDialog} from '../library/library.component';
 
 @Component({
   selector: 'app-admin-customers',
@@ -27,20 +28,6 @@ export class CustomersComponent implements OnInit {
     sortBy: 'name',
   };
   loadMore = true;
-  types = [
-    {
-      text: 'زنانه',
-      value: '1'
-    },
-    {
-      text: 'مردانه',
-      value: '2'
-    },
-    {
-      text: 'بچه گانه',
-      value: '3'
-    }
-  ];
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -58,15 +45,6 @@ export class CustomersComponent implements OnInit {
     });
     this.makeRequest();
   }
-
-  findTypeById(id) {
-    for (let i in this.types) {
-      if (this.types[i].value === id) {
-        return this.types[i].text;
-      }
-    }
-  }
-
 
   convertNumbers(str) {
     const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
@@ -154,16 +132,62 @@ export class CustomersComponent implements OnInit {
 
 
   openDeleteDialog(id, index): void {
-    /*const dialogRef = this.dialog.open(DeleteDialog, {
+    const dialogRef = this.dialog.open(DeleteCustomerDialog, {
       data: {
         result : this.result,
-        index: index,
-        id: id
+        index,
+        id
       }
-    })*/
+    });
   }
 
   addCustomer() {
     this.router.navigate(['/admin/customers/detail']);
   }
+}
+
+@Component({
+  selector: 'customer-delete-dialog',
+  templateUrl: './delete-customer-dialog.html'
+})
+
+export class DeleteCustomerDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DeleteCustomerDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(ComponentFactoryResolver) factoryResolver,
+    private http: HttpClient,
+    private commonService: CommonService) {
+  }
+
+  loading = false;
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  delete() {
+    let param = {
+      id: this.data.id
+    };
+    this.loading = true;
+    this.http.post('http://127.0.0.1:9000/v1/shop/customer/delete', param, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          this.loading = false;
+          this.data.result.splice(this.data.index, 1);
+          this.onNoClick();
+          this.commonService.showMessage('محصول با موفقیت حذف شد', 'success-msg');
+        },
+        response => {
+          this.loading = false;
+          this.onNoClick();
+          this.commonService.showMessage('خطایی رخ داده است', 'error-msg');
+        });
+  }
+
 }

@@ -179,7 +179,7 @@ export class LibraryComponent implements OnInit {
         index: index,
         id: id
       }
-    })
+    });
   }
 
   openDialog(productt) {

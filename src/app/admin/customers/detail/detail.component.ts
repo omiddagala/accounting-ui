@@ -145,7 +145,11 @@ export class DetailComponent implements OnInit {
           this.router.navigate(['/admin/customers']);
         },
         err => {
-          this.commonService.handleError(err);
+          // this.commonService.handleError(err);
+          if (err.status === 422) {
+            console.log(err)
+            this.commonService.showMessage(err.error, 'error-msg')
+          }
           this.saveLoading = false;
         });
   }

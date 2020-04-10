@@ -1,0 +1,18 @@
+<div style="max-width: 350px">
+  <div>آیا از حذف این  مشتری اطمینان دارید ؟</div>
+  <div class="d-flex flex-row justify-content-between mt-3">
+    <button mat-button
+            *ngIf="!loading"
+            (click)="delete()"
+            style="background-color: red;color: white">
+      <span>بله</span>
+    </button>
+    <button mat-button
+            *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </button>
+    <button mat-button (click)="onNoClick()">
+      <span>خیر</span>
+    </button>
+  </div>
+</div>
