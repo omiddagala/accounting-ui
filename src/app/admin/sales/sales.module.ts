@@ -7,7 +7,7 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatIconModule,
-  MatListModule, MatButtonModule, MatInputModule, MatTooltipModule
+  MatListModule, MatButtonModule, MatInputModule, MatTooltipModule, MatRadioModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
@@ -35,7 +35,8 @@ import {SalesRoutingModule} from './sales-routing.module';
     SalesRoutingModule,
     MatButtonModule,
     MatInputModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatRadioModule
   ],
   declarations: [
     SalesComponent

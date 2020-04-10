@@ -64,11 +64,11 @@
               <div dir="rtl"
                    style="padding-top: 22px"
                    class="col-3 d-flex row justify-content-around">
-                <div class="col-1 mat-body-2 white-color text-center mt-3"
+                <div class="col-2 mat-body-2 white-color text-center mt-3"
                      style="padding: 0 !important;">
                   <span>نام</span>
                 </div>
-                <mat-form-field class="col-11"
+                <mat-form-field class="col-10"
                                 appearance="outline">
                   <input formControlName="name"
                          matInput
@@ -79,11 +79,11 @@
               <div dir="rtl"
                    style="padding-top: 22px"
                    class="col-3 d-flex row justify-content-around">
-                <div class="col-1 mat-body-2 white-color text-center mt-3"
+                <div class="col-2 mat-body-2 white-color text-center mt-3"
                      style="padding: 0 !important;">
                   <span>نام خانوادگی</span>
                 </div>
-                <mat-form-field class="col-11"
+                <mat-form-field class="col-10"
                                 appearance="outline">
                   <input formControlName="family"
                          matInput
@@ -94,11 +94,11 @@
               <div dir="rtl"
                    style="padding-top: 22px"
                    class="col-3 d-flex row justify-content-around">
-                <div class="col-1 mat-body-2 white-color text-center mt-3"
+                <div class="col-2 mat-body-2 white-color text-center mt-3"
                      style="padding: 0 !important;">
                   <span>کد ملی</span>
                 </div>
-                <mat-form-field class="col-11"
+                <mat-form-field class="col-10"
                                 appearance="outline">
                   <input formControlName="nationalCode"
                          matInput
@@ -109,11 +109,11 @@
               <div dir="rtl"
                    style="padding-top: 22px"
                    class="col-3 d-flex row justify-content-around">
-                <div class="col-1 mat-body-2 white-color text-center mt-3"
+                <div class="col-2 mat-body-2 white-color text-center mt-3"
                      style="padding: 0 !important;">
                   <span>شماره موبایل</span>
                 </div>
-                <mat-form-field class="col-11"
+                <mat-form-field class="col-10"
                                 appearance="outline">
                   <input formControlName="mobile"
                          matInput
@@ -122,8 +122,18 @@
                 </mat-form-field>
               </div>
 
-              <div class="col-2 py-2 mt-1">
-                <button class="w-100 mat-body-1  search-desktop-btn"
+              <div class="pt-1 col-3 mb-3 d-flex row justify-content-around">
+                <div class="col-2  white-color mat-body-2 my-auto"> وضعیت</div>
+                <div class="col-10 my-auto" dir="rtl">
+                  <mat-radio-group formControlName="status">
+                    <mat-radio-button style="color: white" value="UNPAID">پرداخت نشده</mat-radio-button>
+                    <mat-radio-button style="color: white" class="ml-3" value="PAID">پرداخت شده</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+              <div class="col-12 py-2 mb-2 mt-1 d-flex flex-row justify-content-center">
+                <button class="col-4 mat-body-1 mx-auto search-desktop-btn"
                         style="background: green"
                         (click)="search()"
                         mat-flat-button>
@@ -188,9 +198,10 @@
                 </div>
 
                 <div class="col-4 table-items my-auto  text-center py-2">
-                  <button mat-icon-button (click)="edit(item.id)"
-                          matTooltip="ویرایش">
-                    <mat-icon>edit</mat-icon>
+                  <button mat-button
+                          (click)="goSaleDetail(item.id)"
+                          style="color: white;background-color: green">
+                    جزییات
                   </button>
                   <app-loading-component *ngIf="timelineLoading"></app-loading-component>
                 </div>
@@ -298,6 +309,16 @@
                 </div>
               </div>
 
+              <div class="pt-1 col-10 col-md-8 mb-3">
+                <div class="w-100  white-color mat-body-2"> وضعیت</div>
+                <div dir="rtl">
+                 <mat-radio-group formControlName="status">
+                   <mat-radio-button style="color: white" value="UNPAID">پرداخت نشده</mat-radio-button>
+                   <mat-radio-button style="color: white" class="ml-3" value="PAID">پرداخت شده</mat-radio-button>
+                 </mat-radio-group>
+                </div>
+              </div>
+
               <div class="pt-1 col-4 col-md-5 mb-4">
                 <button mat-flat-button
                         class="w-100"
@@ -340,12 +361,12 @@
                      style="text-align: end">{{item.nationalCode}}</div>
               </div>
               <hr class="w-75 mx-auto  mt-4">
-              <div class="d-flex flex-row flex-wrap justify-content-between pt-1">
-                <div class="col-3 col-md-1">
-                  <button mat-icon-button
-                          (click)="edit(item.id)"
-                          matTooltip="ویرایش">
-                    <mat-icon>edit</mat-icon>
+              <div class="d-flex flex-row flex-wrap justify-content-end pt-1">
+                <div>
+                  <button mat-button
+                          style="color: white;background-color: green"
+                          (click)="goSaleDetail(item.id)">
+                    جزییات
                   </button>
                 </div>
 

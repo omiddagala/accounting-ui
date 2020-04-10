@@ -1,12 +1,10 @@
-import {Component, ComponentFactoryResolver, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 // @ts-ignore
 import Menu from '../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CommonService} from '../../../shared/common/common.service';
-import {DeleteDialog} from '../library/library.component';
 
 @Component({
   selector: 'app-admin-sales',
@@ -32,7 +30,6 @@ export class SalesComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
               public router: Router,
-              private dialog: MatDialog,
               public commonService: CommonService) {
   }
 
@@ -42,6 +39,7 @@ export class SalesComponent implements OnInit {
       family: new FormControl(undefined),
       nationalCode: new FormControl(undefined),
       mobile: new FormControl(undefined),
+      status: new FormControl('UNPAID')
     });
     this.makeRequest();
   }
@@ -65,9 +63,10 @@ export class SalesComponent implements OnInit {
       family: this.formGroup.get('family').value,
       nationalCode: this.convertNumbers(this.formGroup.get('nationalCode').value),
       mobile: this.convertNumbers(this.formGroup.get('mobile').value),
+      status: this.formGroup.get('status').value,
       pageableDTO: this.pageableDTO
     };
-    this.http.post<any>('http://127.0.0.1:9000/v1/shop/customer/list', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/customer/unpaidList', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -126,7 +125,7 @@ export class SalesComponent implements OnInit {
     }
   }
 
-  edit(id) {
+  goSaleDetail(id) {
     this.router.navigate(['/admin/customers/detail'], {queryParams: {id: id}});
   }
 
