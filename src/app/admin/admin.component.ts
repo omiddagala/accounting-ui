@@ -27,6 +27,11 @@ export class AdminComponent implements OnInit {
       route: '/admin/customers'
     },
     {
+      name: 'فروش ها',
+      image: '../../assets/image/facilities/home/buy.jpg',
+      route: '/admin/sales'
+    },
+    {
       name: 'انبارها',
       image: '../../assets/image/facilities/home/buy.jpg',
       route: '/admin/reservoir'
