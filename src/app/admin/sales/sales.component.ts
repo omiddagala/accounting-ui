@@ -145,7 +145,7 @@ export class SalesComponent implements OnInit {
   }
 
   goSaleDetail(id) {
-    this.router.navigate(['/admin/sales/detail'], {queryParams: {id: id}});
+    this.router.navigate(['/admin/sales/sale-detail'], {queryParams: {id: id}});
   }
 
 }

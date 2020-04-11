@@ -213,7 +213,8 @@
                     <mat-icon>visibility</mat-icon>
                   </button>
 
-                  <button mat-icon-button>
+                  <button mat-icon-button
+                          (click)="openDeleteSaleDialog(item.id, i)">
                     <mat-icon style="color: red">delete</mat-icon>
                   </button>
                 </div>
@@ -234,7 +235,7 @@
 
         <!-- <div class="col-auto px-lg-5">
            <button mat-flat-button
-                   routerLink="/admin/customers/detail"
+                   routerLink="/admin/customers/sale-detail"
                    class="change-search-btn">
              ایجاد
            </button>
@@ -384,7 +385,8 @@
                 </div>
 
                 <div class="col-1 table-items my-auto  text-center py-2">
-                  <button mat-icon-button>
+                  <button mat-icon-button
+                          (click)="openDeleteSaleDialog(item.id, i)">
                     <mat-icon style="color: red">delete</mat-icon>
                   </button>
                 </div>

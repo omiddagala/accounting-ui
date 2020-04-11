@@ -53,4 +53,4 @@ import {DetailComponent} from './detail/detail.component';
   ]
 })
 
-export class CustomersModule{}
+export class CustomersModule {}

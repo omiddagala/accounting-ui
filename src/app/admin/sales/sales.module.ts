@@ -7,7 +7,7 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatIconModule,
-  MatListModule, MatButtonModule, MatInputModule, MatTooltipModule, MatRadioModule
+  MatListModule, MatButtonModule, MatInputModule, MatTooltipModule, MatRadioModule, MatDialogModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
@@ -16,7 +16,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../../../shared/shared.module';
 import {LoadingModule} from '../../../shared/component/loading/loading.module';
 import {SalesRoutingModule} from './sales-routing.module';
-import {DetailComponent} from './detail/detail.component';
+import {DeleteSaleDialog, SaleDetailComponent} from './sale-detail/sale-detail.component';
 import {MyDatePickerModule} from '../../../shared/datepicker';
 
 @NgModule({
@@ -40,15 +40,18 @@ import {MyDatePickerModule} from '../../../shared/datepicker';
     MatTooltipModule,
     MatRadioModule,
     MyDatePickerModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule
   ],
   declarations: [
     SalesComponent,
-    DetailComponent
+    SaleDetailComponent,
+    DeleteSaleDialog,
   ],
-  entryComponents: []
+  exports: [],
+  entryComponents: [
+    DeleteSaleDialog,
+  ]
 })
 
-export class SalesModule {
-
-}
+export class SalesModule {}

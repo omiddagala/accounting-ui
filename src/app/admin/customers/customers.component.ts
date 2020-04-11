@@ -6,7 +6,6 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CommonService} from '../../../shared/common/common.service';
-import {DeleteDialog} from '../library/library.component';
 
 @Component({
   selector: 'app-admin-customers',
@@ -127,7 +126,7 @@ export class CustomersComponent implements OnInit {
   }
 
   edit(id) {
-    this.router.navigate(['/admin/customers/detail'], {queryParams: {id: id}});
+    this.router.navigate(['/admin/customers/sale-detail'], {queryParams: {id: id}});
   }
 
 
@@ -142,7 +141,7 @@ export class CustomersComponent implements OnInit {
   }
 
   addCustomer() {
-    this.router.navigate(['/admin/customers/detail']);
+    this.router.navigate(['/admin/customers/sale-detail']);
   }
 }
 
@@ -189,5 +188,4 @@ export class DeleteCustomerDialog {
           this.commonService.showMessage('خطایی رخ داده است', 'error-msg');
         });
   }
-
 }
