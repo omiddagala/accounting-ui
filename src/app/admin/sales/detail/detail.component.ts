@@ -1,59 +1,54 @@
 import {Component, OnInit} from '@angular/core';
 // @ts-ignore
-import Menu from '../../../shared/data/menu.json';
+import Menu from '../../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {CommonService} from '../../../shared/common/common.service';
-import * as moment from 'jalali-moment';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CommonService} from '../../../../shared/common/common.service';
 
 @Component({
-  selector: 'app-admin-sales',
-  templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.scss']
+  selector: 'app-admin-sales-detail',
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.scss']
 })
 
-export class SalesComponent implements OnInit {
+export class DetailComponent implements OnInit {
   menu: any = Menu;
   showSearchField = false;
   formGroup: FormGroup;
   loading = false;
   public result = [];
   timelineLoading = false;
+  customerId: any;
   pageableDTO = {
     page: 0,
     size: 3,
     direction: 'ASC',
-    sortBy: 'name',
+    sortBy: 'id',
   };
   loadMore = true;
-  date = {
-    add: {
-      date: {
-        year: moment().jYear(),
-        month: moment().jMonth() + 1,
-        day: moment().jDate()
-      },
-      jsdate: new Date(moment().format('jYYYY/jM/jD')),
-      formatted: moment().format('jYYYY/jM/jD')
-    },
-    paid: ''
-  };
+
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
               public router: Router,
+              private route: ActivatedRoute,
               public commonService: CommonService) {
   }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      name: new FormControl(undefined),
-      family: new FormControl(undefined),
-      nationalCode: new FormControl(undefined),
-      mobile: new FormControl(undefined),
-      status: new FormControl('UNPAID'),
+      status: new FormControl('UNPAID')
     });
-    this.makeRequest();
+    this.getCustomerId();
+  }
+
+  getCustomerId() {
+    this.route.queryParams.subscribe(params => {
+      this.customerId = params.id;
+    });
+    if (this.customerId) {
+      this.makeRequest();
+    }
   }
 
   convertNumbers(str) {
@@ -67,31 +62,17 @@ export class SalesComponent implements OnInit {
     return str;
   }
 
-  convertToMiladiDate(dateObj) {
-    if (dateObj) {
-      const date = moment(dateObj.formatted, 'jYYYY/jMM/jDD');
-      console.log(date.format('YYYY-MM-DD'));
-      return date.format('YYYY-MM-DD');
-    } else {
-      return '';
-    }
-  }
-
   makeRequest() {
-    console.log(this.date);
     this.loading = true;
     // this.result = [];
     const param = {
-      name: this.formGroup.get('name').value,
-      family: this.formGroup.get('family').value,
-      nationalCode: this.convertNumbers(this.formGroup.get('nationalCode').value),
-      mobile: this.convertNumbers(this.formGroup.get('mobile').value),
+      customer: {
+        id: parseInt(this.customerId)
+      },
       status: this.formGroup.get('status').value,
-      addDate: this.convertToMiladiDate(this.date.add),
-      paidDate: this.convertNumbers(this.date.paid),
       pageableDTO: this.pageableDTO
     };
-    this.http.post<any>('http://127.0.0.1:9000/v1/shop/customer/unpaidList', param, {
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/sales/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }

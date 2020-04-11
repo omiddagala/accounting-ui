@@ -61,47 +61,7 @@
           <form [formGroup]="formGroup">
             <div class="row mx-5 justify-content-center">
 
-              <div class="col-4 pt-2 " style="margin-right: 26px">
-                <br/>
-                <div class="d-flex flex-row ">
-                  <div class="col-2 white-color mat-body-2 mt-3"
-                       style="padding-left: 0; padding-right: 0">
-                    <span>تاریخ پرداخت</span>
-                  </div>
-                  <div class="col-10">
-                    <my-date-picker [type]="'jalali'"
-                                    [required]="true"
-                                    [label]="false"
-                                    [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="date.paid"
-                                    placeholder="تاریخ پرداخت"
-                                    [locale]="'fa'">
-                    </my-date-picker>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-4 mt-2">
-                <br>
-                <div class=" d-flex flex-row">
-                  <div class="col-2 d-flex white-color mat-body-2 mt-3"
-                       style="padding-left: 0; padding-right: 0">
-                    <span> تاریخ اضافه</span>
-                  </div>
-                  <div class="col-10" style="padding-right: 0;padding-left: 42px;">
-                    <my-date-picker [type]="'jalali'"
-                                    [required]="true"
-                                    [label]="false"
-                                    [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="date.add"
-                                    placeholder="تاریخ اضافه شدن"
-                                    [locale]="'fa'">
-                    </my-date-picker>
-                  </div>
-                </div>
-              </div>
-
-              <div class="pt-1 col-4 d-flex row justify-content-around">
+              <div class="pt-1 col-3 mb-3 d-flex row justify-content-around">
                 <div class="col-2  white-color mat-body-2 my-auto"> وضعیت</div>
                 <div class="col-10 my-auto" dir="rtl">
                   <mat-radio-group formControlName="status">
@@ -111,72 +71,7 @@
                 </div>
               </div>
 
-              <div dir="rtl"
-                   style="padding-top: 22px"
-                   class="col-4 d-flex row justify-content-around">
-                <div class="col-2 mat-body-2 white-color text-center mt-4"
-                     style="padding: 0 !important;">
-                  <span>نام</span>
-                </div>
-                <mat-form-field class="col-10"
-                                appearance="outline">
-                  <input formControlName="name"
-                         matInput
-                         autocomplete="off"
-                         placeholder="نام"/>
-                </mat-form-field>
-              </div>
-
-              <div dir="rtl"
-                   style="padding-top: 22px"
-                   class="col-4 d-flex row justify-content-around">
-                <div class="col-2 mat-body-2 white-color text-center mt-3"
-                     style="padding: 0 !important;">
-                  <span>نام خانوادگی</span>
-                </div>
-                <mat-form-field class="col-10"
-                                appearance="outline">
-                  <input formControlName="family"
-                         matInput
-                         autocomplete="off"
-                         placeholder="نام خانوادگی"/>
-                </mat-form-field>
-              </div>
-
-              <div dir="rtl"
-                   style="padding-top: 22px"
-                   class="col-4 d-flex row justify-content-around">
-                <div class="col-2 mat-body-2 white-color text-center mt-3"
-                     style="padding: 0 !important;">
-                  <span>کد ملی</span>
-                </div>
-                <mat-form-field class="col-10"
-                                appearance="outline">
-                  <input formControlName="nationalCode"
-                         matInput
-                         autocomplete="off"
-                         placeholder="کد ملی"/>
-                </mat-form-field>
-              </div>
-
-              <div dir="rtl"
-                   style="padding-top: 22px"
-                   class="col-4 d-flex row justify-content-around">
-                <div class="col-2 mat-body-2 white-color text-center mt-3"
-                     style="padding: 0 !important;">
-                  <span>شماره موبایل</span>
-                </div>
-                <mat-form-field class="col-10"
-                                appearance="outline">
-                  <input formControlName="mobile"
-                         matInput
-                         autocomplete="off"
-                         placeholder="شماره موبایل"/>
-                </mat-form-field>
-              </div>
-
-
-              <div class="col-12 py-2 mb-3 mt-1 d-flex flex-row justify-content-center">
+              <div class="col-12 py-2 mb-2 mt-1 d-flex flex-row justify-content-center">
                 <button class="col-4 mat-body-1 mx-auto search-desktop-btn"
                         style="background: green"
                         (click)="search()"
@@ -261,8 +156,16 @@
         </div>
       </div>
       <!--  @@@@@@@@@@@@@@@@@@@@ d-block محصولd-lg-none @@@@@@@@@@@@@@@@@@@@@@-->
-      <mat-toolbar class="d-lg-none d-flex flex-row justify-content-end zero-padding-mobile"
+      <mat-toolbar class="d-lg-none d-flex flex-row justify-content-between zero-padding-mobile"
                    style="background: #236b81">
+
+        <!-- <div class="col-auto px-lg-5">
+           <button mat-flat-button
+                   routerLink="/admin/customers/detail"
+                   class="change-search-btn">
+             ایجاد
+           </button>
+         </div>-->
 
         <div class="col-auto px-lg-5">
           <button mat-flat-button
@@ -292,39 +195,6 @@
         <div class="layer w-100">
           <form [formGroup]="formGroup">
             <div class="d-flex row mx-3 justify-content-center">
-
-              <div class="col-10 col-md-8 pt-2 ">
-
-                <div class="mx-auto white-color mat-body-2 mt-3">
-                  <span>تاریخ پرداخت</span>
-                </div>
-                <div class="mx-auto">
-                  <my-date-picker [type]="'jalali'"
-                                  [required]="true"
-                                  [label]="false"
-                                  [ngModelOptions]="{standalone: true}"
-                                  [(ngModel)]="date.paid"
-                                  placeholder="تاریخ پرداخت"
-                                  [locale]="'fa'">
-                  </my-date-picker>
-                </div>
-              </div>
-
-              <div class="col-10 col-md-8 mt-2">
-                <div class=" mx-auto d-flex white-color mat-body-2 mt-2">
-                  <span> تاریخ اضافه</span>
-                </div>
-                <div class=" mx-auto">
-                  <my-date-picker [type]="'jalali'"
-                                  [required]="true"
-                                  [label]="false"
-                                  [ngModelOptions]="{standalone: true}"
-                                  [(ngModel)]="date.add"
-                                  placeholder="تاریخ اضافه شدن"
-                                  [locale]="'fa'">
-                  </my-date-picker>
-                </div>
-              </div>
 
               <div class="pt-1 col-10 col-md-8">
                 <div class="w-100  white-color mat-body-2"> نام</div>

@@ -12,10 +12,12 @@ import {
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {MainMenuModule} from '../../../shared/component/main-menu/MainMenu.module';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../../../shared/shared.module';
 import {LoadingModule} from '../../../shared/component/loading/loading.module';
 import {SalesRoutingModule} from './sales-routing.module';
+import {DetailComponent} from './detail/detail.component';
+import {MyDatePickerModule} from '../../../shared/datepicker';
 
 @NgModule({
   imports: [
@@ -36,10 +38,13 @@ import {SalesRoutingModule} from './sales-routing.module';
     MatButtonModule,
     MatInputModule,
     MatTooltipModule,
-    MatRadioModule
+    MatRadioModule,
+    MyDatePickerModule,
+    FormsModule
   ],
   declarations: [
-    SalesComponent
+    SalesComponent,
+    DetailComponent
   ],
   entryComponents: []
 })

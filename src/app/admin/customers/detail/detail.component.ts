@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 // @ts-ignore
 import Menu from '../../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -6,12 +6,6 @@ import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CommonService} from '../../../../shared/common/common.service';
-import * as moment from 'jalali-moment';
-
-
-export interface DialogData {
-  count;
-}
 
 
 @Component({
