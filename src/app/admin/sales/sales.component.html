@@ -61,7 +61,8 @@
           <form [formGroup]="formGroup">
             <div class="row mx-5 justify-content-center">
 
-              <div class="col-4 pt-2 " style="margin-right: 26px">
+              <div class="col-4 pt-2 "
+                   style="margin-right: 26px">
                 <br/>
                 <div class="d-flex flex-row ">
                   <div class="col-2 white-color mat-body-2 mt-3"
@@ -70,7 +71,6 @@
                   </div>
                   <div class="col-10">
                     <my-date-picker [type]="'jalali'"
-                                    [required]="true"
                                     [label]="false"
                                     [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="date.paid"
@@ -90,7 +90,6 @@
                   </div>
                   <div class="col-10" style="padding-right: 0;padding-left: 42px;">
                     <my-date-picker [type]="'jalali'"
-                                    [required]="true"
                                     [label]="false"
                                     [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="date.add"
@@ -192,18 +191,6 @@
       <div class="row mx-auto px-lg-5 mt-3  w-100 d-none d-lg-flex">
         <div class="col-12 mx-auto" style="padding: 0 !important;">
           <mat-card>
-            <!--<div class="row justify-content-between my-auto top-card">
-              <div class="col-2 col-xl-1 mat-body-1 mt-2 gray-color "
-                   style="font-weight: 500;">
-                <button class="w-100 mb-2"
-                        mat-flat-button
-                        (click)="addCustomer()"
-                        style="background: green;color: white;min-height: 40px">
-                  افزودن
-                </button>
-              </div>
-            </div>-->
-
             <div class="row  justify-content-between"
                  style="border-bottom: 2px solid #f1f1f1">
 
@@ -247,7 +234,6 @@
                           style="color: white;background-color: green">
                     جزییات
                   </button>
-                  <app-loading-component *ngIf="timelineLoading"></app-loading-component>
                 </div>
               </div>
               <mat-spinner *ngIf="loading"
@@ -300,7 +286,6 @@
                 </div>
                 <div class="mx-auto">
                   <my-date-picker [type]="'jalali'"
-                                  [required]="true"
                                   [label]="false"
                                   [ngModelOptions]="{standalone: true}"
                                   [(ngModel)]="date.paid"
@@ -316,7 +301,6 @@
                 </div>
                 <div class=" mx-auto">
                   <my-date-picker [type]="'jalali'"
-                                  [required]="true"
                                   [label]="false"
                                   [ngModelOptions]="{standalone: true}"
                                   [(ngModel)]="date.add"

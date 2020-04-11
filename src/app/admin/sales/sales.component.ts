@@ -19,7 +19,6 @@ export class SalesComponent implements OnInit {
   formGroup: FormGroup;
   loading = false;
   public result = [];
-  timelineLoading = false;
   pageableDTO = {
     page: 0,
     size: 3,

@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonService} from '../../../../shared/common/common.service';
+import * as moment from 'jalali-moment';
 
 @Component({
   selector: 'app-admin-sales-detail',
@@ -18,7 +19,6 @@ export class DetailComponent implements OnInit {
   formGroup: FormGroup;
   loading = false;
   public result = [];
-  timelineLoading = false;
   customerId: any;
   pageableDTO = {
     page: 0,
@@ -27,6 +27,10 @@ export class DetailComponent implements OnInit {
     sortBy: 'id',
   };
   loadMore = true;
+  date = {
+    add: '',
+    paid: ''
+  };
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -37,7 +41,8 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      status: new FormControl('UNPAID')
+      status: new FormControl('UNPAID'),
+      factorNumber: new FormControl('')
     });
     this.getCustomerId();
   }
@@ -62,14 +67,27 @@ export class DetailComponent implements OnInit {
     return str;
   }
 
+  convertToMiladiDate(dateObj) {
+    if (dateObj) {
+      const date = moment(dateObj.formatted, 'jYYYY/jMM/jDD');
+      console.log(date.format('YYYY-MM-DD'));
+      return date.format('YYYY-MM-DD');
+    } else {
+      return '';
+    }
+  }
+
   makeRequest() {
     this.loading = true;
     // this.result = [];
     const param = {
       customer: {
+        // tslint:disable-next-line:radix
         id: parseInt(this.customerId)
       },
       status: this.formGroup.get('status').value,
+      addDate:  this.convertToMiladiDate(this.date.add),
+      paidDate: this.convertNumbers(this.date.paid),
       pageableDTO: this.pageableDTO
     };
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/sales/list', param, {
