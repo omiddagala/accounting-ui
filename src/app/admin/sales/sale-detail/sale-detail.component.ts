@@ -18,12 +18,12 @@ export class SaleDetailComponent implements OnInit {
   menu: any = Menu;
   showSearchField = false;
   formGroup: FormGroup;
-  loading = true;
+  loading = false;
   public result = [];
   customer: any = {
     id: '',
     obj: '',
-    loading: false
+    loading: true
   }
   pageableDTO = {
     page: 0,
@@ -58,13 +58,11 @@ export class SaleDetailComponent implements OnInit {
       this.customer.id = params.id;
     });
     if (this.customer.id) {
-      this.makeRequest();
       this.getUser();
     }
   }
 
   getUser() {
-    // this.customer.loading = true;
     const param = {
       id: this.customer.id
     }
@@ -127,7 +125,7 @@ export class SaleDetailComponent implements OnInit {
           this.loading = false;
           this.result.push(...val);
           console.log(this.result);
-          // this.addValueToResult();
+          this.addValueToResult();
           this.pageableDTO.page++;
           if (val.length === this.pageableDTO.size) {
             this.loadMore = true;
@@ -146,7 +144,7 @@ export class SaleDetailComponent implements OnInit {
       });
       this.result.forEach((item, index) => {
         this.result.forEach((secondItem, secondIndex) => {
-          if (item.name === secondItem.name) {
+          if (item.id === secondItem.id) {
             flag[index] += 1;
             if (flag[index] >= 2) {
               this.result.splice(index, 1);
@@ -289,9 +287,13 @@ export class EditSaleDialog implements OnInit{
       return true;
     }
     this.checkData();
-    console.log(this.obj);
+    let param = this.obj;
+    param.user = {
+      id: this.obj.user.id,
+      username: this.obj.user.username
+    };
     this.loading = true;
-    this.http.post('http://127.0.0.1:9000/v1/shop/sales/save', this.obj, {
+    this.http.post('http://127.0.0.1:9000/v1/shop/sales/save', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -303,7 +305,7 @@ export class EditSaleDialog implements OnInit{
           this.onNoClick();
           this.commonService.showMessage('تغیرات با موفقیت اعمال شد', 'success-msg');
         },
-        response => {
+        err => {
           this.loading = false;
           this.onNoClick();
           this.commonService.showMessage('خطایی رخ داده است', 'error-msg');

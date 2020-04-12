@@ -144,6 +144,18 @@
         <div class="col-12 mx-auto" style="padding: 0 !important;">
           <mat-card>
 
+            <div class="row justify-content-between my-auto top-card">
+              <div class="col-2 mat-body-1 mt-2 gray-color"
+                   style="font-weight: 500;">
+                <button class="w-100 mb-2"
+                        mat-flat-button
+                        [disabled]="formGroup.get('status').value === 'PAID'"
+                        color="accent">
+                  فاکتور کردن
+                </button>
+              </div>
+            </div>
+
             <div class="row  justify-content-between"
                  style="border-bottom: 2px solid #f1f1f1">
 
@@ -190,7 +202,7 @@
                 </div>
 
                 <div class="col-2 table-items my-auto  text-center py-2">
-                  {{item.productSize.product.price}}
+                  {{item.productSize.product.price | number}}
                 </div>
 
                 <div class="col-1 table-items my-auto  text-center py-2">
@@ -198,11 +210,11 @@
                 </div>
 
                 <div class="col-2 table-items my-auto  text-center py-2">
-                  {{item.productSize.product.price * item.amount}}
+                  {{item.productSize.product.price * item.amount | number}}
                 </div>
 
                 <div class="col-2 table-items my-auto  text-center py-2">
-                  {{item.price * item.amount}}
+                  {{item.price * item.amount | number}}
                 </div>
 
                 <div class="col-1 table-items my-auto  text-center py-2">
@@ -230,6 +242,7 @@
       <!--  @@@@@@@@@@@@@@@@@@@@ d-block محصولd-lg-none @@@@@@@@@@@@@@@@@@@@@@-->
       <mat-toolbar class="d-lg-none d-flex flex-row justify-content-between zero-padding-mobile"
                    style="background: #236b81">
+
 
         <div *ngIf="!customer.loading"
              class="col-auto mat-body-1"
@@ -304,7 +317,6 @@
                   </mat-form-field>
                 </div>
               </div>
-
               <div class="pt-1 col-10 col-md-8 mb-3">
                 <div class="w-100  white-color mat-body-2"> وضعیت</div>
                 <div dir="rtl">
@@ -329,6 +341,15 @@
       </div>
 
       <div class="d-flex  d-lg-none flex-wrap">
+
+        <div class="col-auto px-lg-5 mt-2">
+          <button mat-flat-button
+                  [disabled]="formGroup.get('status').value === 'PAID'"
+                  color="accent">
+            فاکتور کردن
+          </button>
+        </div>
+
         <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"
              style="margin-left: 0 !important;margin-right: 0 !important;">
 
@@ -338,38 +359,57 @@
                       *ngFor="let item of result; let i = index">
 
               <div class="row justify-content-between pb-1">
-                <div class="col-4 mat-body-2">خریدار</div>
+                <div class="col-4 mat-body-2">گروه کالا</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
                 <div class="col-4 mat-body-2"
-                     style="text-align: end">{{item.customer.name + ' ' + item.customer.family}}</div>
+                     style="text-align: end">
+                  {{item.productSize.product.group.name}}
+                </div>
               </div>
 
               <div class="row justify-content-between py-1">
-                <div class="col-4 mat-body-2">نام محصول</div>
+                <div class="col-4 mat-body-2">کد محصول</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
                 <div class="col-4 mat-body-2"
-                     style="text-align: end">{{item.productSize.product.name}}</div>
+                     style="text-align: end">
+                  {{item.productSize.code}}
+                </div>
+              </div>
+
+              <div class="row justify-content-between py-1">
+                <div class="col-4 mat-body-2">قیمت واحد</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
+                     style="text-align: end">
+                  {{item.productSize.product.price | number}}
+                </div>
               </div>
 
               <div class="row justify-content-between py-1">
                 <div class="col-4 mat-body-2">تعداد</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
                 <div class="col-4 mat-body-2"
-                     style="text-align: end">{{item.amount}}</div>
-              </div>
-
-              <div class="row justify-content-between py-1">
-                <div class="col-4 mat-body-2">قیمت محصول</div>
-                <div class="col-4 d-flex my-auto between-two-content-border"></div>
-                <div class="col-4 mat-body-2"
-                     style="text-align: end">{{item.productSize.product.price}}</div>
+                     style="text-align: end">
+                  {{item.amount}}
+                </div>
               </div>
 
               <div class="row justify-content-between py-1">
                 <div class="col-4 mat-body-2">قیمت کل</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
                 <div class="col-4 mat-body-2"
-                     style="text-align: end">{{item.productSize.product.price * item.amount}}</div>
+                     style="text-align: end">
+                  {{item.productSize.product.price * item.amount | number}}
+                </div>
+              </div>
+
+              <div class="row justify-content-between py-1">
+                <div class="col-4 mat-body-2">قیمت کل پس از تخفیف</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
+                     style="text-align: end">
+                  {{item.price * item.amount | number}}
+                </div>
               </div>
 
               <hr class="w-75 mx-auto  mt-4">

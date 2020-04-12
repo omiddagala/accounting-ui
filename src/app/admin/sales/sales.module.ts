@@ -18,6 +18,7 @@ import {LoadingModule} from '../../../shared/component/loading/loading.module';
 import {SalesRoutingModule} from './sales-routing.module';
 import {DeleteSaleDialog, EditSaleDialog, SaleDetailComponent} from './sale-detail/sale-detail.component';
 import {MyDatePickerModule} from '../../../shared/datepicker';
+import {NgxCurrencyModule} from 'ngx-currency';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import {MyDatePickerModule} from '../../../shared/datepicker';
     MatRadioModule,
     MyDatePickerModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxCurrencyModule
   ],
   declarations: [
     SalesComponent,
