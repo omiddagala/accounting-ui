@@ -1,0 +1,47 @@
+<h1 mat-dialog-title
+    class="color_236b81"
+    dir="rtl">
+  <span>مشخصات حساب را وارد کنید</span>
+</h1>
+<form [formGroup]="formGroup"
+      mat-dialog-content dir="rtl">
+  <mat-form-field>
+    <mat-label class="col-12">
+      <span>بانک</span>
+    </mat-label>
+    <input style="direction: rtl"
+           matInput
+           formControlName="bank">
+    <mat-error *ngIf="formGroup.get('bank').hasError('required')">
+      این فیلد الزامی است
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12" dir="rtl">
+    <mat-label>
+      <span>شماره حساب</span>
+    </mat-label>
+    <input style="direction: rtl"
+           matInput
+           formControlName="accountNumber">
+    <mat-error *ngIf="formGroup.get('accountNumber').hasError('required')">
+      این فیلد الزامی است
+    </mat-error>
+  </mat-form-field>
+
+</form>
+<div mat-dialog-actions dir="rtl">
+  <button mat-button
+          (click)="onNoClick()">
+    <span>لغو</span>
+  </button>
+  <button mat-button
+          (click)="addAccount()">
+    <span *ngIf="!loading">ثبت</span>
+    <mat-spinner *ngIf="loading"
+                 class="mx-auto"
+                 [diameter]="30"
+                 [strokeWidth]="4">
+    </mat-spinner>
+  </button>
+</div>

@@ -15,6 +15,11 @@
     "route": "/admin/library/collective-orders"
   },
   {
+    "text": "حساب ها",
+    "value": "accounts",
+    "route": "/admin/accounts"
+  },
+  {
     "text": "پرینتر",
     "value": "printer",
     "route": "/admin/printer"

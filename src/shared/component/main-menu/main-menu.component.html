@@ -33,11 +33,6 @@
       خانه
     </button>
 
-    <!--<button class="d-none d-md-block"
-            mat-button
-            (click)="routeHome()">
-      قوانین و مقررات
-    </button>-->
     <button class="d-none d-md-block"
             mat-button
             *ngIf="commonService.isAdmin()"
@@ -47,6 +42,10 @@
     <button mat-button
             (click)="routeCollectiveOrders()">
       حواله جمعی
+    </button>
+    <button mat-button
+            (click)="routeToAccounts()">
+       حساب ها
     </button>
     <button class=""
             mat-button

@@ -19,14 +19,15 @@ export class MainMenuComponent implements OnInit {
   @Input() snav: any;
   @Output() ordersList = new EventEmitter<object>();
   notificationsNumber: any;
+
   constructor(public commonService: CommonService,
               private router: Router,
               private http: HttpClient) {
 
   }
 
-   ngOnInit() {
-     this.getOrders();
+  ngOnInit() {
+    this.getOrders();
   }
 
 
@@ -37,37 +38,37 @@ export class MainMenuComponent implements OnInit {
     // snav.toggle()
   }
 
-   getOrders() {
+  getOrders() {
     const TIME = 20000;
     this.ordersList.emit({
       orders: [],
       loading: true
     });
-     this.gerOrdersRequest();
+    this.gerOrdersRequest();
     setInterval(() => {
       this.gerOrdersRequest();
     }, TIME);
 
   }
 
-   gerOrdersRequest() {
-      this.http.post('http://127.0.0.1:9000/v1/shop/order/fetch', {}, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token')
-        }
-      })
-        .subscribe(
-          (val) => {
-            const result: any = val;
-            this.notificationsNumber = result.length;
-            this.ordersList.emit({
-              orders: val,
-              loading: false
-            });
-          },
-          err => {
-            console.log(err);
+  gerOrdersRequest() {
+    this.http.post('http://127.0.0.1:9000/v1/shop/order/fetch', {}, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          const result: any = val;
+          this.notificationsNumber = result.length;
+          this.ordersList.emit({
+            orders: val,
+            loading: false
           });
+        },
+        err => {
+          console.log(err);
+        });
 
   }
 
@@ -77,6 +78,10 @@ export class MainMenuComponent implements OnInit {
 
   routeCollectiveOrders() {
     this.router.navigate(['/admin/library/collective-orders']);
+  }
+
+  routeToAccounts() {
+    this.router.navigate(['/admin/accounts']);
   }
 
   routeUsers() {
