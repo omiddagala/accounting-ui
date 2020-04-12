@@ -13,7 +13,7 @@ export class DeleteAccountDialog {
     public dialogRef: MatDialogRef<DeleteAccountDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: HttpClient,
-    private commonService: CommonService,) {
+    private commonService: CommonService) {
   }
 
   delete() {
