@@ -1,0 +1,10 @@
+.dialog-width {
+  width: 500px;
+}
+
+@media (max-width: 500px) {
+  .dialog-width {
+    width: 260px !important;
+  }
+
+}

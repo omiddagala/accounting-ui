@@ -5,9 +5,7 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {GroupData, GroupDialog} from './group/group.component';
 import {CommonService} from '../../../shared/common/common.service';
-import {CountDialog} from './detail/detail.component';
 
 @Component({
   selector: 'app-admin-library',
@@ -115,11 +113,6 @@ export class LibraryComponent implements OnInit {
           }
         });
       });
-      /*flag.forEach((item, index) => {
-        if (flag >= 2) {
-          this.result.splice(index, 1);
-        }
-      });*/
     }
   }
 
@@ -139,14 +132,14 @@ export class LibraryComponent implements OnInit {
 
   edit(id) {
     localStorage.setItem('productCopy', JSON.stringify({}));
-    this.router.navigate(['/admin/library/sale-detail'], {queryParams: {id: id}});
+    this.router.navigate(['/admin/library/detail'], {queryParams: {id: id}});
   }
 
   copyProduct(id) {
     console.log(this.result);
     const product = this.result.filter(item => item.id === id);
     localStorage.setItem('productCopy', JSON.stringify(product[0]));
-    this.router.navigate(['/admin/library/sale-detail']);
+    this.router.navigate(['/admin/library/detail']);
   }
 
   openTimelineDialog(id) {
@@ -192,7 +185,7 @@ export class LibraryComponent implements OnInit {
 
   addProduct() {
     localStorage.setItem('productCopy', JSON.stringify({}));
-    this.router.navigate(['/admin/library/sale-detail']);
+    this.router.navigate(['/admin/library/detail']);
   }
 
 

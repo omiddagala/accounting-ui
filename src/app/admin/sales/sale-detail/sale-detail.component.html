@@ -28,8 +28,9 @@
       </app-main-menu>
       <mat-toolbar style="height: 56px"
                    class="d-none d-lg-flex blue-toolbar row  px-md-5 justify-content-between">
-        <div class="col-auto mat-body-1">
-          <span>فروش ها</span>
+        <div *ngIf="!customer.loading"
+             class="col-auto mat-body-1">
+          <span>{{customer.obj.name +' '+ customer.obj.family}}</span>
         </div>
 
         <div class="d-flex flex-row">
@@ -142,27 +143,20 @@
       <div class="row mx-auto px-lg-5 mt-3  w-100 d-none d-lg-flex">
         <div class="col-12 mx-auto" style="padding: 0 !important;">
           <mat-card>
-            <!--<div class="row justify-content-between my-auto top-card">
-              <div class="col-2 col-xl-1 mat-body-1 mt-2 gray-color "
-                   style="font-weight: 500;">
-                <button class="w-100 mb-2"
-                        mat-flat-button
-                        (click)="addCustomer()"
-                        style="background: green;color: white;min-height: 40px">
-                  افزودن
-                </button>
-              </div>
-            </div>-->
 
             <div class="row  justify-content-between"
                  style="border-bottom: 2px solid #f1f1f1">
 
               <div class=" px-1 text-center table-header col-2 py-2">
-                خریدار
+                گروه کالا
               </div>
 
-              <div class=" px-1 text-center table-header col-3 py-2">
-                نام محصول
+              <div class=" px-1 text-center table-header col-1 py-2">
+                کد محصول
+              </div>
+
+              <div class=" px-1 text-center table-header col-2 py-2">
+                قیمت واحد
               </div>
 
               <div class=" px-1 text-center table-header col-1 py-2">
@@ -170,11 +164,11 @@
               </div>
 
               <div class=" px-1 text-center table-header col-2 py-2">
-                قیمت
+                قیمت کل
               </div>
 
-              <div class=" px-1 text-center table-header col-3 py-2">
-                قیمت کل
+              <div class=" px-1 text-center table-header col-2 py-2">
+                 قیمت کل پس از تخفیف
               </div>
 
               <div class=" px-1 text-center table-header col-1 py-2">
@@ -188,12 +182,15 @@
                    style="border-bottom: 2px solid #f1f1f1; height: 85px">
 
                 <div class="col-2 table-items my-auto mat-title text-center py-2">
-                  {{item.customer.name + ' ' + item.customer.family}}
+                  {{item.productSize.product.group.name}}
                 </div>
 
+                <div class="col-1 table-items my-auto  text-center py-2">
+                  {{item.productSize.code}}
+                </div>
 
-                <div class="col-3 table-items my-auto  text-center py-2">
-                  {{item.productSize.product.name}}
+                <div class="col-2 table-items my-auto  text-center py-2">
+                  {{item.productSize.product.price}}
                 </div>
 
                 <div class="col-1 table-items my-auto  text-center py-2">
@@ -201,15 +198,16 @@
                 </div>
 
                 <div class="col-2 table-items my-auto  text-center py-2">
-                  {{item.productSize.product.price}}
-                </div>
-
-                <div class="col-3 table-items my-auto  text-center py-2">
                   {{item.productSize.product.price * item.amount}}
                 </div>
 
+                <div class="col-2 table-items my-auto  text-center py-2">
+                  {{item.price * item.amount}}
+                </div>
+
                 <div class="col-1 table-items my-auto  text-center py-2">
-                  <button mat-icon-button>
+                  <button mat-icon-button
+                          (click)="openEditSaleDialog(i)">
                     <mat-icon>visibility</mat-icon>
                   </button>
 
@@ -230,16 +228,14 @@
         </div>
       </div>
       <!--  @@@@@@@@@@@@@@@@@@@@ d-block محصولd-lg-none @@@@@@@@@@@@@@@@@@@@@@-->
-      <mat-toolbar class="d-lg-none d-flex flex-row justify-content-end zero-padding-mobile"
+      <mat-toolbar class="d-lg-none d-flex flex-row justify-content-between zero-padding-mobile"
                    style="background: #236b81">
 
-        <!-- <div class="col-auto px-lg-5">
-           <button mat-flat-button
-                   routerLink="/admin/customers/sale-detail"
-                   class="change-search-btn">
-             ایجاد
-           </button>
-         </div>-->
+        <div *ngIf="!customer.loading"
+             class="col-auto mat-body-1"
+             style="color: white">
+          <span>{{customer.obj.name +' '+ customer.obj.family}}</span>
+        </div>
 
         <div class="col-auto px-lg-5">
           <button mat-flat-button
@@ -378,13 +374,14 @@
 
               <hr class="w-75 mx-auto  mt-4">
               <div class="d-flex flex-row flex-wrap justify-content-end pt-1">
-                <div class="col-1 table-items my-auto  text-center py-2">
-                  <button mat-icon-button>
+                <div class="col-2 col-md-1 table-items my-auto  text-center py-2">
+                  <button mat-icon-button
+                          (click)="openEditSaleDialog(i)">
                     <mat-icon>visibility</mat-icon>
                   </button>
                 </div>
 
-                <div class="col-1 table-items my-auto  text-center py-2">
+                <div class="col-2 col-md-1 table-items my-auto  text-center py-2">
                   <button mat-icon-button
                           (click)="openDeleteSaleDialog(item.id, i)">
                     <mat-icon style="color: red">delete</mat-icon>

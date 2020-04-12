@@ -16,7 +16,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../../../shared/shared.module';
 import {LoadingModule} from '../../../shared/component/loading/loading.module';
 import {SalesRoutingModule} from './sales-routing.module';
-import {DeleteSaleDialog, SaleDetailComponent} from './sale-detail/sale-detail.component';
+import {DeleteSaleDialog, EditSaleDialog, SaleDetailComponent} from './sale-detail/sale-detail.component';
 import {MyDatePickerModule} from '../../../shared/datepicker';
 
 @NgModule({
@@ -47,10 +47,12 @@ import {MyDatePickerModule} from '../../../shared/datepicker';
     SalesComponent,
     SaleDetailComponent,
     DeleteSaleDialog,
+    EditSaleDialog
   ],
   exports: [],
   entryComponents: [
     DeleteSaleDialog,
+    EditSaleDialog
   ]
 })
 

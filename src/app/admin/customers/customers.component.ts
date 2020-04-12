@@ -126,7 +126,7 @@ export class CustomersComponent implements OnInit {
   }
 
   edit(id) {
-    this.router.navigate(['/admin/customers/sale-detail'], {queryParams: {id: id}});
+    this.router.navigate(['/admin/customers/detail'], {queryParams: {id: id}});
   }
 
 
@@ -141,7 +141,7 @@ export class CustomersComponent implements OnInit {
   }
 
   addCustomer() {
-    this.router.navigate(['/admin/customers/sale-detail']);
+    this.router.navigate(['/admin/customers/detail']);
   }
 }
 

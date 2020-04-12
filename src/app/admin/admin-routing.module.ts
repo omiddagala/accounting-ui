@@ -25,7 +25,7 @@ const routes: Routes = [
     component: LibraryComponent,
   },
   {
-    path: 'library/sale-detail',
+    path: 'library/detail',
     component: DetailComponent
   },
   {
