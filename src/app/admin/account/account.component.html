@@ -154,10 +154,11 @@
                           matTooltip="ویرایش">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <!--<button mat-icon-button (click)="openDeleteDialog(item.id, i)"
+                  <button mat-icon-button
+                          (click)="openDeleteAccountDialog(item.id, i)"
                           matTooltip="حذف">
                     <mat-icon style="color: red">delete</mat-icon>
-                  </button>-->
+                  </button>
 
                   <app-loading-component *ngIf="timelineLoading"></app-loading-component>
                 </div>
@@ -289,13 +290,13 @@
                     <mat-icon>edit</mat-icon>
                   </button>
                 </div>
-                <!--<div class="col-3 col-md-1">
+                <div class="col-3 col-md-1">
                   <button mat-icon-button
-                          (click)="openDeleteDialog(item.id, i)"
+                          (click)="openDeleteAccountDialog(item.id, i)"
                           matTooltip="حذف">
                     <mat-icon style="color: red">delete</mat-icon>
                   </button>
-                </div>-->
+                </div>
               </div>
             </mat-card>
             <mat-spinner *ngIf="loading"

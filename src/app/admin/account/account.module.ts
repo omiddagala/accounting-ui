@@ -18,6 +18,7 @@ import {LoadingModule} from '../../../shared/component/loading/loading.module';
 import {RouterModule} from '@angular/router';
 import {MainMenuModule} from '../../../shared/component/main-menu/MainMenu.module';
 import {AddAccountDialog} from './add-account/add-account-dialog';
+import {DeleteAccountDialog} from './delete-account/delete-account-dialog';
 
 @NgModule({
   imports: [
@@ -44,10 +45,12 @@ import {AddAccountDialog} from './add-account/add-account-dialog';
   ],
   declarations: [
     AccountComponent,
-    AddAccountDialog
+    AddAccountDialog,
+    DeleteAccountDialog
   ],
   entryComponents: [
-    AddAccountDialog
+    AddAccountDialog,
+    DeleteAccountDialog
   ]
 })
 

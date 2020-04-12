@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CommonService} from '../../../shared/common/common.service';
 import {AddAccountDialog} from './add-account/add-account-dialog';
+import {DeleteAccountDialog} from './delete-account/delete-account-dialog';
 
 @Component({
   selector: 'app-admin-account',
@@ -121,16 +122,15 @@ export class AccountComponent implements OnInit {
     this.router.navigate(['/admin/customers/detail'], {queryParams: {id: id}});
   }
 
-
-  /*openDeleteDialog(id, index): void {
-    const dialogRef = this.dialog.open(DeleteCustomerDialog, {
+  openDeleteAccountDialog(id, index) {
+    const dialogRef = this.dialog.open(DeleteAccountDialog, {
       data: {
         result : this.result,
         index,
         id
       }
     });
-  }*/
+  }
 
   addAccountDialog() {
     const dialogRef = this.dialog.open(AddAccountDialog, {
