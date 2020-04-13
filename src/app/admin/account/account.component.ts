@@ -24,7 +24,7 @@ export class AccountComponent implements OnInit {
   timelineLoading = false;
   pageableDTO = {
     page: 0,
-    size: 3,
+    size: 25,
     direction: 'ASC',
     sortBy: 'bank',
   };

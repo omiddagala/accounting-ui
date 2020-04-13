@@ -144,15 +144,28 @@
         <div class="col-12 mx-auto" style="padding: 0 !important;">
           <mat-card>
 
-            <div class="row justify-content-between my-auto top-card">
+            <div class="row  my-auto top-card">
               <div class="col-2 mat-body-1 mt-2 gray-color"
                    style="font-weight: 500;">
                 <button class="w-100 mb-2"
                         mat-flat-button
-                        [disabled]="formGroup.get('status').value === 'PAID'"
+                        [disabled]="!isUnpaid()"
                         color="accent">
                   فاکتور کردن
                 </button>
+              </div>
+
+              <div dir="rtl" class="col-3"
+                   *ngIf="isUnpaid()">
+                <mat-form-field class="w-100">
+                  <mat-label>حساب ها</mat-label>
+                  <mat-select [(ngModel)]="account">
+                    <mat-option *ngFor="let item of accountList"
+                                [value]="item.id">
+                      {{item.accountNumber + ' - ' + item.bank }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
 
@@ -235,6 +248,29 @@
                            [strokeWidth]="5">
               </mat-spinner>
             </infinite-scroll>
+
+            <div *ngIf="formGroup.get('status').value === 'UNPAID'"
+                 class="row justify-content-between">
+
+              <div class="col-2 px-1 text-center table-header py-2">مجموع</div>
+
+              <div class=" px-1 text-center table-header col-1 py-2">
+              </div>
+
+              <div class=" px-1 text-center table-header col-2 py-2"></div>
+
+              <div class=" px-1 text-center table-header col-1 py-2"></div>
+
+              <div class=" px-1 text-center table-header col-2 py-2">
+                {{sumPrice.total | number}}
+              </div>
+
+              <div class=" px-1 text-center table-header col-2 py-2">
+                {{sumPrice.discountToal | number}}
+              </div>
+
+              <div class=" px-1 text-center table-header col-1 py-2"></div>
+            </div>
 
           </mat-card>
         </div>
@@ -350,6 +386,18 @@
           </button>
         </div>
 
+        <div dir="rtl" class="col-6 mt-1">
+          <mat-form-field class="w-100">
+            <mat-label>حساب ها</mat-label>
+            <mat-select [(ngModel)]="account">
+              <mat-option *ngFor="let item of accountList"
+                          [value]="item.id">
+                {{item.accountNumber + ' - ' + item.bank }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"
              style="margin-left: 0 !important;margin-right: 0 !important;">
 
@@ -430,12 +478,34 @@
 
               </div>
             </mat-card>
+
             <mat-spinner *ngIf="loading"
                          class="mx-auto my-3"
                          [diameter]="40"
                          [strokeWidth]="5">
             </mat-spinner>
           </infinite-scroll>
+
+          <mat-card class="w-100 my-2"
+                    *ngIf="isUnpaid()">
+            <div class="mat-title">مجموع</div>
+            <div class="row justify-content-between pb-1">
+              <div class="col-5 mat-body-2"> قیمت کل</div>
+              <div class="col-2 d-flex my-auto between-two-content-border"></div>
+              <div class="col-5 mat-body-2"
+                   style="text-align: end">
+                {{sumPrice.total | number}}
+              </div>
+            </div>
+            <div class="row justify-content-between pb-1">
+              <div class="col-5 mat-body-2">قیمت کل پس از تخفیف</div>
+              <div class="col-2 d-flex my-auto between-two-content-border"></div>
+              <div class="col-5 mat-body-2"
+                   style="text-align: end">
+                {{sumPrice.discountToal | number}}
+              </div>
+            </div>
+          </mat-card>
         </div>
       </div>
     </mat-drawer-content>

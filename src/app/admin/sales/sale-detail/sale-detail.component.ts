@@ -18,16 +18,22 @@ export class SaleDetailComponent implements OnInit {
   menu: any = Menu;
   showSearchField = false;
   formGroup: FormGroup;
+  accountList: any;
+  account = '';
   loading = false;
+  sumPrice = {
+    total: 0,
+    discountToal: 0
+  }
   public result = [];
   customer: any = {
-    id: '',
-    obj: '',
+    id: 0,
+    obj: 0,
     loading: true
   }
   pageableDTO = {
     page: 0,
-    size: 3,
+    size: 30,
     direction: 'ASC',
     sortBy: 'id',
   };
@@ -50,6 +56,7 @@ export class SaleDetailComponent implements OnInit {
       status: new FormControl('UNPAID'),
       factorNumber: new FormControl('')
     });
+
     this.getCustomerId();
   }
 
@@ -59,7 +66,27 @@ export class SaleDetailComponent implements OnInit {
     });
     if (this.customer.id) {
       this.getUser();
+      this.getAccountList();
     }
+  }
+
+  getAccountList() {
+    const param = {
+      pageableDTO: this.pageableDTO
+    }
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/bank/list', param, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          console.log(val);
+          this.accountList = val;
+        },
+        err => {
+          console.log(err);
+        });
   }
 
   getUser() {
@@ -96,7 +123,7 @@ export class SaleDetailComponent implements OnInit {
   convertToMiladiDate(dateObj) {
     if (dateObj) {
       const date = moment(dateObj.formatted, 'jYYYY/jMM/jDD');
-      console.log(date.format('YYYY-MM-DD'));
+      // console.log(date.format('YYYY-MM-DD'));
       return date.format('YYYY-MM-DD');
     } else {
       return '';
@@ -124,8 +151,9 @@ export class SaleDetailComponent implements OnInit {
         (val) => {
           this.loading = false;
           this.result.push(...val);
-          console.log(this.result);
+          // console.log(this.result);
           this.addValueToResult();
+          this.calculateTotalPrice();
           this.pageableDTO.page++;
           if (val.length === this.pageableDTO.size) {
             this.loadMore = true;
@@ -134,6 +162,19 @@ export class SaleDetailComponent implements OnInit {
         response => {
           this.loading = false;
         });
+  }
+
+  isUnpaid() {
+    return this.formGroup.get('status').value === 'UNPAID'
+  }
+
+  calculateTotalPrice() {
+    if (this.isUnpaid()) {
+      this.result.forEach(item => {
+        this.sumPrice.total += item.productSize.product.price * item.amount;
+        this.sumPrice.discountToal += item.price * item.amount;
+      });
+    }
   }
 
   addValueToResult() {
@@ -260,7 +301,7 @@ export class EditSaleDialog implements OnInit{
       amount: new FormControl(this.obj.amount, Validators.required),
       discountPrice: new FormControl(this.obj.price, Validators.required)
     });
-    console.log(this.obj);
+    // console.log(this.obj);
   }
 
   onNoClick(): void {
@@ -301,7 +342,7 @@ export class EditSaleDialog implements OnInit{
       .subscribe(
         (val) => {
           this.loading = false;
-          console.log(val);
+          // console.log(val);
           this.onNoClick();
           this.commonService.showMessage('تغیرات با موفقیت اعمال شد', 'success-msg');
         },
@@ -311,5 +352,4 @@ export class EditSaleDialog implements OnInit{
           this.commonService.showMessage('خطایی رخ داده است', 'error-msg');
         });
   }
-
 }

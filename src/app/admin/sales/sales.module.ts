@@ -7,7 +7,7 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatIconModule,
-  MatListModule, MatButtonModule, MatInputModule, MatTooltipModule, MatRadioModule, MatDialogModule
+  MatListModule, MatButtonModule, MatInputModule, MatTooltipModule, MatRadioModule, MatDialogModule, MatSelectModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
@@ -43,7 +43,8 @@ import {NgxCurrencyModule} from 'ngx-currency';
     MyDatePickerModule,
     FormsModule,
     MatDialogModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    MatSelectModule
   ],
   declarations: [
     SalesComponent,
