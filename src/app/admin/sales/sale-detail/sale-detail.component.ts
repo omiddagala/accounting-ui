@@ -21,16 +21,48 @@ export class SaleDetailComponent implements OnInit {
   accountList: any;
   account = '';
   loading = false;
+  factorTitle = [
+    {
+      name: 'گروه کالا',
+      enName: 'productGroup',
+      width: '15%'
+    },
+    {
+      name: 'کد محصول',
+      enName: 'productCode',
+      width: '20%'
+    },
+    {
+      name: 'قیمت واحد',
+      enName: 'price',
+      width: '15%'
+    },
+    {
+      name: 'تعداد',
+      enName: 'amount',
+      width: '10%'
+    },
+    {
+      name: 'قیمت کل',
+      enName: 'totalPrice',
+      width: '15%'
+    },
+    {
+      name: 'قیمت کل با تخفیف',
+      enName: 'discountPrice',
+      width: '25%'
+    },
+  ]
   sumPrice = {
     total: 0,
     discountToal: 0
-  }
+  };
   public result = [];
   customer: any = {
     id: 0,
     obj: 0,
     loading: true
-  }
+  };
   pageableDTO = {
     page: 0,
     size: 30,
@@ -73,7 +105,7 @@ export class SaleDetailComponent implements OnInit {
   getAccountList() {
     const param = {
       pageableDTO: this.pageableDTO
-    }
+    };
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/bank/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -92,7 +124,7 @@ export class SaleDetailComponent implements OnInit {
   getUser() {
     const param = {
       id: this.customer.id
-    }
+    };
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/customer/list', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -165,10 +197,12 @@ export class SaleDetailComponent implements OnInit {
   }
 
   isUnpaid() {
-    return this.formGroup.get('status').value === 'UNPAID'
+    return this.formGroup.get('status').value === 'UNPAID';
   }
 
   calculateTotalPrice() {
+    this.sumPrice.total = 0;
+    this.sumPrice.discountToal = 0;
     if (this.isUnpaid()) {
       this.result.forEach(item => {
         this.sumPrice.total += item.productSize.product.price * item.amount;
@@ -228,6 +262,158 @@ export class SaleDetailComponent implements OnInit {
       this.makeRequest();
     }
   }
+
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  createFactorTitle() {
+    const title = document.createElement('div');
+    title.style.width = '100%';
+    title.style.display = 'flex';
+    title.style.flexDirection = 'row';
+    title.style.marginTop = '15px';
+    title.style.borderTop = 'solid 1px black';
+    title.style.borderBottom = 'dashed 1px black';
+    title.style.paddingTop = '5px';
+    title.style.paddingBottom = '5px';
+    this.factorTitle.forEach(item => {
+      const div = document.createElement('div');
+      div.style.width = item.width;
+      div.style.fontSize = '12px';
+      div.innerHTML = item.name;
+      title.appendChild(div);
+    });
+    return title;
+  }
+
+  creatFactorHeader() {
+    const header = document.createElement('div');
+    header.style.width = '100%';
+    header.style.display = 'flex';
+    header.style.flexDirection = 'row';
+    header.style.justifyContent = 'space-between';
+    header.style.flexWrap = 'wrap';
+    const factorNumber = document.createElement('div');
+    factorNumber.innerHTML = 'شماره فاکتور';
+    const date = document.createElement('div');
+    date.innerHTML = 'تاریخ';
+    header.appendChild(factorNumber);
+    header.appendChild(date);
+
+    const title = this.createFactorTitle();
+    header.appendChild(title);
+
+    return header;
+  }
+
+  createItemDiv(text, width) {
+    const div = document.createElement('div');
+    div.style.width = width;
+    div.innerHTML = text;
+    return div;
+  }
+
+  createFactorProductDetail() {
+    const container = document.createElement('div');
+    container.style.width = '100%';
+    this.result.forEach(item => {
+      const detail = document.createElement('div');
+      detail.style.width = '100%';
+      detail.style.display = 'flex';
+      detail.style.flexDirection = 'row';
+      detail.style.borderBottom = 'dashed 1px black';
+      detail.style.paddingTop = '5px';
+      detail.style.paddingBottom = '5px';
+      detail.style.fontSize = '12px';
+
+      const productGroup = this.createItemDiv(item.productSize.product.group.name, this.factorTitle[0].width);
+      const productCode = this.createItemDiv(item.productSize.code,  this.factorTitle[1].width);
+      const price = this.createItemDiv(this.numberWithCommas(item.productSize.product.price), this.factorTitle[2].width);
+      const amount = this.createItemDiv(item.amount, this.factorTitle[3].width);
+      const totalPrice = this.createItemDiv(this.numberWithCommas(item.productSize.product.price * item.amount), this.factorTitle[4].width);
+      const discountPrice = this.createItemDiv(this.numberWithCommas(item.price * item.amount), this.factorTitle[5].width);
+
+      detail.appendChild(productGroup);
+      detail.appendChild(productCode);
+      detail.appendChild(price);
+      detail.appendChild(amount);
+      detail.appendChild(totalPrice);
+      detail.appendChild(discountPrice);
+      container.appendChild(detail);
+    });
+
+    return container;
+  }
+
+  createFooterFactor() {
+    const footer = document.createElement('div');
+    footer.style.width = '100%';
+    footer.style.display = 'flex';
+    footer.style.flexDirection = 'row';
+    // footer.style.marginTop = '15px';
+    footer.style.borderTop = 'solid 1px black';
+    footer.style.borderBottom = 'dashed 1px black';
+    footer.style.paddingTop = '5px';
+    footer.style.paddingBottom = '5px';
+    this.factorTitle.forEach((item) => {
+      const div = document.createElement('div');
+      div.style.width = item.width;
+      div.style.fontSize = '12px';
+      if (item.enName === 'productGroup') {
+        div.innerHTML = 'مجموع';
+      }
+      if (item.enName === 'totalPrice') {
+        div.innerHTML = this.numberWithCommas(this.sumPrice.total);
+      }
+      if (item.enName === 'discountPrice') {
+        div.innerHTML = this.numberWithCommas(this.sumPrice.discountToal);
+      }
+      footer.appendChild(div);
+    });
+    return footer;
+  }
+
+  createFactor() {
+    const container = document.createElement('div');
+    container.style.width = `100%`;
+    container.style.display = 'flex';
+    container.style.flexDirection = 'row';
+    container.style.flexWrap = 'wrap';
+    container.style.direction = 'rtl';
+    container.appendChild(this.creatFactorHeader());
+    container.appendChild(this.createFactorProductDetail());
+    container.appendChild(this.createFooterFactor());
+    return container;
+  }
+
+  printFactor() {
+    const myWindow = window.open('', '', 'left=200,top=200,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    const factor = this.createFactor()
+    this.setFactorInWindow(myWindow, factor);
+    myWindow.document.close(); // necessary for IE >= 10
+    myWindow.focus(); // necessary for IE >= 10*/
+    setTimeout(function() {
+      myWindow.print();
+      myWindow.close();
+    }, 200);
+  }
+
+  setFactorInWindow(myWindow, container) {
+    const body = document.createElement('body');
+    // body.style.width = `50px`;
+    body.style.display = 'flex';
+    body.style.flexWrap = 'wrap';
+    body.style.alignContent = 'baseline';
+    body.style.backgroundColor = 'green';
+    body.appendChild(container);
+    myWindow.document.write('<html><head><title></title>');
+    myWindow.document.write('</head>');
+    myWindow.document.write(body.innerHTML);
+    myWindow.document.write('</html>');
+  }
+
+
 }
 
 
@@ -251,7 +437,7 @@ export class DeleteSaleDialog {
   }
 
   delete() {
-    let param = {
+    const param = {
       id: this.data.id
     };
     this.loading = true;

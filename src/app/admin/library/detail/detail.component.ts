@@ -443,6 +443,7 @@ export class CountDialog implements OnInit {
       container.appendChild(div);
     }
     console.log(container);
+
     const myWindow = window.open('', '', 'left=200,top=200,width=900,height=900,toolbar=0,scrollbars=0,status=0');
     this.setBarcodeInWindow(myWindow, container);
     myWindow.document.close(); // necessary for IE >= 10
