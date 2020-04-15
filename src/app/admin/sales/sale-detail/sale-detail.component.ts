@@ -21,6 +21,7 @@ export class SaleDetailComponent implements OnInit {
   accountList: any;
   account = '';
   loading = false;
+  saleLoading = false;
   factorTitle = [
     {
       name: 'گروه کالا',
@@ -52,7 +53,7 @@ export class SaleDetailComponent implements OnInit {
       enName: 'discountPrice',
       width: '25%'
     },
-  ]
+  ];
   sumPrice = {
     total: 0,
     discountToal: 0
@@ -170,7 +171,7 @@ export class SaleDetailComponent implements OnInit {
         id: parseInt(this.customer.id)
       },
       status: this.formGroup.get('status').value,
-      addDate:  this.convertToMiladiDate(this.date.add),
+      addDate: this.convertToMiladiDate(this.date.add),
       paidDate: this.convertNumbers(this.date.paid),
       pageableDTO: this.pageableDTO
     };
@@ -234,7 +235,7 @@ export class SaleDetailComponent implements OnInit {
   openDeleteSaleDialog(id, index) {
     const dialogRef = this.dialog.open(DeleteSaleDialog, {
       data: {
-        result : this.result,
+        result: this.result,
         index,
         id
       }
@@ -244,7 +245,7 @@ export class SaleDetailComponent implements OnInit {
   openEditSaleDialog(index) {
     const dialogRef = this.dialog.open(EditSaleDialog, {
       data: {
-        result : this.result[index],
+        result: this.result[index],
       }
     });
   }
@@ -287,18 +288,18 @@ export class SaleDetailComponent implements OnInit {
     return title;
   }
 
-  creatFactorHeader() {
+  creatFactorHeader(factorNumber) {
     const header = document.createElement('div');
     header.style.width = '100%';
     header.style.display = 'flex';
     header.style.flexDirection = 'row';
     header.style.justifyContent = 'space-between';
     header.style.flexWrap = 'wrap';
-    const factorNumber = document.createElement('div');
-    factorNumber.innerHTML = 'شماره فاکتور';
+    const factorNumberBox = document.createElement('div');
+    factorNumberBox.innerHTML = 'شماره فاکتور : ' + factorNumber;
     const date = document.createElement('div');
     date.innerHTML = 'تاریخ';
-    header.appendChild(factorNumber);
+    header.appendChild(factorNumberBox);
     header.appendChild(date);
 
     const title = this.createFactorTitle();
@@ -328,7 +329,7 @@ export class SaleDetailComponent implements OnInit {
       detail.style.fontSize = '12px';
 
       const productGroup = this.createItemDiv(item.productSize.product.group.name, this.factorTitle[0].width);
-      const productCode = this.createItemDiv(item.productSize.code,  this.factorTitle[1].width);
+      const productCode = this.createItemDiv(item.productSize.code, this.factorTitle[1].width);
       const price = this.createItemDiv(this.numberWithCommas(item.productSize.product.price), this.factorTitle[2].width);
       const amount = this.createItemDiv(item.amount, this.factorTitle[3].width);
       const totalPrice = this.createItemDiv(this.numberWithCommas(item.productSize.product.price * item.amount), this.factorTitle[4].width);
@@ -374,22 +375,22 @@ export class SaleDetailComponent implements OnInit {
     return footer;
   }
 
-  createFactor() {
+  createFactor(factorNumber) {
     const container = document.createElement('div');
     container.style.width = `100%`;
     container.style.display = 'flex';
     container.style.flexDirection = 'row';
     container.style.flexWrap = 'wrap';
     container.style.direction = 'rtl';
-    container.appendChild(this.creatFactorHeader());
+    container.appendChild(this.creatFactorHeader(factorNumber));
     container.appendChild(this.createFactorProductDetail());
     container.appendChild(this.createFooterFactor());
     return container;
   }
 
-  printFactor() {
+  printFactor(factorNumber) {
     const myWindow = window.open('', '', 'left=200,top=200,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    const factor = this.createFactor()
+    const factor = this.createFactor(factorNumber);
     this.setFactorInWindow(myWindow, factor);
     myWindow.document.close(); // necessary for IE >= 10
     myWindow.focus(); // necessary for IE >= 10*/
@@ -397,6 +398,56 @@ export class SaleDetailComponent implements OnInit {
       myWindow.print();
       myWindow.close();
     }, 200);
+  }
+
+  canSaveSale() {
+    if (this.saleLoading) {
+      return false;
+    }
+    if (!this.result.length) {
+      this.commonService.showMessage('لیست خریدی موجود نمیباشد', 'error-msg');
+      return false;
+    }
+    if (!this.account) {
+      this.commonService.showMessage('شماره حساب رو انتخاب کنید', 'error-msg');
+      return false;
+    }
+    return true;
+  }
+
+  prepareData() {
+    let ids = []
+    this.result.forEach(item => {
+      ids.push(item.id);
+    });
+    return {
+      ids,
+      bankAccount: this.account
+    };
+  }
+
+  saveSales() {
+    if (!this.canSaveSale()) {
+      return;
+    }
+    this.saleLoading = true;
+    const param = this.prepareData();
+    console.log(param);
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/sales/finalize', param, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          console.log(val);
+          this.saleLoading = false;
+          this.printFactor(val);
+          location.reload();
+        },
+        err => {
+          this.saleLoading = false;
+        });
   }
 
   setFactorInWindow(myWindow, container) {
@@ -430,6 +481,7 @@ export class DeleteSaleDialog {
     private http: HttpClient,
     private commonService: CommonService) {
   }
+
   loading = false;
 
   onNoClick(): void {
@@ -468,10 +520,11 @@ export class DeleteSaleDialog {
   styleUrls: ['./edit-dialog/edit-dialog.scss']
 })
 
-export class EditSaleDialog implements OnInit{
+export class EditSaleDialog implements OnInit {
   loading = false;
   obj: any;
   formGroup: FormGroup;
+
   constructor(
     public dialogRef: MatDialogRef<EditSaleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,

@@ -150,7 +150,7 @@
                 <button class="w-100 mb-2"
                         mat-flat-button
                         [disabled]="!isUnpaid()"
-                        (click)="printFactor()"
+                        (click)="saveSales()"
                         color="accent">
                   فاکتور کردن
                 </button>
@@ -162,8 +162,8 @@
                   <mat-label>حساب ها</mat-label>
                   <mat-select [(ngModel)]="account">
                     <mat-option *ngFor="let item of accountList"
-                                [value]="item.id">
-                      {{item.accountNumber + ' - ' + item.bank }}
+                                [value]="item">
+                      {{item.accountNumber + ' - ' + item.bank}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -381,18 +381,25 @@
 
         <div class="col-auto px-lg-5 mt-2">
           <button mat-flat-button
-                  [disabled]="formGroup.get('status').value === 'PAID'"
+                  (click)="saveSales()"
+                  [disabled]="!isUnpaid()"
                   color="accent">
-            فاکتور کردن
+            <span *ngIf="!saleLoading"> فاکتور کردن</span>
+            <mat-spinner *ngIf="loading"
+                         class="mx-auto my-3"
+                         [diameter]="30"
+                         [strokeWidth]="4">
+            </mat-spinner>
           </button>
         </div>
 
         <div dir="rtl" class="col-6 mt-1">
-          <mat-form-field class="w-100">
+          <mat-form-field class="w-100"
+                          *ngIf="isUnpaid()">
             <mat-label>حساب ها</mat-label>
             <mat-select [(ngModel)]="account">
               <mat-option *ngFor="let item of accountList"
-                          [value]="item.id">
+                          [value]="item">
                 {{item.accountNumber + ' - ' + item.bank }}
               </mat-option>
             </mat-select>
