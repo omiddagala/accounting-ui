@@ -25,6 +25,12 @@ export class AddAccountDialog implements OnInit {
       bank: new FormControl('', Validators.required),
       accountNumber: new FormControl('', Validators.required)
     });
+    if (this.data.item) {
+      this.formGroup.patchValue({
+        bank: this.data.item.bank,
+        accountNumber: this.data.item.accountNumber
+      });
+    }
   }
 
   onNoClick(): void {
@@ -44,10 +50,13 @@ export class AddAccountDialog implements OnInit {
       return;
     }
     this.loading = true;
-    const param = {
+    let param = {
       bank: this.formGroup.get('bank').value,
       accountNumber: this.commonService.toEnglishDigits(this.formGroup.get('accountNumber').value)
     };
+    if (this.data.item) {
+      param.id = this.data.item.id;
+    }
     this.http.post('http://127.0.0.1:9000/v1/shop/bank/save', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')

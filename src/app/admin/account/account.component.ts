@@ -79,8 +79,9 @@ export class AccountComponent implements OnInit {
             this.loadMore = true;
           }
         },
-        response => {
+        err => {
           this.loading = false;
+          console.log(err);
         });
   }
 
@@ -118,8 +119,12 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  edit(id) {
-    this.router.navigate(['/admin/customers/detail'], {queryParams: {id: id}});
+  edit(item) {
+    const dialogRef = this.dialog.open(AddAccountDialog, {
+      data: {
+        item
+      }
+    });
   }
 
   openDeleteAccountDialog(id, index) {
@@ -138,50 +143,3 @@ export class AccountComponent implements OnInit {
     });
   }
 }
-
-/*
-@Component({
-  selector: 'customer-delete-dialog',
-  templateUrl: './delete-customer-dialog.html'
-})
-*/
-
-/*export class DeleteCustomerDialog {
-  constructor(
-    public dialogRef: MatDialogRef<DeleteCustomerDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    @Inject(ComponentFactoryResolver) factoryResolver,
-    private http: HttpClient,
-    private commonService: CommonService) {
-  }
-
-  loading = false;
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  delete() {
-    let param = {
-      id: this.data.id
-    };
-    this.loading = true;
-    this.http.post('http://127.0.0.1:9000/v1/shop/customer/delete', param, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
-    })
-      .subscribe(
-        (val) => {
-          this.loading = false;
-          this.data.result.splice(this.data.index, 1);
-          this.onNoClick();
-          this.commonService.showMessage('محصول با موفقیت حذف شد', 'success-msg');
-        },
-        response => {
-          this.loading = false;
-          this.onNoClick();
-          this.commonService.showMessage('خطایی رخ داده است', 'error-msg');
-        });
-  }
-}*/

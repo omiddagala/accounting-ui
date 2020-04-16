@@ -3,9 +3,9 @@ import {Component, EventEmitter, Inject, OnInit} from '@angular/core';
 import Menu from '../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {Router} from "@angular/router";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
-import {CommonService} from "../../../shared/common/common.service";
+import {Router} from '@angular/router';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {CommonService} from '../../../shared/common/common.service';
 
 export interface ReservoirData {
   name;
@@ -45,7 +45,7 @@ export class ReservoirComponent implements OnInit {
     this.loading = true;
     this.result = [];
     const param = {
-      name: this.formGroup.get("name").value,
+      name: this.formGroup.get('name').value,
     };
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/reservoir/list', param, {
       headers: {
@@ -57,7 +57,7 @@ export class ReservoirComponent implements OnInit {
           this.loading = false;
           this.result.push(...val);
         },
-        response => {
+        err => {
           this.loading = false;
         });
   }
@@ -72,8 +72,9 @@ export class ReservoirComponent implements OnInit {
       .subscribe(
         (val) => {
           this.loading = false;
-          if (!this.reservoir.id)
+          if (!this.reservoir.id) {
             this.result.push(val);
+          }
           this.commonService.showMessage('عملیات با موفقیت انجام شد.', 'success-msg');
         },
         response => {
@@ -82,8 +83,8 @@ export class ReservoirComponent implements OnInit {
   }
 
   delete(id, index) {
-    let param = {
-      id: id
+    const param = {
+      id
     };
     this.loading = true;
     this.http.post('http://127.0.0.1:9000/v1/shop/reservoir/delete', param, {
@@ -97,7 +98,7 @@ export class ReservoirComponent implements OnInit {
           this.result.splice(index, 1);
           this.commonService.showMessage('عملیات با موفقیت انجام شد.', 'success-msg');
         },
-        response => {
+        err => {
           this.loading = false;
         });
   }
@@ -108,7 +109,7 @@ export class ReservoirComponent implements OnInit {
         id: null,
         name: '',
         address: ''
-      }
+      };
     }
     this.reservoir = reservoir;
     const dialogRef = this.dialog.open(ReservoirDialog, {
