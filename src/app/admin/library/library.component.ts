@@ -22,9 +22,9 @@ export class LibraryComponent implements OnInit {
   timelineLoading = false;
   pageableDTO = {
     page: 0,
-    size: 20,
+    size: 15,
     direction: 'ASC',
-    sortBy: 'name',
+    sortBy: 'id',
   };
   loadMore = true;
   types = [
@@ -91,7 +91,7 @@ export class LibraryComponent implements OnInit {
             this.loadMore = true;
           }
         },
-        response => {
+        err => {
           this.loading = false;
         });
   }
@@ -104,7 +104,7 @@ export class LibraryComponent implements OnInit {
       })
       this.result.forEach((item, index) => {
         this.result.forEach((secondItem, secondIndex) => {
-          if (item.name === secondItem.name) {
+          if (item.id === secondItem.id) {
             flag[index] += 1;
             if (flag[index] >= 2) {
               this.result.splice(index, 1);
@@ -132,7 +132,7 @@ export class LibraryComponent implements OnInit {
 
   edit(id) {
     localStorage.setItem('productCopy', JSON.stringify({}));
-    this.router.navigate(['/admin/library/detail'], {queryParams: {id: id}});
+    this.router.navigate(['/admin/library/detail'], {queryParams: {id}});
   }
 
   copyProduct(id) {
@@ -169,8 +169,8 @@ export class LibraryComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialog, {
       data: {
         result : this.result,
-        index: index,
-        id: id
+        index,
+        id
       }
     });
   }

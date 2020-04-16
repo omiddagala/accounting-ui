@@ -144,29 +144,43 @@
         <div class="col-12 mx-auto" style="padding: 0 !important;">
           <mat-card>
 
-            <div class="row  my-auto top-card">
-              <div class="col-2 mat-body-1 mt-2 gray-color"
+            <div class="row my-auto top-card justify-content-between">
+              <div class="col-8 d-flex flex-row">
+                <div class="col-2 mat-body-1 mt-2 gray-color"
+                     style="font-weight: 500;">
+                  <button class="w-100 mb-2"
+                          mat-flat-button
+                          [disabled]="!isUnpaid()"
+                          (click)="saveSales()"
+                          color="accent">
+                    فاکتور کردن
+                  </button>
+                </div>
+
+                <div dir="rtl" class="col-3"
+                     *ngIf="isUnpaid()">
+
+                  <mat-form-field class="w-100">
+                    <mat-label>حساب ها</mat-label>
+                    <mat-select [(ngModel)]="account">
+                      <mat-option *ngFor="let item of accountList"
+                                  [value]="item">
+                        {{item.accountNumber + ' - ' + item.bank}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="col-auto mat-body-1 mt-2 gray-color"
                    style="font-weight: 500;">
                 <button class="w-100 mb-2"
                         mat-flat-button
-                        [disabled]="!isUnpaid()"
-                        (click)="saveSales()"
+                        [disabled]="isUnpaid()"
+                        (click)="openFactorNumberList()"
                         color="accent">
-                  فاکتور کردن
+                  چاپ فاکتور
                 </button>
-              </div>
-
-              <div dir="rtl" class="col-3"
-                   *ngIf="isUnpaid()">
-                <mat-form-field class="w-100">
-                  <mat-label>حساب ها</mat-label>
-                  <mat-select [(ngModel)]="account">
-                    <mat-option *ngFor="let item of accountList"
-                                [value]="item">
-                      {{item.accountNumber + ' - ' + item.bank}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
               </div>
             </div>
 
@@ -203,45 +217,63 @@
 
             </div>
             <infinite-scroll (scrolled)="onScroll()">
-              <div class="row justify-content-between"
-                   *ngFor="let item of result; let i = index"
-                   style="border-bottom: 2px solid #f1f1f1; height: 85px">
+              <div *ngFor="let item of result; let i = index"
+                   style="border-bottom: 2px solid #f1f1f1; height: 95px">
+                <div class="row justify-content-between">
+                  <div class="col-2 table-items my-auto mat-title text-center py-2">
+                    {{item.productSize.product.group.name}}
+                  </div>
 
-                <div class="col-2 table-items my-auto mat-title text-center py-2">
-                  {{item.productSize.product.group.name}}
+                  <div class="col-1 table-items my-auto  text-center py-2">
+                    {{item.productSize.code}}
+                  </div>
+
+                  <div class="col-2 table-items my-auto  text-center py-2">
+                    {{item.productSize.product.price | number}}
+                  </div>
+
+                  <div class="col-1 table-items my-auto  text-center py-2">
+                    {{item.amount}}
+                  </div>
+
+                  <div class="col-2 table-items my-auto  text-center py-2">
+                    {{item.productSize.product.price * item.amount | number}}
+                  </div>
+
+                  <div class="col-2 table-items my-auto  text-center py-2">
+                    {{item.price * item.amount | number}}
+                  </div>
+
+                  <div class="col-1 table-items my-auto  text-center py-2">
+                    <button mat-icon-button
+                            (click)="openEditSaleDialog(i)">
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+
+                    <button mat-icon-button
+                            (click)="openDeleteSaleDialog(item.id, i)">
+                      <mat-icon style="color: red">delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="row d-flex more-info w-100 justify-content-between px-2 ">
+                  <div *ngIf="item.factorNumber"
+                       class="d-flex flex-row">
+                    <div class="mat-body-2">شماره فاکتور : </div>
+                    <mat-chip-list>
+                      <mat-chip color="primary"
+                                class="mat-body-2">
+                        {{item.factorNumber}}
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                  <div class="d-flex flex-row"
+                       *ngIf="item.paidDate">
+                    <div> تاریخ : </div>
+                    <div> {{convertMiladiToShamsi(item.paidDate)}} </div>
+                  </div>
                 </div>
 
-                <div class="col-1 table-items my-auto  text-center py-2">
-                  {{item.productSize.code}}
-                </div>
-
-                <div class="col-2 table-items my-auto  text-center py-2">
-                  {{item.productSize.product.price | number}}
-                </div>
-
-                <div class="col-1 table-items my-auto  text-center py-2">
-                  {{item.amount}}
-                </div>
-
-                <div class="col-2 table-items my-auto  text-center py-2">
-                  {{item.productSize.product.price * item.amount | number}}
-                </div>
-
-                <div class="col-2 table-items my-auto  text-center py-2">
-                  {{item.price * item.amount | number}}
-                </div>
-
-                <div class="col-1 table-items my-auto  text-center py-2">
-                  <button mat-icon-button
-                          (click)="openEditSaleDialog(i)">
-                    <mat-icon>visibility</mat-icon>
-                  </button>
-
-                  <button mat-icon-button
-                          (click)="openDeleteSaleDialog(item.id, i)">
-                    <mat-icon style="color: red">delete</mat-icon>
-                  </button>
-                </div>
               </div>
               <mat-spinner *ngIf="loading"
                            class="mx-auto my-3"
@@ -404,6 +436,20 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+        </div>
+
+        <div class="col-auto px-lg-5 mt-2">
+          <button mat-flat-button
+                  (click)="openFactorNumberList()"
+                  [disabled]="isUnpaid()"
+                  color="accent">
+            <span *ngIf="!saleLoading">فاکتور ها</span>
+            <mat-spinner *ngIf="loading"
+                         class="mx-auto my-3"
+                         [diameter]="30"
+                         [strokeWidth]="4">
+            </mat-spinner>
+          </button>
         </div>
 
         <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"

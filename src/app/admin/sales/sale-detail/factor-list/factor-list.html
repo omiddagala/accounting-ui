@@ -1,0 +1,8 @@
+<infinite-scroll (scrolled)="onScroll()">
+  <div class="w-100 py-2 d-flex justify-content-between"
+       style="border-bottom: 1px solid rgba(159,159,159,0.64);min-width: 400px;direction: rtl;cursor: pointer"
+       *ngFor="let item of result">
+    <div> شماره فاکتور :</div>
+    <div>{{item}}</div>
+  </div>
+</infinite-scroll>

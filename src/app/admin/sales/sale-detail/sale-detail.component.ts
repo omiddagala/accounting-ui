@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CommonService} from '../../../../shared/common/common.service';
 import * as moment from 'jalali-moment';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {FactorList} from './factor-list/factor-list';
 
 @Component({
   selector: 'app-admin-sales-detail',
@@ -138,7 +139,6 @@ export class SaleDetailComponent implements OnInit {
         },
         err => {
           console.log(err);
-          // this.customer.loading = false;
         });
   }
 
@@ -156,11 +156,18 @@ export class SaleDetailComponent implements OnInit {
   convertToMiladiDate(dateObj) {
     if (dateObj) {
       const date = moment(dateObj.formatted, 'jYYYY/jMM/jDD');
-      // console.log(date.format('YYYY-MM-DD'));
       return date.format('YYYY-MM-DD');
     } else {
       return '';
     }
+  }
+
+  convertMiladiToShamsi(date) {
+    /*console.log(date)
+    const miladiDate = moment(date, 'YYYY-M-D');
+    console.log(miladiDate.format('jYYYY-jM-jD'));
+    return miladiDate.format('jYYYY-jM-jD');*/
+    return moment(date, 'YYYY-MM-DD ').endOf('jMonth').format('jYYYY/jM/jD ');
   }
 
   makeRequest() {
@@ -173,6 +180,7 @@ export class SaleDetailComponent implements OnInit {
       status: this.formGroup.get('status').value,
       addDate: this.convertToMiladiDate(this.date.add),
       paidDate: this.convertNumbers(this.date.paid),
+      factorNumber: this.formGroup.get('factorNumber').value,
       pageableDTO: this.pageableDTO
     };
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/sales/list', param, {
@@ -184,7 +192,6 @@ export class SaleDetailComponent implements OnInit {
         (val) => {
           this.loading = false;
           this.result.push(...val);
-          // console.log(this.result);
           this.addValueToResult();
           this.calculateTotalPrice();
           this.pageableDTO.page++;
@@ -192,7 +199,7 @@ export class SaleDetailComponent implements OnInit {
             this.loadMore = true;
           }
         },
-        response => {
+        err => {
           this.loading = false;
         });
   }
@@ -210,6 +217,14 @@ export class SaleDetailComponent implements OnInit {
         this.sumPrice.discountToal += item.price * item.amount;
       });
     }
+  }
+
+  openFactorNumberList(){
+    const dialogRef = this.dialog.open(FactorList, {
+      data: {
+        customer: this.customer.id
+      }
+    });
   }
 
   addValueToResult() {
@@ -452,7 +467,6 @@ export class SaleDetailComponent implements OnInit {
 
   setFactorInWindow(myWindow, container) {
     const body = document.createElement('body');
-    // body.style.width = `50px`;
     body.style.display = 'flex';
     body.style.flexWrap = 'wrap';
     body.style.alignContent = 'baseline';
@@ -505,7 +519,7 @@ export class DeleteSaleDialog {
           this.onNoClick();
           this.commonService.showMessage('محصول با موفقیت حذف شد', 'success-msg');
         },
-        response => {
+        err => {
           this.loading = false;
           this.onNoClick();
           this.commonService.showMessage('خطایی رخ داده است', 'error-msg');
@@ -540,7 +554,6 @@ export class EditSaleDialog implements OnInit {
       amount: new FormControl(this.obj.amount, Validators.required),
       discountPrice: new FormControl(this.obj.price, Validators.required)
     });
-    // console.log(this.obj);
   }
 
   onNoClick(): void {
@@ -581,7 +594,6 @@ export class EditSaleDialog implements OnInit {
       .subscribe(
         (val) => {
           this.loading = false;
-          // console.log(val);
           this.onNoClick();
           this.commonService.showMessage('تغیرات با موفقیت اعمال شد', 'success-msg');
         },

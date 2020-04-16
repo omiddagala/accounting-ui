@@ -23,7 +23,7 @@ export class AdminComponent implements OnInit {
     },
     {
       name: 'مشتریان',
-      image: '../../assets/image/facilities/home/buy.jpg',
+      image: '../../assets/image/facilities/home/Due-Diligence-Checklist.jpg',
       route: '/admin/customers'
     },
     {

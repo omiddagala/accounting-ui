@@ -7,7 +7,7 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatIconModule,
-  MatListModule, MatButtonModule, MatInputModule, MatTooltipModule, MatRadioModule, MatDialogModule, MatSelectModule
+  MatListModule, MatButtonModule, MatInputModule, MatTooltipModule, MatRadioModule, MatDialogModule, MatSelectModule, MatChipsModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
@@ -19,6 +19,7 @@ import {SalesRoutingModule} from './sales-routing.module';
 import {DeleteSaleDialog, EditSaleDialog, SaleDetailComponent} from './sale-detail/sale-detail.component';
 import {MyDatePickerModule} from '../../../shared/datepicker';
 import {NgxCurrencyModule} from 'ngx-currency';
+import {FactorList} from './sale-detail/factor-list/factor-list';
 
 @NgModule({
   imports: [
@@ -44,18 +45,21 @@ import {NgxCurrencyModule} from 'ngx-currency';
     FormsModule,
     MatDialogModule,
     NgxCurrencyModule,
-    MatSelectModule
+    MatSelectModule,
+    MatChipsModule
   ],
   declarations: [
     SalesComponent,
     SaleDetailComponent,
     DeleteSaleDialog,
-    EditSaleDialog
+    EditSaleDialog,
+    FactorList
   ],
   exports: [],
   entryComponents: [
     DeleteSaleDialog,
-    EditSaleDialog
+    EditSaleDialog,
+    FactorList
   ]
 })
 
