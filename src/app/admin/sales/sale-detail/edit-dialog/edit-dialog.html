@@ -55,6 +55,25 @@
 
   <form [formGroup]="formGroup"
         class="d-flex flex-row flex-wrap mt-3">
+
+    <div class="col-12" dir="rtl">
+      <mat-form-field class="w-100"
+                      appearance="outline">
+        <mat-label>درصد تخفیف</mat-label>
+        <input formControlName="discount"
+               matInput
+               required
+               autocomplete="off"
+               placeholder="درصد تخفیف"/>
+        <mat-error *ngIf="formGroup.get('discount').hasError('validNumMin')">
+          مقدار وارد شده از 0 کمتر است
+        </mat-error>
+        <mat-error *ngIf="formGroup.get('discount').hasError('validNumMax')">
+          مقدار وارد شده از 100 بیشتر است
+        </mat-error>
+      </mat-form-field>
+    </div>
+
     <div class="col-12 col-md-6" dir="rtl">
       <mat-form-field class="w-100"
                       appearance="outline">

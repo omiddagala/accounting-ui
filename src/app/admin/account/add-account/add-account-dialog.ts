@@ -52,10 +52,10 @@ export class AddAccountDialog implements OnInit {
     this.loading = true;
     let param = {
       bank: this.formGroup.get('bank').value,
-      accountNumber: this.commonService.toEnglishDigits(this.formGroup.get('accountNumber').value)
+      accountNumber: this.commonService.toEnglishDigits(this.formGroup.get('accountNumber').value),
     };
     if (this.data.item) {
-      param.id = this.data.item.id;
+      param['id'] = this.data.item.id;
     }
     this.http.post('http://127.0.0.1:9000/v1/shop/bank/save', param, {
       headers: {

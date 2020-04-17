@@ -8,6 +8,8 @@ import {CommonService} from '../../../../shared/common/common.service';
 import * as moment from 'jalali-moment';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {FactorList} from './factor-list/factor-list';
+import {ValidatorNumberMax, ValidatorNumberMin, ValidatorNumberRange} from '../../../../shared/validators/min-max.validator';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-sales-detail',
@@ -219,7 +221,7 @@ export class SaleDetailComponent implements OnInit {
     }
   }
 
-  openFactorNumberList(){
+  openFactorNumberList() {
     const dialogRef = this.dialog.open(FactorList, {
       data: {
         customer: this.customer.id
@@ -431,7 +433,7 @@ export class SaleDetailComponent implements OnInit {
   }
 
   prepareData() {
-    let ids = []
+    let ids = [];
     this.result.forEach(item => {
       ids.push(item.id);
     });
@@ -552,9 +554,30 @@ export class EditSaleDialog implements OnInit {
     this.obj = this.data.result;
     this.formGroup = this.formBuilder.group({
       amount: new FormControl(this.obj.amount, Validators.required),
-      discountPrice: new FormControl(this.obj.price, Validators.required)
+      discountPrice: new FormControl(this.obj.price, Validators.required),
+      discount: new FormControl(0, [ValidatorNumberMin(0), ValidatorNumberMax(100)])
     });
+    this.discount();
   }
+
+  discount() {
+    this.formGroup.get('discount').valueChanges.forEach(
+      (value) => {
+        if(!value) {
+          value = 0;
+        }
+        console.log(value);
+        const price = this.obj.productSize.product.price;
+        const val = price -  (price * (parseFloat(value) / 100));
+        console.log(val);
+        this.formGroup.patchValue({
+          discountPrice: val
+        });
+      }
+    );
+  }
+
+
 
   onNoClick(): void {
     this.dialogRef.close();
