@@ -18,6 +18,7 @@ import {LoadingModule} from '../../../shared/component/loading/loading.module';
 import {RouterModule} from '@angular/router';
 import {MainMenuModule} from '../../../shared/component/main-menu/MainMenu.module';
 import {DetailComponent} from './detail/detail.component';
+import {NgxBarcodeModule} from 'ngx-barcode';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import {DetailComponent} from './detail/detail.component';
     MatListModule,
     MainMenuModule,
     MatToolbarModule,
+    NgxBarcodeModule,
   ],
   declarations: [
     CustomersComponent,
