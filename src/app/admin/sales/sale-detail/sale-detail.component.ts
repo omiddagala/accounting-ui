@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, OnInit} from '@angular/core';
+import {Component, ComponentFactoryResolver, EventEmitter, Inject, OnInit} from '@angular/core';
 // @ts-ignore
 import Menu from '../../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -57,10 +57,7 @@ export class SaleDetailComponent implements OnInit {
       width: '25%'
     },
   ];
-  sumPrice = {
-    total: 0,
-    discountToal: 0
-  };
+  sumPrice: any = {};
   public result = [];
   customer: any = {
     id: 0,
@@ -169,7 +166,7 @@ export class SaleDetailComponent implements OnInit {
     const miladiDate = moment(date, 'YYYY-M-D');
     console.log(miladiDate.format('jYYYY-jM-jD'));
     return miladiDate.format('jYYYY-jM-jD');*/
-    return moment(date, 'YYYY-MM-DD ').endOf('jMonth').format('jYYYY/jM/jD ');
+    return moment(date, 'YYYY-MM-DD ').format('jYYYY/jM/jD ');
   }
 
   makeRequest() {
@@ -211,12 +208,19 @@ export class SaleDetailComponent implements OnInit {
   }
 
   calculateTotalPrice() {
-    this.sumPrice.total = 0;
-    this.sumPrice.discountToal = 0;
+    this.sumPrice = {
+      total: 0,
+      discountToal: 0
+    };
+    // this.sumPrice.total = 0;
+    // this.sumPrice.discountToal = 0;
     if (this.isUnpaid()) {
       this.result.forEach(item => {
         this.sumPrice.total += item.productSize.product.price * item.amount;
         this.sumPrice.discountToal += item.price * item.amount;
+        console.log(this.sumPrice);
+        console.log(item);
+        console.log('here');
       });
     }
   }
@@ -257,6 +261,10 @@ export class SaleDetailComponent implements OnInit {
         id
       }
     });
+    dialogRef.componentInstance.closeDialog.subscribe(res => {
+      console.log('close');
+      this.calculateTotalPrice();
+    });
   }
 
   openEditSaleDialog(index) {
@@ -265,6 +273,9 @@ export class SaleDetailComponent implements OnInit {
         result: this.result[index],
       }
     });
+    dialogRef.componentInstance.closeDialog.subscribe(res => {
+      this.calculateTotalPrice();
+    })
   }
 
   search() {
@@ -315,7 +326,7 @@ export class SaleDetailComponent implements OnInit {
     const factorNumberBox = document.createElement('div');
     factorNumberBox.innerHTML = 'شماره فاکتور : ' + factorNumber;
     const date = document.createElement('div');
-    date.innerHTML = 'تاریخ';
+    date.innerHTML = 'تاریخ : ' + moment().format('jYYYY/jMM/jDD');
     header.appendChild(factorNumberBox);
     header.appendChild(date);
 
@@ -444,6 +455,7 @@ export class SaleDetailComponent implements OnInit {
   }
 
   saveSales() {
+
     if (!this.canSaveSale()) {
       return;
     }
@@ -504,6 +516,8 @@ export class DeleteSaleDialog {
     this.dialogRef.close();
   }
 
+  closeDialog = new EventEmitter();
+
   delete() {
     const param = {
       id: this.data.id
@@ -520,6 +534,7 @@ export class DeleteSaleDialog {
           this.data.result.splice(this.data.index, 1);
           this.onNoClick();
           this.commonService.showMessage('محصول با موفقیت حذف شد', 'success-msg');
+          this.closeDialog.emit(null);
         },
         err => {
           this.loading = false;
@@ -563,12 +578,12 @@ export class EditSaleDialog implements OnInit {
   discount() {
     this.formGroup.get('discount').valueChanges.forEach(
       (value) => {
-        if(!value) {
+        if (!value) {
           value = 0;
         }
         console.log(value);
         const price = this.obj.productSize.product.price;
-        const val = price -  (price * (parseFloat(value) / 100));
+        const val = price - (price * (parseFloat(value) / 100));
         console.log(val);
         this.formGroup.patchValue({
           discountPrice: val
@@ -577,7 +592,7 @@ export class EditSaleDialog implements OnInit {
     );
   }
 
-
+  closeDialog = new EventEmitter();
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -617,6 +632,7 @@ export class EditSaleDialog implements OnInit {
       .subscribe(
         (val) => {
           this.loading = false;
+          this.closeDialog.emit(null);
           this.onNoClick();
           this.commonService.showMessage('تغیرات با موفقیت اعمال شد', 'success-msg');
         },

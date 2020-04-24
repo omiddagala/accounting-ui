@@ -9,7 +9,8 @@
     </button>
     <button mat-button
             *ngIf="loading">
-      <mat-spinner></mat-spinner>
+      <mat-spinner diameter="25"
+                   strokeWidth="4"></mat-spinner>
     </button>
     <button mat-button (click)="onNoClick()">
       <span>خیر</span>

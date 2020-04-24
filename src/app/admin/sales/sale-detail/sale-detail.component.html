@@ -172,7 +172,7 @@
                 </div>
               </div>
 
-              <div class="col-auto mat-body-1 mt-2 gray-color"
+             <!-- <div class="col-auto mat-body-1 mt-2 gray-color"
                    style="font-weight: 500;">
                 <button class="w-100 mb-2"
                         mat-flat-button
@@ -181,7 +181,7 @@
                         color="accent">
                   چاپ فاکتور
                 </button>
-              </div>
+              </div>-->
             </div>
 
             <div class="row  justify-content-between"
@@ -416,12 +416,12 @@
                   (click)="saveSales()"
                   [disabled]="!isUnpaid()"
                   color="accent">
-            <span *ngIf="!saleLoading"> فاکتور کردن</span>
-            <mat-spinner *ngIf="loading"
+            <span> فاکتور کردن</span>
+            <!--<mat-spinner *ngIf="loading"
                          class="mx-auto my-3"
-                         [diameter]="30"
+                         [diameter]="20"
                          [strokeWidth]="4">
-            </mat-spinner>
+            </mat-spinner>-->
           </button>
         </div>
 
@@ -438,7 +438,7 @@
           </mat-form-field>
         </div>
 
-        <div class="col-auto px-lg-5 mt-2">
+       <!-- <div class="col-auto px-lg-5 mt-2">
           <button mat-flat-button
                   (click)="openFactorNumberList()"
                   [disabled]="isUnpaid()"
@@ -450,7 +450,7 @@
                          [strokeWidth]="4">
             </mat-spinner>
           </button>
-        </div>
+        </div>-->
 
         <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"
              style="margin-left: 0 !important;margin-right: 0 !important;">
