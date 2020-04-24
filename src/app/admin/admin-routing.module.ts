@@ -69,6 +69,11 @@ const routes: Routes = [
     component: PrinterComponent
   },
   {
+    path: 'report',
+    loadChildren: () => import('./report/report.module')
+      .then(m => m.ReportModule)
+  },
+  {
     path: 'users',
     loadChildren: () => import('./users/users.module')
       .then(m => m.UsersModule)
