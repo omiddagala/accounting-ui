@@ -15,5 +15,5 @@ const route: Routes = [
 })
 
 export class ReportRoutingModule {
-  
+
 }

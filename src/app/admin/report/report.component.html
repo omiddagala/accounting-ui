@@ -1,1 +1,363 @@
-salam
+<div class="w-100 h-100 wrapper">
+  <mat-drawer-container class="h-100 w-100" dir="rtl">
+    <mat-drawer style="min-width: 40%"
+                #snav mode="over">
+      <mat-nav-list>
+        <div *ngFor="let item of menu">
+          <a mat-list-item
+             *ngIf="commonService.canSeePage(item.value)"
+             [routerLink]="item.route"
+             class="px-2">
+            {{item.text}}
+          </a>
+        </div>
+
+        <a mat-list-item
+           (click)="commonService.logOut()"
+           class="px-2">
+          خروج
+        </a>
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content class="h-100">
+      <!--<app-loading-component *ngIf="loading"></app-loading-component>-->
+      <app-main-menu [logo]="true"
+                     [snav]="snav"
+                     [mainMenu]="true"
+                     [profile]="true">
+      </app-main-menu>
+      <mat-toolbar style="height: 56px"
+                   class="d-none d-lg-flex blue-toolbar row  px-md-5 justify-content-between">
+        <div class="col-auto mat-body-1">
+          <span>گزارش ها</span>
+        </div>
+
+        <div class="d-flex flex-row">
+          <div *ngIf="!showSearchField"
+               class="col-auto d-flex justify-content-center align-items-center cursor"
+               (click)="showSearchField = !showSearchField">
+            <span class="mat-body-1 mr-1">تغییر جستجو</span>
+            <img class="ml-1"
+                 width="28"
+                 src="../../../assets/image/facilities/search/search.png"/>
+          </div>
+          <div class="col-auto d-flex justify-content-center align-items-center cursor"
+               (click)="showSearchField = !showSearchField"
+               *ngIf="showSearchField">
+            <span class="pr-1 mat-body-1">بستن</span>
+            <mat-icon class="close">close</mat-icon>
+          </div>
+          <button mat-icon-button
+                  (click)="router.navigate(['/admin'])"
+                  style="color: white">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </div>
+
+      </mat-toolbar>
+      <div *ngIf="showSearchField"
+           class="d-none d-lg-flex field-search w-100 fadeInAnimation">
+        <div class="layer w-100">
+          <form [formGroup]="formGroup">
+            <div class="row mx-5 justify-content-center">
+
+              <div class="col-4 pt-2 "
+                   style="margin-right: 26px">
+                <br/>
+                <div class="d-flex flex-row ">
+                  <div class="col-2 white-color mat-body-2 mt-3"
+                       style="padding-left: 0; padding-right: 0">
+                    <span>از تاریخ</span>
+                  </div>
+                  <div class="col-10">
+                    <my-date-picker [type]="'jalali'"
+                                    [label]="false"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="date.from"
+                                    placeholder="از تاریخ"
+                                    [locale]="'fa'">
+                    </my-date-picker>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4 mt-2">
+                <br>
+                <div class=" d-flex flex-row">
+                  <div class="col-2 d-flex white-color mat-body-2 mt-3"
+                       style="padding-left: 0; padding-right: 0">
+                    <span> تا تاریخ</span>
+                  </div>
+                  <div class="col-10" style="padding-right: 0;padding-left: 42px;">
+                    <my-date-picker [type]="'jalali'"
+                                    [label]="false"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="date.to"
+                                    placeholder=" تا تاریخ"
+                                    [locale]="'fa'">
+                    </my-date-picker>
+                  </div>
+                </div>
+              </div>
+
+              <div dir="rtl"
+                   style="padding-top: 35px"
+                   class="col-4 d-flex row justify-content-around ">
+                <div class="col-2 mat-body-2 white-color text-center mt-3"
+                     style="padding: 0 !important;">
+                  <span> کد خریدار</span>
+                </div>
+                <mat-form-field class="col-10"
+                                appearance="outline">
+                  <input formControlName="customerCode"
+                         matInput
+                         autocomplete="off"
+                         placeholder="کد خردار"/>
+                </mat-form-field>
+              </div>
+
+              <div dir="rtl"
+                   style="padding-top: 22px"
+                   class="col-4 d-flex row justify-content-around">
+                <div class="col-2 mat-body-2 white-color text-center mt-3"
+                     style="padding: 0 !important;">
+                  <span>کد فروشنده</span>
+                </div>
+                <mat-form-field class="col-10"
+                                appearance="outline">
+                  <input formControlName="userCode"
+                         matInput
+                         autocomplete="off"
+                         placeholder="کد فروشنده"/>
+                </mat-form-field>
+              </div>
+
+              <div class="col-12 py-2 mb-3 mt-1 d-flex flex-row justify-content-center">
+                <button class="col-4 mat-body-1 mx-auto search-desktop-btn"
+                        style="background: green"
+                        (click)="search()"
+                        mat-flat-button>
+                  جستجو
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row mx-auto px-lg-5 mt-3  w-100 d-none d-lg-flex">
+        <div class="col-12 mx-auto" style="padding: 0 !important;">
+          <mat-card>
+            <div class="row  justify-content-between"
+                 style="border-bottom: 2px solid #f1f1f1">
+
+              <div class=" px-1 text-center table-header col-2 py-2">
+                کد محصول
+              </div>
+
+              <div class=" px-1 text-center table-header col-3 py-2">
+                فروشنده
+              </div>
+
+              <div class=" px-1 text-center table-header col-3 py-2">
+               خریدار
+              </div>
+
+              <div class=" px-1 text-center table-header col-2 py-2">
+                قیمت کل
+              </div>
+
+              <div class=" px-1 text-center table-header col-2 py-2">
+                عملیات
+              </div>
+
+            </div>
+            <infinite-scroll (scrolled)="onScroll()">
+              <div class="row justify-content-between"
+                   *ngFor="let item of result; let i = index"
+                   style="border-bottom: 2px solid #f1f1f1; height: 85px">
+
+                <div class="col-3 table-items my-auto mat-title text-center py-2">
+                  {{item.name}}
+                </div>
+
+                <div class="col-3 table-items my-auto mat-title text-center py-2">
+                  {{item.family}}
+                </div>
+
+                <div class="col-2 table-items my-auto  text-center py-2">
+                  {{item.nationalCode}}
+                </div>
+
+                <div class="col-4 table-items my-auto  text-center py-2">
+                  <button mat-button
+                          (click)="goSaleDetail(item.id)"
+                          style="color: white;background-color: green">
+                    جزییات
+                  </button>
+                </div>
+              </div>
+              <mat-spinner *ngIf="loading"
+                           class="mx-auto my-3"
+                           [diameter]="40"
+                           [strokeWidth]="5">
+              </mat-spinner>
+            </infinite-scroll>
+
+          </mat-card>
+        </div>
+      </div>
+      <!--  @@@@@@@@@@@@@@@@@@@@ d-block محصولd-lg-none @@@@@@@@@@@@@@@@@@@@@@-->
+      <mat-toolbar class="d-lg-none d-flex flex-row justify-content-end zero-padding-mobile"
+                   style="background: #236b81">
+
+        <div class="col-auto px-lg-5">
+          <button mat-flat-button
+                  *ngIf="!showSearchField"
+                  (click)="showSearchField = !showSearchField"
+                  class="change-search-btn">
+            تغیر جستجو
+          </button>
+          <button mat-icon-button
+                  *ngIf="showSearchField"
+                  (click)="showSearchField = !showSearchField"
+                  class="change-search-btn">
+            <mat-icon class="close">close</mat-icon>
+          </button>
+
+          <button mat-icon-button
+                  (click)="router.navigate(['/admin'])"
+                  style="color: white">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </div>
+
+      </mat-toolbar>
+
+      <div *ngIf="showSearchField"
+           class="d-flex d-lg-none field-search w-100 fadeInAnimation">
+        <div class="layer w-100">
+          <form [formGroup]="formGroup">
+            <div class="d-flex row mx-3 justify-content-center">
+
+              <div class="col-10 col-md-8 pt-2 ">
+
+                <div class="mx-auto white-color mat-body-2 mt-3">
+                  <span> از تاریخ</span>
+                </div>
+                <div class="mx-auto">
+                  <my-date-picker [type]="'jalali'"
+                                  [label]="false"
+                                  [ngModelOptions]="{standalone: true}"
+                                  [(ngModel)]="date.from"
+                                  placeholder=" از تاریخ"
+                                  [locale]="'fa'">
+                  </my-date-picker>
+                </div>
+              </div>
+
+              <div class="col-10 col-md-8 mt-2">
+                <div class=" mx-auto d-flex white-color mat-body-2 mt-2">
+                  <span> تا تاریخ</span>
+                </div>
+                <div class=" mx-auto">
+                  <my-date-picker [type]="'jalali'"
+                                  [label]="false"
+                                  [ngModelOptions]="{standalone: true}"
+                                  [(ngModel)]="date.to"
+                                  placeholder="تا تاریخ"
+                                  [locale]="'fa'">
+                  </my-date-picker>
+                </div>
+              </div>
+
+              <div class="pt-1 col-10 col-md-8">
+                <div class="w-100  white-color mat-body-2"> کد خریدار</div>
+                <div dir="rtl">
+                  <mat-form-field class="w-100"
+                                  appearance="outline">
+                    <input formControlName="customerCode"
+                           matInput
+                           autocomplete="off"
+                           placeholder="کد خریدار"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="pt-1 col-10 col-md-8">
+                <div class="w-100  white-color mat-body-2">کد فروشنده</div>
+                <div dir="rtl">
+                  <mat-form-field class="w-100"
+                                  appearance="outline">
+                    <input formControlName="userCode"
+                           matInput
+                           autocomplete="off"
+                           placeholder="کد فروشنده"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="pt-1 col-4 col-md-5 mb-4">
+                <button mat-flat-button
+                        class="w-100"
+                        (click)="search()"
+                        style="background: green;color: white">
+                  جستجو
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="d-flex  d-lg-none flex-wrap">
+        <div class="col-12 mx-auto d-flex row mx-3 my-2 py-1"
+             style="margin-left: 0 !important;margin-right: 0 !important;">
+
+          <infinite-scroll (scrolled)="onScroll()"
+                           class="w-100">
+            <mat-card class="w-100 my-2"
+                      *ngFor="let item of result; let i = index">
+
+              <div class="row justify-content-between pb-1">
+                <div class="col-4 mat-body-2">کد محصول</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
+                     style="text-align: end">{{item.name}}</div>
+              </div>
+
+              <div class="row justify-content-between py-1">
+                <div class="col-4 mat-body-2">فروشنده</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
+                     style="text-align: end">{{item.family}}</div>
+              </div>
+              <div class="row justify-content-between py-1">
+                <div class="col-4 mat-body-2">خریدار</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
+                     style="text-align: end">{{item.nationalCode}}</div>
+              </div>
+              <hr class="w-75 mx-auto  mt-4">
+              <div class="d-flex flex-row flex-wrap justify-content-end pt-1">
+                <div>
+                  <button mat-button
+                          style="color: white;background-color: green"
+                          (click)="goSaleDetail(item.id)">
+                    جزییات
+                  </button>
+                </div>
+
+              </div>
+            </mat-card>
+            <mat-spinner *ngIf="loading"
+                         class="mx-auto my-3"
+                         [diameter]="40"
+                         [strokeWidth]="5">
+            </mat-spinner>
+          </infinite-scroll>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

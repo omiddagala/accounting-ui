@@ -23,5 +23,10 @@
     "text": "پرینتر",
     "value": "printer",
     "route": "/admin/printer"
+  },
+  {
+    "text": "گزارش ها",
+    "value": "report",
+    "route": "/admin/report"
   }
 ]
