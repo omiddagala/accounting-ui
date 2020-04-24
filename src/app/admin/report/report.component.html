@@ -20,7 +20,6 @@
       </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content class="h-100">
-      <!--<app-loading-component *ngIf="loading"></app-loading-component>-->
       <app-main-menu [logo]="true"
                      [snav]="snav"
                      [mainMenu]="true"
@@ -129,6 +128,24 @@
                          matInput
                          autocomplete="off"
                          placeholder="کد فروشنده"/>
+                </mat-form-field>
+              </div>
+
+
+              <div dir="rtl"
+                   style="padding-top: 22px"
+                   class="col-4 d-flex row justify-content-around">
+                <div class="col-2 mat-body-2 white-color text-center mt-3"
+                     style="padding: 0 !important;">
+                  <span>شماره حساب</span>
+                </div>
+                <mat-form-field appearance="outline"  class="col-10">
+                  <mat-select formControlName="bankAccount">
+                    <mat-option *ngFor="let item of accountList"
+                                [value]="item">
+                      {{item.accountNumber + ' - ' + item.bank}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
 
@@ -310,6 +327,21 @@
                            matInput
                            autocomplete="off"
                            placeholder="کد فروشنده"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="pt-1 col-10 col-md-8">
+                <div class="w-100  white-color mat-body-2">شماره حساب</div>
+                <div dir="rtl">
+                  <mat-form-field appearance="outline"
+                                  class="w-100">
+                    <mat-select formControlName="bankAccount">
+                      <mat-option *ngFor="let item of accountList"
+                                  [value]="item">
+                        {{item.accountNumber + ' - ' + item.bank}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
               </div>

@@ -20,9 +20,11 @@ export class ReportComponent implements OnInit {
   loading = false;
   totalPrice: any;
   public result = [];
+  public accountList = [];
+  public account = null;
   pageableDTO = {
     page: 0,
-    size: 3,
+    size: 20,
     direction: 'ASC',
     sortBy: 'id',
   };
@@ -37,7 +39,7 @@ export class ReportComponent implements OnInit {
       jsdate: new Date(moment().format('jYYYY/jM/jD')),
       formatted: moment().format('jYYYY/jM/jD')
     },
-    from: ''
+    from: null
   };
 
   constructor(private formBuilder: FormBuilder,
@@ -50,11 +52,30 @@ export class ReportComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       customerCode: new FormControl(undefined),
       userCode: new FormControl(undefined),
-      // nationalCode: new FormControl(undefined),
-      // mobile: new FormControl(undefined),
-      // status: new FormControl('UNPAID'),
+      bankAccount: new FormControl(undefined)
     });
+
     this.makeRequest();
+    this.getAccountList();
+  }
+
+  getAccountList() {
+    const param = {
+      pageableDTO: this.pageableDTO
+    };
+    this.http.post<any>('http://127.0.0.1:9000/v1/shop/bank/list', param, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          console.log(val);
+          this.accountList = val;
+        },
+        err => {
+          console.log(err);
+        });
   }
 
   convertNumbers(str) {
@@ -71,27 +92,38 @@ export class ReportComponent implements OnInit {
   convertToMiladiDate(dateObj) {
     if (dateObj) {
       const date = moment(dateObj.formatted, 'jYYYY/jMM/jDD');
-      console.log(date.format('YYYY-MM-DD'));
+      // console.log(date.format('YYYY-MM-DD'));
       return date.format('YYYY-MM-DD');
     } else {
-      return '';
+      return null;
+    }
+  }
+
+  getId(id) {
+    return id ? {id} : null;
+  }
+
+  getBankAccountId(bankAccount) {
+    if (bankAccount) {
+      const id = bankAccount.id;
+      return id ? {id} : null;
+    } else {
+      return null;
     }
   }
 
   makeRequest() {
-    console.log(this.date);
+    // console.log(this.date);
     this.loading = true;
-    // this.result = [];
     const param = {
-      // name: this.formGroup.get('name').value,
-      // family: this.formGroup.get('family').value,
-      // nationalCode: this.convertNumbers(this.formGroup.get('nationalCode').value),
-      // mobile: this.convertNumbers(this.formGroup.get('mobile').value),
-      // status: this.formGroup.get('status').value,
+      user: this.getId(this.formGroup.get('userCode').value),
+      customer: this.getId(this.formGroup.get('customerCode').value),
+      bankAccount: this.getBankAccountId(this.formGroup.get('bankAccount').value),
       to: this.convertToMiladiDate(this.date.to),
-      // paidDate: this.convertNumbers(this.date.paid),
+      from: this.convertNumbers(this.date.from),
       pageableDTO: this.pageableDTO
     };
+    console.log(param)
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/sales/report', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -100,16 +132,20 @@ export class ReportComponent implements OnInit {
       .subscribe(
         (val) => {
           this.loading = false;
-          this.totalPrice = val.total
+          this.totalPrice = val.total;
+          console.log(val);
           this.result.push(...val.sales);
-          this.addValueToResult();
+          console.log('here');
+          console.log(this.result);
+          // this.addValueToResult();
           this.pageableDTO.page++;
           if (val.length === this.pageableDTO.size) {
             this.loadMore = true;
           }
         },
-        response => {
+        err => {
           this.loading = false;
+          console.log(err);
         });
   }
 
@@ -121,7 +157,7 @@ export class ReportComponent implements OnInit {
       });
       this.result.forEach((item, index) => {
         this.result.forEach((secondItem, secondIndex) => {
-          if (item.name === secondItem.name) {
+          if (item.id === secondItem.id) {
             flag[index] += 1;
             if (flag[index] >= 2) {
               this.result.splice(index, 1);
@@ -148,7 +184,7 @@ export class ReportComponent implements OnInit {
   }
 
   goSaleDetail(id) {
-    this.router.navigate(['/admin/sales/detail'], {queryParams: {id: id}});
+    // this.router.navigate(['/admin/sales/detail'], {queryParams: {id: id}});
   }
 
 }
