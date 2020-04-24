@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {ReportComponent} from './report.component';
+import {DetailReport, ReportComponent} from './report.component';
 import {ReportRoutingModule} from './report-routing.module';
 import {
   MatBadgeModule,
@@ -16,6 +16,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MainMenuModule} from '../../../shared/component/main-menu/MainMenu.module';
 import {MyDatePickerModule} from '../../../shared/datepicker';
 import {SharedModule} from '../../../shared/shared.module';
+import {NgxCurrencyModule} from 'ngx-currency';
 @NgModule({
   imports: [
     ReportRoutingModule,
@@ -38,12 +39,17 @@ import {SharedModule} from '../../../shared/shared.module';
     MyDatePickerModule,
     MatRadioModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule,
+    NgxCurrencyModule
   ],
   declarations: [
     ReportComponent,
+    DetailReport
   ],
-  entryComponents: []
+  entryComponents: [
+    DetailReport
+  ]
 })
 
 export class ReportModule {

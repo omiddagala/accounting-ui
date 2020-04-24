@@ -1,11 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, OnInit} from '@angular/core';
 // @ts-ignore
 import Menu from '../../../shared/data/menu.json';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {CommonService} from '../../../shared/common/common.service';
 import * as moment from 'jalali-moment';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {ValidatorNumberMax, ValidatorNumberMin} from '../../../shared/validators/min-max.validator';
+import {EditSaleDialog} from '../sales/sale-detail/sale-detail.component';
 
 @Component({
   selector: 'app-admin-report',
@@ -45,6 +48,7 @@ export class ReportComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
               public router: Router,
+              private dialog: MatDialog,
               public commonService: CommonService) {
   }
 
@@ -120,7 +124,7 @@ export class ReportComponent implements OnInit {
       customer: this.getId(this.formGroup.get('customerCode').value),
       bankAccount: this.getBankAccountId(this.formGroup.get('bankAccount').value),
       to: this.convertToMiladiDate(this.date.to),
-      from: this.convertNumbers(this.date.from),
+      from: this.convertToMiladiDate(this.date.from),
       pageableDTO: this.pageableDTO
     };
     console.log(param)
@@ -183,10 +187,52 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  goSaleDetail(id) {
-    // this.router.navigate(['/admin/sales/detail'], {queryParams: {id: id}});
+  goSaleDetail(index) {
+    const dialogRef = this.dialog.open(DetailReport, {
+      data: {
+        result: this.result[index],
+      }
+    });
   }
 
 }
+
+@Component({
+  selector: 'detai-report',
+  templateUrl: './detail-dialog/detail.dialog.html',
+  styleUrls: ['./detail-dialog/detail.dialog.scss']
+})
+
+export class DetailReport implements OnInit {
+  loading = false;
+  obj: any;
+  formGroup: FormGroup;
+
+  constructor(
+    public dialogRef: MatDialogRef<DetailReport>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(ComponentFactoryResolver) factoryResolver,
+    private http: HttpClient,
+    private commonService: CommonService,
+    private formBuilder: FormBuilder) {
+  }
+
+  ngOnInit(): void {
+    this.obj = this.data.result;
+    /*this.formGroup = this.formBuilder.group({
+      amount: new FormControl(this.obj.amount, Validators.required),
+      discountPrice: new FormControl(this.obj.price, Validators.required),
+      discount: new FormControl(0, [ValidatorNumberMin(0), ValidatorNumberMax(100)])
+    });*/
+    console.log(this.obj);
+  }
+
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
 
 
