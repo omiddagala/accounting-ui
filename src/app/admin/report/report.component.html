@@ -148,6 +148,11 @@
       <div class="row mx-auto px-lg-5 mt-3  w-100 d-none d-lg-flex">
         <div class="col-12 mx-auto" style="padding: 0 !important;">
           <mat-card>
+            <div class="row px-2 py-2"
+            style="border-bottom: 2px solid #f1f1f1" >
+              <div class="mat-card-title"> مجموع : </div>
+              <span class="mat-card-title px-1 pt-1"> {{totalPrice | number}}</span>
+            </div>
             <div class="row  justify-content-between"
                  style="border-bottom: 2px solid #f1f1f1">
 
@@ -155,16 +160,20 @@
                 کد محصول
               </div>
 
-              <div class=" px-1 text-center table-header col-3 py-2">
+              <div class=" px-1 text-center table-header col-2 py-2">
                 فروشنده
               </div>
 
-              <div class=" px-1 text-center table-header col-3 py-2">
+              <div class=" px-1 text-center table-header col-2 py-2">
                خریدار
               </div>
 
               <div class=" px-1 text-center table-header col-2 py-2">
                 قیمت کل
+              </div>
+
+              <div class=" px-1 text-center table-header col-2 py-2">
+                تاریخ
               </div>
 
               <div class=" px-1 text-center table-header col-2 py-2">
@@ -177,19 +186,27 @@
                    *ngFor="let item of result; let i = index"
                    style="border-bottom: 2px solid #f1f1f1; height: 85px">
 
-                <div class="col-3 table-items my-auto mat-title text-center py-2">
-                  {{item.name}}
+                <div class="col-2 table-items my-auto mat-title text-center py-2">
+                  {{item.productSize.code}}
                 </div>
 
-                <div class="col-3 table-items my-auto mat-title text-center py-2">
-                  {{item.family}}
+                <div class="col-2 table-items my-auto mat-title text-center py-2">
+                  {{item.user.id}}
                 </div>
 
                 <div class="col-2 table-items my-auto  text-center py-2">
-                  {{item.nationalCode}}
+                  {{item.customer.id}}
                 </div>
 
-                <div class="col-4 table-items my-auto  text-center py-2">
+                <div class="col-2 table-items my-auto  text-center py-2">
+                  {{item.amount * item.price | number}}
+                </div>
+
+                <div class="col-2 table-items my-auto  text-center py-2">
+                  {{item.paidDate}}
+                </div>
+
+                <div class="col-2 table-items my-auto  text-center py-2">
                   <button mat-button
                           (click)="goSaleDetail(item.id)"
                           style="color: white;background-color: green">
@@ -316,6 +333,12 @@
 
           <infinite-scroll (scrolled)="onScroll()"
                            class="w-100">
+            <mat-card class="w-100 my-2">
+              <div class="row px-2 py-2">
+                <div class="mat-card-title"> مجموع : </div>
+                <span class="mat-card-title px-1 pt-1"> {{totalPrice | number}}</span>
+              </div>
+            </mat-card>
             <mat-card class="w-100 my-2"
                       *ngFor="let item of result; let i = index">
 
@@ -323,20 +346,32 @@
                 <div class="col-4 mat-body-2">کد محصول</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
                 <div class="col-4 mat-body-2"
-                     style="text-align: end">{{item.name}}</div>
+                     style="text-align: end">{{item.productSize.code}}</div>
               </div>
 
               <div class="row justify-content-between py-1">
                 <div class="col-4 mat-body-2">فروشنده</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
                 <div class="col-4 mat-body-2"
-                     style="text-align: end">{{item.family}}</div>
+                     style="text-align: end">{{item.user.id}}</div>
               </div>
               <div class="row justify-content-between py-1">
                 <div class="col-4 mat-body-2">خریدار</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
                 <div class="col-4 mat-body-2"
-                     style="text-align: end">{{item.nationalCode}}</div>
+                     style="text-align: end">{{item.customer.id}}</div>
+              </div>
+              <div class="row justify-content-between py-1">
+                <div class="col-4 mat-body-2">قیمت کل</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
+                     style="text-align: end">{{item.amount * item.price | number}}</div>
+              </div>
+              <div class="row justify-content-between py-1">
+                <div class="col-4 mat-body-2">تاریخ</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
+                     style="text-align: end">{{item.paidDate}}</div>
               </div>
               <hr class="w-75 mx-auto  mt-4">
               <div class="d-flex flex-row flex-wrap justify-content-end pt-1">

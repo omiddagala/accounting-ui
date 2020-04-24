@@ -18,6 +18,7 @@ export class ReportComponent implements OnInit {
   showSearchField = false;
   formGroup: FormGroup;
   loading = false;
+  totalPrice: any;
   public result = [];
   pageableDTO = {
     page: 0,
@@ -38,6 +39,7 @@ export class ReportComponent implements OnInit {
     },
     from: ''
   };
+
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
               public router: Router,
@@ -86,7 +88,7 @@ export class ReportComponent implements OnInit {
       // nationalCode: this.convertNumbers(this.formGroup.get('nationalCode').value),
       // mobile: this.convertNumbers(this.formGroup.get('mobile').value),
       // status: this.formGroup.get('status').value,
-      // addDate: this.convertToMiladiDate(this.date.add),
+      to: this.convertToMiladiDate(this.date.to),
       // paidDate: this.convertNumbers(this.date.paid),
       pageableDTO: this.pageableDTO
     };
@@ -98,7 +100,8 @@ export class ReportComponent implements OnInit {
       .subscribe(
         (val) => {
           this.loading = false;
-          this.result.push(...val);
+          this.totalPrice = val.total
+          this.result.push(...val.sales);
           this.addValueToResult();
           this.pageableDTO.page++;
           if (val.length === this.pageableDTO.size) {
