@@ -141,7 +141,7 @@ export class ReportComponent implements OnInit {
           this.result.push(...val.sales);
           console.log('here');
           console.log(this.result);
-          // this.addValueToResult();
+          this.addValueToResult();
           this.pageableDTO.page++;
           if (val.length === this.pageableDTO.size) {
             this.loadMore = true;
