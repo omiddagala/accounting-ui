@@ -49,7 +49,7 @@
             <mat-icon class="close">close</mat-icon>
           </div>
           <button mat-icon-button
-                  (click)="router.navigate(['/admin'])"
+                  (click)="router.navigate(['/admin/sales'])"
                   style="color: white">
             <mat-icon>arrow_back_ios</mat-icon>
           </button>
@@ -143,46 +143,6 @@
       <div class="row mx-auto px-lg-5 mt-3  w-100 d-none d-lg-flex">
         <div class="col-12 mx-auto" style="padding: 0 !important;">
           <mat-card>
-
-            <div class="row my-auto top-card justify-content-between">
-              <div class="col-8 d-flex flex-row">
-                <div class="col-2 mat-body-1 mt-2 gray-color"
-                     style="font-weight: 500;">
-                  <button class="w-100 mb-2"
-                          mat-flat-button
-                          [disabled]="!isUnpaid()"
-                          (click)="saveSales()"
-                          color="accent">
-                    فاکتور کردن
-                  </button>
-                </div>
-
-                <div dir="rtl" class="col-3"
-                     *ngIf="isUnpaid()">
-
-                  <mat-form-field class="w-100">
-                    <mat-label>حساب ها</mat-label>
-                    <mat-select [(ngModel)]="account">
-                      <mat-option *ngFor="let item of accountList"
-                                  [value]="item">
-                        {{item.accountNumber + ' - ' + item.bank}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-
-             <!-- <div class="col-auto mat-body-1 mt-2 gray-color"
-                   style="font-weight: 500;">
-                <button class="w-100 mb-2"
-                        mat-flat-button
-                        [disabled]="isUnpaid()"
-                        (click)="openFactorNumberList()"
-                        color="accent">
-                  چاپ فاکتور
-                </button>
-              </div>-->
-            </div>
 
             <div class="row  justify-content-between"
                  style="border-bottom: 2px solid #f1f1f1">
@@ -282,6 +242,46 @@
               </mat-spinner>
             </infinite-scroll>
 
+            <div class="row my-auto top-card justify-content-between">
+              <div class="col-8 d-flex flex-row">
+                <div class="col-2 mat-body-1 mt-2 gray-color"
+                     style="font-weight: 500;">
+                  <button class="w-100 mb-2"
+                          mat-flat-button
+                          [disabled]="!isUnpaid()"
+                          (click)="saveSales()"
+                          color="accent">
+                    فاکتور کردن
+                  </button>
+                </div>
+
+                <div dir="rtl" class="col-3"
+                     *ngIf="isUnpaid()">
+
+                  <mat-form-field class="w-100">
+                    <mat-label>حساب ها</mat-label>
+                    <mat-select [(ngModel)]="account">
+                      <mat-option *ngFor="let item of accountList"
+                                  [value]="item">
+                        {{item.accountNumber + ' - ' + item.bank}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- <div class="col-auto mat-body-1 mt-2 gray-color"
+                    style="font-weight: 500;">
+                 <button class="w-100 mb-2"
+                         mat-flat-button
+                         [disabled]="isUnpaid()"
+                         (click)="openFactorNumberList()"
+                         color="accent">
+                   چاپ فاکتور
+                 </button>
+               </div>-->
+            </div>
+
             <div *ngIf="formGroup.get('status').value === 'UNPAID'"
                  class="row justify-content-between">
 
@@ -334,7 +334,7 @@
           </button>
 
           <button mat-icon-button
-                  (click)="router.navigate(['/admin'])"
+                  (click)="router.navigate(['/admin/sales'])"
                   style="color: white">
             <mat-icon>arrow_back_ios</mat-icon>
           </button>
@@ -411,32 +411,6 @@
 
       <div class="d-flex  d-lg-none flex-wrap">
 
-        <div class="col-auto px-lg-5 mt-2">
-          <button mat-flat-button
-                  (click)="saveSales()"
-                  [disabled]="!isUnpaid()"
-                  color="accent">
-            <span> فاکتور کردن</span>
-            <!--<mat-spinner *ngIf="loading"
-                         class="mx-auto my-3"
-                         [diameter]="20"
-                         [strokeWidth]="4">
-            </mat-spinner>-->
-          </button>
-        </div>
-
-        <div dir="rtl" class="col-6 mt-1">
-          <mat-form-field class="w-100"
-                          *ngIf="isUnpaid()">
-            <mat-label>حساب ها</mat-label>
-            <mat-select [(ngModel)]="account">
-              <mat-option *ngFor="let item of accountList"
-                          [value]="item">
-                {{item.accountNumber + ' - ' + item.bank }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
 
        <!-- <div class="col-auto px-lg-5 mt-2">
           <button mat-flat-button
@@ -542,6 +516,37 @@
 
           <mat-card class="w-100 my-2"
                     *ngIf="isUnpaid()">
+
+            <div class="d-flex row">
+
+              <div class="col-auto px-lg-5 mt-2">
+                <button mat-flat-button
+                        (click)="saveSales()"
+                        [disabled]="!isUnpaid()"
+                        color="accent">
+                  <span> فاکتور کردن</span>
+                  <!--<mat-spinner *ngIf="loading"
+                               class="mx-auto my-3"
+                               [diameter]="20"
+                               [strokeWidth]="4">
+                  </mat-spinner>-->
+                </button>
+              </div>
+
+              <div dir="rtl" class="col-6 mt-1">
+                <mat-form-field class="w-100"
+                                *ngIf="isUnpaid()">
+                  <mat-label>حساب ها</mat-label>
+                  <mat-select [(ngModel)]="account">
+                    <mat-option *ngFor="let item of accountList"
+                                [value]="item">
+                      {{item.accountNumber + ' - ' + item.bank }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
             <div class="mat-title">مجموع</div>
             <div class="row justify-content-between pb-1">
               <div class="col-5 mat-body-2"> قیمت کل</div>

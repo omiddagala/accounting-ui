@@ -22,7 +22,7 @@ export class CustomersComponent implements OnInit {
   timelineLoading = false;
   pageableDTO = {
     page: 0,
-    size: 3,
+    size: 20,
     direction: 'ASC',
     sortBy: 'name',
   };
@@ -94,7 +94,7 @@ export class CustomersComponent implements OnInit {
       });
       this.result.forEach((item, index) => {
         this.result.forEach((secondItem, secondIndex) => {
-          if (item.name === secondItem.name) {
+          if (item.id === secondItem.id) {
             flag[index] += 1;
             if (flag[index] >= 2) {
               this.result.splice(index, 1);

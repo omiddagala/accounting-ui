@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, OnInit} from '@angular/core';
+import {Component, ComponentFactoryResolver, EventEmitter, Inject, OnInit} from '@angular/core';
 // @ts-ignore
 import Menu from '../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -8,7 +8,7 @@ import {CommonService} from '../../../shared/common/common.service';
 import * as moment from 'jalali-moment';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {ValidatorNumberMax, ValidatorNumberMin} from '../../../shared/validators/min-max.validator';
-import {EditSaleDialog} from '../sales/sale-detail/sale-detail.component';
+import {DeleteSaleDialog, EditSaleDialog} from '../sales/sale-detail/sale-detail.component';
 
 @Component({
   selector: 'app-admin-report',
@@ -27,7 +27,7 @@ export class ReportComponent implements OnInit {
   public account = null;
   pageableDTO = {
     page: 0,
-    size: 20,
+    size: 15,
     direction: 'ASC',
     sortBy: 'id',
   };
@@ -116,6 +116,12 @@ export class ReportComponent implements OnInit {
     }
   }
 
+  showDate(date) {
+    // console.log(new Date(date))
+    // console.log(moment('2020-4-5').format('jYYYY-jMM-jDD'));
+    return moment(date, 'YYYY-MM-DD').format('jYYYY-jMM-jDD');
+  }
+
   makeRequest() {
     // console.log(this.date);
     this.loading = true;
@@ -187,7 +193,7 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  goSaleDetail(index) {
+  openEditSale(index) {
     const dialogRef = this.dialog.open(DetailReport, {
       data: {
         result: this.result[index],
@@ -195,10 +201,72 @@ export class ReportComponent implements OnInit {
     });
   }
 
+  openDeleteSaleDialog(id, index) {
+    const dialogRef = this.dialog.open(DeleteSale, {
+      data: {
+        result: this.result,
+        index,
+        id
+      }
+    });
+  }
 }
 
+
 @Component({
-  selector: 'detai-report',
+  selector: 'sale-delete',
+  templateUrl: './delete-dialog/delete-dialog.html',
+  // styleUrls: ['./edit-dialog/edit-dialog.scss']
+})
+
+export class DeleteSale {
+  constructor(
+    public dialogRef: MatDialogRef<DeleteSale>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(ComponentFactoryResolver) factoryResolver,
+    private http: HttpClient,
+    private commonService: CommonService) {
+  }
+
+  loading = false;
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  closeDialog = new EventEmitter();
+
+  delete() {
+    const param = {
+      id: this.data.id
+    };
+    this.loading = true;
+    this.http.post('http://127.0.0.1:9000/v1/shop/sales/delete', param, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          this.loading = false;
+          this.data.result.splice(this.data.index, 1);
+          location.reload();
+          this.onNoClick();
+          this.commonService.showMessage('محصول با موفقیت حذف شد', 'success-msg');
+          this.closeDialog.emit(null);
+        },
+        err => {
+          this.loading = false;
+          this.onNoClick();
+          this.commonService.showMessage('خطایی رخ داده است', 'error-msg');
+        });
+  }
+}
+
+
+
+@Component({
+  selector: 'detail-report',
   templateUrl: './detail-dialog/detail.dialog.html',
   styleUrls: ['./detail-dialog/detail.dialog.scss']
 })
@@ -219,20 +287,60 @@ export class DetailReport implements OnInit {
 
   ngOnInit(): void {
     this.obj = this.data.result;
-    /*this.formGroup = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       amount: new FormControl(this.obj.amount, Validators.required),
       discountPrice: new FormControl(this.obj.price, Validators.required),
-      discount: new FormControl(0, [ValidatorNumberMin(0), ValidatorNumberMax(100)])
-    });*/
+      // discount: new FormControl(0, [ValidatorNumberMin(0), ValidatorNumberMax(100)])
+    });
     console.log(this.obj);
   }
-
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  checkFormValidation() {
+    for (const form of Object.keys(this.formGroup.controls)) {
+      this.formGroup.get(form).markAsTouched();
+    }
+  }
+
+  checkData() {
+    this.obj.price = this.formGroup.get('discountPrice').value;
+    this.obj.amount = this.formGroup.get('amount').value;
+  }
+
+  changeSale() {
+    this.checkFormValidation();
+    if (!this.formGroup.valid) {
+      return;
+    }
+    if (this.loading) {
+      return true;
+    }
+    this.checkData();
+    let param = this.obj;
+    param.user = {
+      id: this.obj.user.id,
+      username: this.obj.user.username
+    };
+    this.loading = true;
+    this.http.post('http://127.0.0.1:9000/v1/shop/sales/save', param, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .subscribe(
+        (val) => {
+          this.loading = false;
+          location.reload();
+          this.onNoClick();
+          this.commonService.showMessage('تغیرات با موفقیت اعمال شد', 'success-msg');
+        },
+        err => {
+          this.loading = false;
+          this.onNoClick();
+          this.commonService.showMessage('خطایی رخ داده است', 'error-msg');
+        });
+  }
 }
-
-
-

@@ -186,7 +186,7 @@
               </div>
 
               <div class=" px-1 text-center table-header col-2 py-2">
-                قیمت کل
+                قیمت کل با تخفیف
               </div>
 
               <div class=" px-1 text-center table-header col-2 py-2">
@@ -220,14 +220,19 @@
                 </div>
 
                 <div class="col-2 table-items my-auto  text-center py-2">
-                  {{item.paidDate}}
+                  {{showDate(item.paidDate)}}
                 </div>
 
                 <div class="col-2 table-items my-auto  text-center py-2">
-                  <button mat-button
-                          (click)="goSaleDetail(i)"
-                          style="color: white;background-color: green">
-                    جزییات
+                  <button mat-icon-button
+                          style="color: green"
+                          (click)="openEditSale(i)">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+
+                  <button mat-icon-button
+                          (click)="openDeleteSaleDialog(item.id, i)">
+                    <mat-icon style="color: red">delete</mat-icon>
                   </button>
                 </div>
               </div>
@@ -407,13 +412,17 @@
               </div>
               <hr class="w-75 mx-auto  mt-4">
               <div class="d-flex flex-row flex-wrap justify-content-end pt-1">
-                <div>
-                  <button mat-button
-                          style="color: white;background-color: green"
-                          (click)="goSaleDetail(i)">
-                    جزییات
+
+                  <button mat-icon-button
+                          style="color: green"
+                          (click)="openEditSale(i)">
+                    <mat-icon>visibility</mat-icon>
                   </button>
-                </div>
+
+                <button mat-icon-button
+                        (click)="openDeleteSaleDialog(item.id, i)">
+                  <mat-icon style="color: red">delete</mat-icon>
+                </button>
 
               </div>
             </mat-card>

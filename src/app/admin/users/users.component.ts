@@ -101,7 +101,7 @@ export class UsersComponent implements OnInit {
   }
 
   edit(id) {
-    this.router.navigate(['/admin/users/sale-detail'], { queryParams: { id } });
+    this.router.navigate(['/admin/users/detail'], { queryParams: { id } });
   }
 
   findRole(role) {

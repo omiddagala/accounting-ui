@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {DetailReport, ReportComponent} from './report.component';
+import {DeleteSale, DetailReport, ReportComponent} from './report.component';
 import {ReportRoutingModule} from './report-routing.module';
 import {
   MatBadgeModule,
@@ -45,10 +45,12 @@ import {NgxCurrencyModule} from 'ngx-currency';
   ],
   declarations: [
     ReportComponent,
-    DetailReport
+    DetailReport,
+    DeleteSale
   ],
   entryComponents: [
-    DetailReport
+    DetailReport,
+    DeleteSale
   ]
 })
 
