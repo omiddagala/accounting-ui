@@ -22,6 +22,7 @@ export class ReportComponent implements OnInit {
   formGroup: FormGroup;
   loading = false;
   totalPrice: any;
+  sumPrice: any = {};
   public result = [];
   public accountList = [];
   public account = null;
@@ -42,8 +43,44 @@ export class ReportComponent implements OnInit {
       jsdate: new Date(moment().format('jYYYY/jM/jD')),
       formatted: moment().format('jYYYY/jM/jD')
     },
-    from: null
+    from: null,
   };
+  printBtn = {
+    disable: false,
+    factorNumber: ''
+  };
+  factorTitle = [
+    {
+      name: 'گروه کالا',
+      enName: 'productGroup',
+      width: '15%'
+    },
+    {
+      name: 'کد محصول',
+      enName: 'productCode',
+      width: '20%'
+    },
+    {
+      name: 'قیمت واحد',
+      enName: 'price',
+      width: '15%'
+    },
+    {
+      name: 'تعداد',
+      enName: 'amount',
+      width: '10%'
+    },
+    {
+      name: 'قیمت کل',
+      enName: 'totalPrice',
+      width: '15%'
+    },
+    {
+      name: 'قیمت کل با تخفیف',
+      enName: 'discountPrice',
+      width: '25%'
+    },
+  ];
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -56,7 +93,8 @@ export class ReportComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       customerCode: new FormControl(undefined),
       userCode: new FormControl(undefined),
-      bankAccount: new FormControl(undefined)
+      bankAccount: new FormControl(undefined),
+      factorNum: new FormControl(undefined)
     });
 
     this.makeRequest();
@@ -80,17 +118,6 @@ export class ReportComponent implements OnInit {
         err => {
           console.log(err);
         });
-  }
-
-  convertNumbers(str) {
-    const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-      arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
-    if (typeof str === 'string') {
-      for (let i = 0; i < 10; i++) {
-        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
-      }
-    }
-    return str;
   }
 
   convertToMiladiDate(dateObj) {
@@ -119,21 +146,37 @@ export class ReportComponent implements OnInit {
   showDate(date) {
     // console.log(new Date(date))
     // console.log(moment('2020-4-5').format('jYYYY-jMM-jDD'));
-    return moment(date, 'YYYY-MM-DD').format('jYYYY-jMM-jDD');
+    return moment(date, 'YYYY-MM-DD').locale('fa').format('YYYY-MM-DD');
   }
 
-  makeRequest() {
-    // console.log(this.date);
-    this.loading = true;
-    const param = {
+  preparData() {
+    return {
       user: this.getId(this.formGroup.get('userCode').value),
       customer: this.getId(this.formGroup.get('customerCode').value),
       bankAccount: this.getBankAccountId(this.formGroup.get('bankAccount').value),
       to: this.convertToMiladiDate(this.date.to),
       from: this.convertToMiladiDate(this.date.from),
-      pageableDTO: this.pageableDTO
+      pageableDTO: this.pageableDTO,
+      factorNumber: this.commonService.toEnglishDigits(this.formGroup.get('factorNum').value)
     };
-    console.log(param)
+  }
+
+  checkPrintBtn() {
+    const factorNum = this.formGroup.get('factorNum').value;
+    if ((this.result.length > 0) && (factorNum)) {
+      this.printBtn.disable = false;
+      this.printBtn.factorNumber = factorNum;
+    } else {
+      this.printBtn.disable = true;
+      this.printBtn.factorNumber = '';
+    }
+  }
+
+
+  makeRequest() {
+    this.loading = true;
+    const param = this.preparData();
+    console.log(param);
     this.http.post<any>('http://127.0.0.1:9000/v1/shop/sales/report', param, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -143,10 +186,8 @@ export class ReportComponent implements OnInit {
         (val) => {
           this.loading = false;
           this.totalPrice = val.total;
-          console.log(val);
           this.result.push(...val.sales);
-          console.log('here');
-          console.log(this.result);
+          this.checkPrintBtn();
           this.addValueToResult();
           this.pageableDTO.page++;
           if (val.length === this.pageableDTO.size) {
@@ -155,6 +196,7 @@ export class ReportComponent implements OnInit {
         },
         err => {
           this.loading = false;
+          this.totalPrice = '';
           console.log(err);
         });
   }
@@ -210,6 +252,174 @@ export class ReportComponent implements OnInit {
       }
     });
   }
+
+  calculateTotalPrice() {
+    this.sumPrice = {
+      total: 0,
+      discountToal: 0
+    };
+    // this.sumPrice.total = 0;
+    // this.sumPrice.discountToal = 0;
+    this.result.forEach(item => {
+      this.sumPrice.total += item.productSize.product.price * item.amount;
+      this.sumPrice.discountToal += item.price * item.amount;
+    });
+  }
+
+  preparePrint() {
+    this.calculateTotalPrice();
+    this.printFactor(this.printBtn.factorNumber);
+    console.log(this.sumPrice);
+  }
+
+  printFactor(factorNumber) {
+    const myWindow = window.open('', '', 'left=200,top=200,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    const factor = this.createFactor(factorNumber);
+    this.setFactorInWindow(myWindow, factor);
+    myWindow.document.close(); // necessary for IE >= 10
+    myWindow.focus(); // necessary for IE >= 10*/
+    setTimeout(function() {
+      myWindow.print();
+      myWindow.close();
+    }, 200);
+  }
+
+  setFactorInWindow(myWindow, container) {
+    const body = document.createElement('body');
+    body.style.display = 'flex';
+    body.style.flexWrap = 'wrap';
+    body.style.alignContent = 'baseline';
+    body.style.backgroundColor = 'green';
+    body.appendChild(container);
+    myWindow.document.write('<html><head><title></title>');
+    myWindow.document.write('</head>');
+    myWindow.document.write(body.innerHTML);
+    myWindow.document.write('</html>');
+  }
+
+  createFactor(factorNumber) {
+    const container = document.createElement('div');
+    container.style.width = `100%`;
+    container.style.display = 'flex';
+    container.style.flexDirection = 'row';
+    container.style.flexWrap = 'wrap';
+    container.style.direction = 'rtl';
+    container.appendChild(this.creatFactorHeader(factorNumber));
+    container.appendChild(this.createFactorProductDetail());
+    container.appendChild(this.createFooterFactor());
+    return container;
+  }
+
+  creatFactorHeader(factorNumber) {
+    const header = document.createElement('div');
+    header.style.width = '100%';
+    header.style.display = 'flex';
+    header.style.flexDirection = 'row';
+    header.style.justifyContent = 'space-between';
+    header.style.flexWrap = 'wrap';
+    const factorNumberBox = document.createElement('div');
+    factorNumberBox.innerHTML = 'شماره فاکتور : ' + factorNumber;
+    const date = document.createElement('div');
+    date.innerHTML = 'تاریخ : ' + moment().format('jYYYY/jMM/jDD');
+    header.appendChild(factorNumberBox);
+    header.appendChild(date);
+
+    const title = this.createFactorTitle();
+    header.appendChild(title);
+
+    return header;
+  }
+
+  createFactorTitle() {
+    const title = document.createElement('div');
+    title.style.width = '100%';
+    title.style.display = 'flex';
+    title.style.flexDirection = 'row';
+    title.style.marginTop = '15px';
+    title.style.borderTop = 'solid 1px black';
+    title.style.borderBottom = 'dashed 1px black';
+    title.style.paddingTop = '5px';
+    title.style.paddingBottom = '5px';
+    this.factorTitle.forEach(item => {
+      const div = document.createElement('div');
+      div.style.width = item.width;
+      div.style.fontSize = '12px';
+      div.innerHTML = item.name;
+      title.appendChild(div);
+    });
+    return title;
+  }
+
+  createItemDiv(text, width) {
+    const div = document.createElement('div');
+    div.style.width = width;
+    div.innerHTML = text;
+    return div;
+  }
+
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  createFactorProductDetail() {
+    const container = document.createElement('div');
+    container.style.width = '100%';
+    this.result.forEach(item => {
+      const detail = document.createElement('div');
+      detail.style.width = '100%';
+      detail.style.display = 'flex';
+      detail.style.flexDirection = 'row';
+      detail.style.borderBottom = 'dashed 1px black';
+      detail.style.paddingTop = '5px';
+      detail.style.paddingBottom = '5px';
+      detail.style.fontSize = '12px';
+
+      const productGroup = this.createItemDiv(item.productSize.product.group.name, this.factorTitle[0].width);
+      const productCode = this.createItemDiv(item.productSize.code, this.factorTitle[1].width);
+      const price = this.createItemDiv(this.numberWithCommas(item.productSize.product.price), this.factorTitle[2].width);
+      const amount = this.createItemDiv(item.amount, this.factorTitle[3].width);
+      const totalPrice = this.createItemDiv(this.numberWithCommas(item.productSize.product.price * item.amount), this.factorTitle[4].width);
+      const discountPrice = this.createItemDiv(this.numberWithCommas(item.price * item.amount), this.factorTitle[5].width);
+
+      detail.appendChild(productGroup);
+      detail.appendChild(productCode);
+      detail.appendChild(price);
+      detail.appendChild(amount);
+      detail.appendChild(totalPrice);
+      detail.appendChild(discountPrice);
+      container.appendChild(detail);
+    });
+
+    return container;
+  }
+
+  createFooterFactor() {
+    const footer = document.createElement('div');
+    footer.style.width = '100%';
+    footer.style.display = 'flex';
+    footer.style.flexDirection = 'row';
+    // footer.style.marginTop = '15px';
+    footer.style.borderTop = 'solid 1px black';
+    footer.style.borderBottom = 'dashed 1px black';
+    footer.style.paddingTop = '5px';
+    footer.style.paddingBottom = '5px';
+    this.factorTitle.forEach((item) => {
+      const div = document.createElement('div');
+      div.style.width = item.width;
+      div.style.fontSize = '12px';
+      if (item.enName === 'productGroup') {
+        div.innerHTML = 'مجموع';
+      }
+      if (item.enName === 'totalPrice') {
+        div.innerHTML = this.numberWithCommas(this.sumPrice.total);
+      }
+      if (item.enName === 'discountPrice') {
+        div.innerHTML = this.numberWithCommas(this.sumPrice.discountToal);
+      }
+      footer.appendChild(div);
+    });
+    return footer;
+  }
 }
 
 
@@ -262,7 +472,6 @@ export class DeleteSale {
         });
   }
 }
-
 
 
 @Component({

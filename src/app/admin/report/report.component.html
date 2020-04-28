@@ -111,7 +111,7 @@
                   <input formControlName="customerCode"
                          matInput
                          autocomplete="off"
-                         placeholder="کد خردار"/>
+                         placeholder="کد خریدار"/>
                 </mat-form-field>
               </div>
 
@@ -131,7 +131,6 @@
                 </mat-form-field>
               </div>
 
-
               <div dir="rtl"
                    style="padding-top: 22px"
                    class="col-4 d-flex row justify-content-around">
@@ -148,6 +147,23 @@
                   </mat-select>
                 </mat-form-field>
               </div>
+
+              <div dir="rtl"
+                   style="padding-top: 22px"
+                   class="col-4 d-flex row justify-content-around">
+                <div class="col-2 mat-body-2 white-color text-center mt-3"
+                     style="padding: 0 !important;">
+                  <span>شماره فاکتور</span>
+                </div>
+                <mat-form-field class="col-10"
+                                appearance="outline">
+                  <input formControlName="factorNum"
+                         matInput
+                         autocomplete="off"
+                         placeholder="شماره فاکتور"/>
+                </mat-form-field>
+              </div>
+
 
               <div class="col-12 py-2 mb-3 mt-1 d-flex flex-row justify-content-center">
                 <button class="col-4 mat-body-1 mx-auto search-desktop-btn"
@@ -201,7 +217,7 @@
             <infinite-scroll (scrolled)="onScroll()">
               <div class="row justify-content-between"
                    *ngFor="let item of result; let i = index"
-                   style="border-bottom: 2px solid #f1f1f1; height: 85px">
+                   style="border-bottom: 2px solid #f1f1f1; height: 95px">
 
                 <div class="col-2 table-items my-auto mat-title text-center py-2">
                   {{item.productSize.code}}
@@ -235,6 +251,28 @@
                     <mat-icon style="color: red">delete</mat-icon>
                   </button>
                 </div>
+
+                <div class="d-flex flex-row more-info w-100 justify-content-between px-2">
+                  <div *ngIf="item.factorNumber"
+                       class="d-flex flex-row">
+                    <div class="mat-body-2">شماره فاکتور : </div>
+                    <mat-chip-list>
+                      <mat-chip color="primary"
+                                class="mat-body-2">
+                        {{item.factorNumber}}
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex flex-row">
+                <button mat-flat-button
+                        class="mt-3 mx-auto"
+                        [disabled]="printBtn.disable"
+                        (click)="preparePrint()"
+                        color="accent">
+                  <span>چاپ</span>
+                </button>
               </div>
               <mat-spinner *ngIf="loading"
                            class="mx-auto my-3"
@@ -351,6 +389,19 @@
                 </div>
               </div>
 
+              <div class="pt-1 col-10 col-md-8">
+                <div class="w-100  white-color mat-body-2">شماره فاکتور</div>
+                <div dir="rtl">
+                  <mat-form-field class="w-100"
+                                  appearance="outline">
+                    <input formControlName="factorNum"
+                           matInput
+                           autocomplete="off"
+                           placeholder="شماره فاکتور"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
               <div class="pt-1 col-4 col-md-5 mb-4">
                 <button mat-flat-button
                         class="w-100"
@@ -405,6 +456,12 @@
                      style="text-align: end">{{item.amount * item.price | number}}</div>
               </div>
               <div class="row justify-content-between py-1">
+                <div class="col-4 mat-body-2">شماره فاکتور</div>
+                <div class="col-4 d-flex my-auto between-two-content-border"></div>
+                <div class="col-4 mat-body-2"
+                     style="text-align: end">{{item.factorNumber}}</div>
+              </div>
+              <div class="row justify-content-between py-1">
                 <div class="col-4 mat-body-2">تاریخ</div>
                 <div class="col-4 d-flex my-auto between-two-content-border"></div>
                 <div class="col-4 mat-body-2"
@@ -431,6 +488,15 @@
                          [diameter]="40"
                          [strokeWidth]="5">
             </mat-spinner>
+            <div class="d-flex flex-row">
+              <button mat-flat-button
+                      [disabled]="printBtn.disable"
+                      class="my-3 mx-auto"
+                      (click)="preparePrint()"
+                      color="accent">
+                <span>چاپ</span>
+              </button>
+            </div>
           </infinite-scroll>
         </div>
       </div>

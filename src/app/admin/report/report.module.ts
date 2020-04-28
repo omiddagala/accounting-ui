@@ -4,7 +4,7 @@ import {ReportRoutingModule} from './report-routing.module';
 import {
   MatBadgeModule,
   MatButtonModule,
-  MatCardModule, MatDialogModule,
+  MatCardModule, MatChipsModule, MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule, MatListModule, MatProgressSpinnerModule, MatRadioModule,
@@ -41,7 +41,8 @@ import {NgxCurrencyModule} from 'ngx-currency';
     SharedModule,
     FormsModule,
     MatDialogModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    MatChipsModule
   ],
   declarations: [
     ReportComponent,
