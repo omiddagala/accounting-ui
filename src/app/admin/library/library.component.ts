@@ -193,8 +193,33 @@ export class LibraryComponent implements OnInit {
     this.router.navigate(['/admin/library/order/' + id]);
   }
 
+  openImageDialog(src) {
+    const dialogRef = this.dialog.open(ImageDialog, {
+      data: {src}
+    });
+  }
+
 }
 
+@Component({
+  selector: 'image-dialog',
+  templateUrl: './image-dialog/image-dialog.html',
+})
+
+export class ImageDialog {
+  constructor(
+    public dialogRef: MatDialogRef<ImageDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(ComponentFactoryResolver) factoryResolver,) {
+  }
+
+  loading = false;
+
+  onNoClick(): void {
+    console.log(this.data.src);
+    this.dialogRef.close();
+  }
+}
 
 @Component({
   selector: 'timeline-dialog',
@@ -216,7 +241,6 @@ export class TimelineDialog implements OnInit{
     this.router.navigate(['/admin/library/timeline/' + id]);
   }
 }
-
 
 @Component({
   selector: 'delete-dialog',

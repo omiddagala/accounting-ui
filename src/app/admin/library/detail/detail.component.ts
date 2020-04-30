@@ -301,6 +301,7 @@ export class DetailComponent implements OnInit {
   }
 
   getFile(file, type) {
+    console.log(file);
     this.url = file.link;
     type.valid = true;
     type.link = file.link;

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, OnInit} from '@angular/core';
 // @ts-ignore
 import Menu from '../../../shared/data/menu.json';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {DialogData} from '../library/detail/detail.component';
 import {CommonService} from '../../../shared/common/common.service';
+import {ImageDialog} from '../library/library.component';
 
 @Component({
   selector: 'app-notification-component',
@@ -68,6 +69,12 @@ export class NotificationComponent implements OnInit {
     });
   }
 
+  openImageDialog(src) {
+    this.dialog.open(ImageDialog, {
+      data: {src}
+    });
+  }
+
   closeOrder(id) {
     const param = {
       id
@@ -82,11 +89,13 @@ export class NotificationComponent implements OnInit {
           this.loading = false;
           location.reload();
         },
-        response => {
+        err => {
           this.loading = false;
+          console.log(err);
         });
   }
 }
+
 
 @Component({
   selector: 'notification-dialog',

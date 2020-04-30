@@ -20,7 +20,6 @@
       </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content class="h-100">
-      <!--<app-loading-component *ngIf="loading"></app-loading-component>-->
       <app-main-menu [logo]="true"
                      [snav]="snav"
                      [mainMenu]="true"
@@ -179,7 +178,10 @@
                    style="border-bottom: 2px solid #f1f1f1; height: 85px">
 
                 <div class="col-3 table-items my-auto mat-title text-center py-2">
-                  <img [src]="item.image" height="65">
+                  <img [src]="item.image"
+                       (click)="openImageDialog(item.image)"
+                       style="cursor:pointer;"
+                       height="65"/>
                 </div>
 
                 <div class="col-3 table-items my-auto mat-title text-center py-2">
@@ -341,7 +343,12 @@
             <mat-card class="w-100 my-2"
                       *ngFor="let item of result; let i = index">
               <div class="row justify-content-between py-1">
-                <img *ngIf="item.image" [src]="item.image" height="85" class="mx-auto">
+                <img *ngIf="item.image"
+                     [src]="item.image"
+                     (click)="openImageDialog(item.image)"
+                     style="cursor: pointer"
+                     height="85"
+                     class="mx-auto">
               </div>
 
               <div class="row justify-content-between pb-1">
