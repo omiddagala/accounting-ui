@@ -200,6 +200,9 @@ export class OrderComponent implements OnInit {
           this.router.navigate(['/admin/library']);
         },
         err => {
+          if (err.status === 422) {
+            this.commonService.showMessage(err.error, 'error-msg');
+          }
           console.log(err);
         });
   }
@@ -207,7 +210,7 @@ export class OrderComponent implements OnInit {
   setSize() {
     let obj = [];
     for (const item of this.orderSized) {
-      if (item.value !== '') {
+      if (item.value !== '' && item.value !== '0') {
         obj.push(item);
       }
     }
