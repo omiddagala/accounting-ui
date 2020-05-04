@@ -281,6 +281,9 @@ export class CollectiveOrdersComponent implements OnInit {
         },
         err => {
           console.log(err);
+          if (err.status === 422) {
+            this.commonService.showMessage(err.error, 'error-msg');
+          }
           this.loading = false;
         });
   }
@@ -288,7 +291,7 @@ export class CollectiveOrdersComponent implements OnInit {
   setSize() {
     let obj = [];
     for (const item of this.orderSized) {
-      if (item.value !== '') {
+      if (item.value !== '' && item.value !== '0') {
         obj.push(item);
       }
     }
