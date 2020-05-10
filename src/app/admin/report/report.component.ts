@@ -28,7 +28,7 @@ export class ReportComponent implements OnInit {
   public account = null;
   pageableDTO = {
     page: 0,
-    size: 15,
+    size: 20,
     direction: 'ASC',
     sortBy: 'id',
   };
@@ -190,7 +190,8 @@ export class ReportComponent implements OnInit {
           this.checkPrintBtn();
           this.addValueToResult();
           this.pageableDTO.page++;
-          if (val.length === this.pageableDTO.size) {
+          // console.log(val.sales.length);
+          if (val.sales.length === this.pageableDTO.size) {
             this.loadMore = true;
           }
         },
